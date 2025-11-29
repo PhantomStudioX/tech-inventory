@@ -10,7 +10,8 @@ const products = [
     category: "phones",
     price: "$999",
     stock: 4,
-    image: "images/iphone15.jpg"
+    image: "images/iphone15.jpg",
+    colors: ["black", "white", "blue"]
   },
   {
     id: 2,
@@ -18,7 +19,8 @@ const products = [
     category: "phones",
     price: "$849",
     stock: 6,
-    image: "images/galaxy-s23.jpg"
+    image: "images/galaxy-s23.jpg",
+    colors: ["black", "cream", "green"]
   },
   {
     id: 3,
@@ -26,7 +28,8 @@ const products = [
     category: "phones",
     price: "$799",
     stock: 5,
-    image: "images/pixel8.jpg"
+    image: "images/pixel8.jpg",
+    colors: ["black", "pink", "mint"]
   },
   {
     id: 4,
@@ -34,7 +37,8 @@ const products = [
     category: "phones",
     price: "$599",
     stock: 3,
-    image: "images/iphone13.jpg"
+    image: "images/iphone13.jpg",
+    colors: ["red", "blue", "white"]
   },
   {
     id: 5,
@@ -42,7 +46,8 @@ const products = [
     category: "phones",
     price: "$349",
     stock: 8,
-    image: "images/samsung-a54.jpg"
+    image: "images/samsung-a54.jpg",
+    colors: ["violet", "lime", "black"]
   },
   {
     id: 6,
@@ -50,7 +55,8 @@ const products = [
     category: "phones",
     price: "$699",
     stock: 2,
-    image: "images/oneplus11.jpg"
+    image: "images/oneplus11.jpg",
+    colors: ["black", "green"]
   },
 
   // -------------------
@@ -62,7 +68,8 @@ const products = [
     category: "tablets",
     price: "$1099",
     stock: 2,
-    image: "images/ipad-pro.jpg"
+    image: "images/ipad-pro.jpg",
+    colors: ["silver", "spacegray"]
   },
   {
     id: 8,
@@ -70,7 +77,8 @@ const products = [
     category: "tablets",
     price: "$699",
     stock: 3,
-    image: "images/galaxy-tab-s9.jpg"
+    image: "images/galaxy-tab-s9.jpg",
+    colors: ["gray", "beige"]
   },
   {
     id: 9,
@@ -78,7 +86,8 @@ const products = [
     category: "tablets",
     price: "$149",
     stock: 7,
-    image: "images/fire-hd-10.jpg"
+    image: "images/fire-hd-10.jpg",
+    colors: ["black", "blue"]
   },
   {
     id: 10,
@@ -86,7 +95,8 @@ const products = [
     category: "tablets",
     price: "$229",
     stock: 5,
-    image: "images/lenovo-p11.jpg"
+    image: "images/lenovo-p11.jpg",
+    colors: ["gray"]
   },
 
   // -------------------
@@ -98,7 +108,8 @@ const products = [
     category: "laptops",
     price: "$1199",
     stock: 2,
-    image: "images/macbook-air-m2.jpg"
+    image: "images/macbook-air-m2.jpg",
+    colors: ["silver", "starlight", "spacegray"]
   },
   {
     id: 12,
@@ -106,7 +117,8 @@ const products = [
     category: "laptops",
     price: "$999",
     stock: 3,
-    image: "images/dell-xps13.jpg"
+    image: "images/dell-xps13.jpg",
+    colors: ["silver", "white"]
   },
   {
     id: 13,
@@ -114,7 +126,8 @@ const products = [
     category: "laptops",
     price: "$649",
     stock: 4,
-    image: "images/hp-pavilion15.jpg"
+    image: "images/hp-pavilion15.jpg",
+    colors: ["black", "silver"]
   },
   {
     id: 14,
@@ -122,7 +135,8 @@ const products = [
     category: "laptops",
     price: "$1299",
     stock: 1,
-    image: "images/thinkpad-x1.jpg"
+    image: "images/thinkpad-x1.jpg",
+    colors: ["black"]
   },
   {
     id: 15,
@@ -130,7 +144,8 @@ const products = [
     category: "laptops",
     price: "$549",
     stock: 5,
-    image: "images/asus-vivobook14.jpg"
+    image: "images/asus-vivobook14.jpg",
+    colors: ["black", "blue"]
   },
 
   // -------------------------
@@ -142,7 +157,8 @@ const products = [
     category: "accessories",
     price: "$129",
     stock: 12,
-    image: "images/wireless-earbuds.jpg"
+    image: "images/wireless-earbuds.jpg",
+    colors: ["white", "black"]
   },
   {
     id: 17,
@@ -150,7 +166,8 @@ const products = [
     category: "accessories",
     price: "$249",
     stock: 4,
-    image: "images/airpods-pro.jpg"
+    image: "images/airpods-pro.jpg",
+    colors: ["white"]
   },
   {
     id: 18,
@@ -158,7 +175,8 @@ const products = [
     category: "accessories",
     price: "$39",
     stock: 9,
-    image: "images/samsung-charger.jpg"
+    image: "images/samsung-charger.jpg",
+    colors: ["white", "black"]
   },
   {
     id: 19,
@@ -166,7 +184,8 @@ const products = [
     category: "accessories",
     price: "$25",
     stock: 6,
-    image: "images/laptop-sleeve.jpg"
+    image: "images/laptop-sleeve.jpg",
+    colors: ["gray", "black"]
   },
   {
     id: 20,
@@ -174,6 +193,7 @@ const products = [
     category: "accessories",
     price: "$49",
     stock: 7,
-    image: "images/bluetooth-keyboard.jpg"
+    image: "images/bluetooth-keyboard.jpg",
+    colors: ["black", "white"]
   }
 ];
