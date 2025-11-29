@@ -1,3 +1,5 @@
+/* inventory-website/css/style.css */
+
 /* Global */
 body {
   font-family: Arial, sans-serif;
@@ -24,7 +26,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #4caf50; /* Slightly brighter green on hover */
+  color: #4caf50; /* Bright green */
 }
 
 /* Main */
@@ -62,14 +64,14 @@ main {
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
-  border: 2px solid #e6ffe6;
+  border: 2px solid #e6ffe6; /* Lightest green tint */
   transition: 0.25s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  border-color: #99e699;
+  border-color: #99e699; /* Slightly stronger light green */
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
@@ -85,6 +87,21 @@ main {
 
 .product-card p {
   margin: 6px 0;
+}
+
+/* NEW — Color Dots */
+.color-options {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #e0e0e0;
 }
 
 /* Footer */
