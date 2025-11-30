@@ -20,7 +20,7 @@ const products = [
     price: "$849",
     stock: 6,
     image: "images/galaxy-s23-black.jpg",
-    colors: ["black", "cream", "green"]
+    colors: ["black"]
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const products = [
     price: "$799",
     stock: 5,
     image: "images/pixel8-black.jpg",
-    colors: ["black", "pink", "mint"]
+    colors: ["black"]
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ const products = [
     price: "$599",
     stock: 3,
     image: "images/iphone13-black.jpg",
-    colors: ["red", "blue", "white"]
+    colors: ["black"]
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ const products = [
     price: "$349",
     stock: 8,
     image: "images/samsung-a54-black.jpg",
-    colors: ["violet", "lime", "black"]
+    colors: ["black"]
   },
   {
     id: 6,
@@ -56,7 +56,7 @@ const products = [
     price: "$699",
     stock: 2,
     image: "images/oneplus11-black.jpg",
-    colors: ["black", "green"]
+    colors: ["black"]
   },
 
   // -------------------
@@ -69,7 +69,7 @@ const products = [
     price: "$1099",
     stock: 2,
     image: "images/ipad-pro12-silver.jpg",
-    colors: ["silver", "spacegray"]
+    colors: ["silver"]
   },
   {
     id: 8,
@@ -78,7 +78,7 @@ const products = [
     price: "$699",
     stock: 3,
     image: "images/galaxy-tabs9-black.jpg",
-    colors: ["gray", "beige"]
+    colors: ["gray"]
   },
   {
     id: 9,
@@ -87,7 +87,7 @@ const products = [
     price: "$149",
     stock: 7,
     image: "images/fire-hd-10-black.jpg",
-    colors: ["black", "blue"]
+    colors: ["black"]
   },
   {
     id: 10,
@@ -95,8 +95,8 @@ const products = [
     category: "tablets",
     price: "$229",
     stock: 5,
-    image: "images/lenovo-p11-black.jpg",
-    colors: ["gray"]
+    image: "images/lenovo-p11-grey.jpg",
+    colors: ["grey"]
   },
 
   // -------------------
@@ -109,7 +109,7 @@ const products = [
     price: "$1199",
     stock: 2,
     image: "images/macbook-air-m2-silver.jpg",
-    colors: ["silver", "starlight", "spacegray"]
+    colors: ["silver"]
   },
   {
     id: 12,
@@ -118,7 +118,7 @@ const products = [
     price: "$999",
     stock: 3,
     image: "images/dell-xps13-silver.jpg",
-    colors: ["silver", "white"]
+    colors: ["silver"]
   },
   {
     id: 13,
@@ -127,7 +127,7 @@ const products = [
     price: "$649",
     stock: 4,
     image: "images/hp-pavilion15-silver.jpg",
-    colors: ["black", "silver"]
+    colors: ["silver"]
   },
   {
     id: 14,
@@ -145,7 +145,7 @@ const products = [
     price: "$549",
     stock: 5,
     image: "images/asus-vivobook14-black.jpg",
-    colors: ["black", "blue"]
+    colors: ["black"]
   },
 
   // -------------------------
@@ -158,7 +158,7 @@ const products = [
     price: "$129",
     stock: 12,
     image: "images/iphone-typec.jpg",
-    colors: ["white", "black"]
+    colors: ["white"]
   },
   {
     id: 17,
