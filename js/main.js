@@ -4,6 +4,20 @@ function getQueryParam(name) {
   return params.get(name);
 }
 
+// Get daily "slice" of products for homepage
+function getDailyProducts(products) {
+  const day = new Date().getDate(); // 1-31
+  const start = day % products.length;
+  const count = 8; // number of products to show
+  const dailyProducts = [];
+
+  for (let i = 0; i < count; i++) {
+    dailyProducts.push(products[(start + i) % products.length]);
+  }
+
+  return dailyProducts;
+}
+
 // Load products for homepage or category
 function loadProducts() {
   const category = getQueryParam("category");
@@ -11,11 +25,12 @@ function loadProducts() {
   const titleEl = document.getElementById("category-title");
 
   let filtered = products;
+
   if (category) {
     filtered = products.filter(p => p.category === category);
     if (titleEl) titleEl.textContent = category.charAt(0).toUpperCase() + category.slice(1);
   } else {
-    filtered = products.slice(0, 5); // show first 4 as featured
+    filtered = getDailyProducts(products); // show daily products on homepage
   }
 
   if (!container) return;
@@ -44,7 +59,7 @@ function loadProducts() {
   enableColorSwitching();
 }
 
-// NEW — enable color switching
+// Enable color switching
 function enableColorSwitching() {
   document.querySelectorAll(".color-dot").forEach(dot => {
     dot.addEventListener("click", () => {
@@ -58,7 +73,7 @@ function enableColorSwitching() {
       const base = img.src.split("/").pop().split(".")[0]; 
       const folder = img.src.replace(/\/[^\/]*$/, "/");
 
-      // If original = iphone15.jpg → base = "iphone15"
+      // If original = iphone15-black.jpg → base = "iphone15"
       const mainBase = base.includes("-") ? base.split("-")[0] : base;
 
       img.src = `${folder}${mainBase}-${color}.jpg`;
@@ -82,14 +97,14 @@ if (searchInput) {
         <img id="img-${p.id}" src="${p.image}" alt="${p.name}">
         <h3>${p.name}</h3>
 
-        <!-- Color dots (search results too!) -->
+        <!-- Color dots -->
         <div class="color-options">
           ${(p.colors || []).map(c => `
             <span class="color-dot"
               data-id="${p.id}"
               data-color="${c}"
               style="background:${c};">
-            </span>
+          </span>
           `).join('')}
         </div>
 
