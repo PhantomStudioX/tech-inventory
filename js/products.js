@@ -197,9 +197,9 @@ const products = [
     colors: ["black", "white"]
   },
   
-    // -------------------------
-  // 🎮 GAMING (2 items)
-  // -------------------------
+   // -------------------------
+   // 🎮 GAMING
+   // -------------------------
   {
     id: 21,
     name: "PlayStation 4",
@@ -220,11 +220,11 @@ const products = [
   },
   {
     id: 23,
-    name: "K2 Pro Gaming Headset",
+    name: "Xbox Controller",
     category: "gaming",
     price: "$50",
     stock: 3,
-    image: "images/k2-pro-headset-red.jpg",
-    colors: ["red"]
+    image: "images/xbox-controller-white.jpg",
+    colors: ["white", "red"]
     }, 
 ];
