@@ -11,7 +11,7 @@ const products = [
     price: "$999",
     stock: 4,
     image: "images/iphone15-black.jpg",
-    colors: ["black", "white", "blue"]
+    colors: ["black", "blue"]
   },
   {
     id: 2,
