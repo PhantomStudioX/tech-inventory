@@ -171,11 +171,11 @@ const products = [
   },
   {
     id: 18,
-    name: "K2 Pro Gaming Headset",
+    name: "Finger Sleeve",
     category: "accessories",
     price: "$39",
     stock: 9,
-    image: "images/k2-pro-headset-blue.jpg",
+    image: "images/finger-sleeve.jpg",
     colors: ["blue"]
   },
   {
@@ -217,5 +217,14 @@ const products = [
     stock: 2,
     image: "images/xbox-one-white.jpg",
     colors: ["white"]
-  }
+  },
+  {
+    id: 23,
+    name: "K2 Pro Gaming Headset,
+    category: "gaming",
+    price: "$50",
+    stock: 3,
+    image: "images/k2-pro-headset-blue.jpg",
+    colors: ["blue"]
+  },
 ];
