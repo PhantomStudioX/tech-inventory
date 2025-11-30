@@ -153,11 +153,11 @@ const products = [
   // -------------------------
   {
     id: 16,
-    name: "Wireless Earbuds",
+    name: "iPhone Type C Chrager",
     category: "accessories",
     price: "$129",
     stock: 12,
-    image: "images/wireless-earbuds.jpg",
+    image: "images/iphone-typec.jpg",
     colors: ["white", "black"]
   },
   {
