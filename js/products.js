@@ -195,8 +195,8 @@ const products = [
     stock: 7,
     image: "images/bluetooth-keyboard.jpg",
     colors: ["black", "white"]
-  }
-
+  },
+  
     // -------------------------
   // 🎮 GAMING (2 items)
   // -------------------------
