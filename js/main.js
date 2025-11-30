@@ -37,7 +37,7 @@ function loadProducts() {
       </div>
 
       <p class="price">Price: ${p.price}</p>
-      <p>${p.stock > 0 ? "In Stock" : "Out of Stock"}</p>
+      <p class="stock">Stock: ${p.stock}</p>
     </div>
   `).join('');
 
@@ -94,7 +94,7 @@ if (searchInput) {
         </div>
 
         <p class="price">Price: ${p.price}</p>
-        <p>${p.stock > 0 ? "In Stock" : "Out of Stock"}</p>
+        <p class="stock">Stock: ${p.stock}</p>
       </div>
     `).join('');
 
