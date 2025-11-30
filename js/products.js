@@ -117,7 +117,7 @@ const products = [
     category: "laptops",
     price: "$999",
     stock: 3,
-    image: "images/dell-xps13.jpg",
+    image: "images/dell-xps13-silver.jpg",
     colors: ["silver", "white"]
   },
   {
@@ -126,7 +126,7 @@ const products = [
     category: "laptops",
     price: "$649",
     stock: 4,
-    image: "images/hp-pavilion15.jpg",
+    image: "images/hp-pavilion15-silver.jpg",
     colors: ["black", "silver"]
   },
   {
@@ -135,7 +135,7 @@ const products = [
     category: "laptops",
     price: "$1299",
     stock: 1,
-    image: "images/thinkpad-x1.jpg",
+    image: "images/thinkpad-x1-black.jpg",
     colors: ["black"]
   },
   {
@@ -144,7 +144,7 @@ const products = [
     category: "laptops",
     price: "$549",
     stock: 5,
-    image: "images/asus-vivobook14.jpg",
+    image: "images/asus-vivobook14-black.jpg",
     colors: ["black", "blue"]
   },
 
