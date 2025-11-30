@@ -8,7 +8,7 @@ const products = [
     id: 1,
     name: "iPhone 15",
     category: "phones",
-    price: "$999",
+    price: "$999JMD",
     stock: 99,
     image: "images/iphone15-black.jpg",
     colors: ["black", "blue"]
