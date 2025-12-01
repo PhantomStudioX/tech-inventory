@@ -44,7 +44,7 @@ const products = [
     category: "phones",
     price: "$349",
     stock: 8,
-    image: "images/samsung-a54-black.jpg",
+    image: "images/a54-black.jpg",
     colors: ["black"]
   },
   {
@@ -66,7 +66,7 @@ const products = [
     category: "tablets",
     price: "$1099",
     stock: 2,
-    image: "images/ipad-pro12-silver.jpg",
+    image: "images/ipadpro12-silver.jpg",
     colors: ["silver"]
   },
   {
@@ -75,7 +75,7 @@ const products = [
     category: "tablets",
     price: "$699",
     stock: 3,
-    image: "images/galaxy-tabs9-black.jpg",
+    image: "images/tabs9-black.jpg",
     colors: ["black"]
   },
   {
@@ -84,7 +84,7 @@ const products = [
     category: "tablets",
     price: "$149",
     stock: 7,
-    image: "images/fire-hd-10-black.jpg",
+    image: "images/firehd10-black.jpg",
     colors: ["black"]
   },
   {
@@ -93,7 +93,7 @@ const products = [
     category: "tablets",
     price: "$229",
     stock: 5,
-    image: "images/lenovo-p11-grey.jpg",
+    image: "images/lenovop11-grey.jpg",
     colors: ["grey"]  // matches real file
   },
 
@@ -106,7 +106,7 @@ const products = [
     category: "laptops",
     price: "$1199",
     stock: 2,
-    image: "images/macbook-air-m2-silver.jpg",
+    image: "images/macbookairm2-silver.jpg",
     colors: ["silver"]
   },
   {
@@ -115,7 +115,7 @@ const products = [
     category: "laptops",
     price: "$999",
     stock: 3,
-    image: "images/dell-xps13-silver.jpg",
+    image: "images/xps13-silver.jpg",
     colors: ["silver"]
   },
   {
@@ -124,7 +124,7 @@ const products = [
     category: "laptops",
     price: "$649",
     stock: 4,
-    image: "images/hp-pavilion15-silver.jpg",
+    image: "images/pavilion15-silver.jpg",
     colors: ["silver"]
   },
   {
@@ -133,7 +133,7 @@ const products = [
     category: "laptops",
     price: "$1299",
     stock: 1,
-    image: "images/thinkpad-x1-black.jpg",
+    image: "images/thinkpadx1-black.jpg",
     colors: ["black"]
   },
   {
@@ -142,7 +142,7 @@ const products = [
     category: "laptops",
     price: "$549",
     stock: 5,
-    image: "images/asus-vivobook14-black.jpg",
+    image: "images/vivobook14-black.jpg",
     colors: ["black"]
   },
 
@@ -155,7 +155,7 @@ const products = [
     category: "accessories",
     price: "$129",
     stock: 12,
-    image: "images/iphone-typec.jpg",
+    image: "images/iphonetypec-white.jpg",
     colors: ["white"]
   },
   {
@@ -164,7 +164,7 @@ const products = [
     category: "accessories",
     price: "$249",
     stock: 4,
-    image: "images/airpods-pro2-white.jpg",
+    image: "images/airpodspro2-white.jpg",
     colors: ["white"]
   },
   {
@@ -174,7 +174,7 @@ const products = [
     price: "$39",
     stock: 9,
     image: "images/finger-sleeve.jpg",
-    colors: ["blue"]
+    colors: ["black"]
   },
   {
     id: 19,
@@ -213,7 +213,7 @@ const products = [
     category: "gaming",
     price: "$499",
     stock: 2,
-    image: "images/xbox-one-white.jpg",
+    image: "images/xboxone-white.jpg",
     colors: ["white"]
   },
   {
@@ -222,7 +222,7 @@ const products = [
     category: "gaming",
     price: "$50",
     stock: 3,
-    image: "images/xbox-controller-white.jpg",
+    image: "images/xboxcontroller-white.jpg",
     colors: ["white", "red"]
   }
 ];
