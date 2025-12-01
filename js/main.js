@@ -6,9 +6,9 @@ function getQueryParam(name) {
 
 // Get daily "slice" of products for homepage
 function getDailyProducts(products) {
-  const day = new Date().getDate(); // 1-31
+  const day = new Date().getDate();
   const start = day % products.length;
-  const count = 8; // number of products to show
+  const count = 8;
   const dailyProducts = [];
 
   for (let i = 0; i < count; i++) {
@@ -18,19 +18,18 @@ function getDailyProducts(products) {
   return dailyProducts;
 }
 
-// Load products for homepage or category
+// Load products
 function loadProducts() {
   const category = getQueryParam("category");
   const container = document.getElementById("product-list") || document.getElementById("featured-products");
   const titleEl = document.getElementById("category-title");
 
-  let filtered = products;
+  let filtered = category 
+      ? products.filter(p => p.category === category)
+      : getDailyProducts(products);
 
-  if (category) {
-    filtered = products.filter(p => p.category === category);
-    if (titleEl) titleEl.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-  } else {
-    filtered = getDailyProducts(products); // show daily products on homepage
+  if (titleEl && category) {
+    titleEl.textContent = category.charAt(0).toUpperCase() + category.slice(1);
   }
 
   if (!container) return;
@@ -40,14 +39,9 @@ function loadProducts() {
       <img id="img-${p.id}" src="${p.image}" alt="${p.name}">
       <h3>${p.name}</h3>
 
-      <!-- Color dots -->
       <div class="color-options">
-        ${(p.colors || []).map(c => `
-          <span class="color-dot"
-            data-id="${p.id}"
-            data-color="${c}"
-            style="background:${c};">
-          </span>
+        ${p.colors.map(c => `
+          <span class="color-dot" data-id="${p.id}" data-color="${c}" style="background:${c};"></span>
         `).join('')}
       </div>
 
@@ -59,26 +53,22 @@ function loadProducts() {
   enableColorSwitching();
 }
 
-// Enable color switching
+// Fix color switching
 function enableColorSwitching() {
   document.querySelectorAll(".color-dot").forEach(dot => {
     dot.addEventListener("click", () => {
-      const id = dot.getAttribute("data-id");
-      const color = dot.getAttribute("data-color");
-
+      const id = dot.dataset.id;
+      const color = dot.dataset.color;
       const img = document.getElementById(`img-${id}`);
+
       if (!img) return;
 
-      // Build new image filename:
-      const base = img.src.split("/").pop().split(".")[0]; 
+      const file = img.src.split("/").pop();
+      const base = file.split("-")[0];  
       const folder = img.src.replace(/\/[^\/]*$/, "/");
 
-      // If original = iphone15-black.jpg → base = "iphone15"
-      const mainBase = base.includes("-") ? base.split("-")[0] : base;
+      img.src = `${folder}${base}-${color}.jpg`;
 
-      img.src = `${folder}${mainBase}-${color}.jpg`;
-
-      // Highlight selected dot
       dot.parentElement.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active-color"));
       dot.classList.add("active-color");
     });
@@ -92,19 +82,15 @@ if (searchInput) {
     const query = searchInput.value.toLowerCase();
     const filtered = products.filter(p => p.name.toLowerCase().includes(query));
     const container = document.getElementById("product-list");
+
     container.innerHTML = filtered.map(p => `
       <div class="product-card">
         <img id="img-${p.id}" src="${p.image}" alt="${p.name}">
         <h3>${p.name}</h3>
 
-        <!-- Color dots -->
         <div class="color-options">
-          ${(p.colors || []).map(c => `
-            <span class="color-dot"
-              data-id="${p.id}"
-              data-color="${c}"
-              style="background:${c};">
-          </span>
+          ${p.colors.map(c => `
+            <span class="color-dot" data-id="${p.id}" data-color="${c}" style="background:${c};"></span>
           `).join('')}
         </div>
 
@@ -117,5 +103,4 @@ if (searchInput) {
   });
 }
 
-// Initialize
 window.addEventListener("DOMContentLoaded", loadProducts);
