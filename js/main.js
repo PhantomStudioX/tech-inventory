@@ -84,17 +84,25 @@ if (searchInput) {
     const query = searchInput.value.toLowerCase();
     const category = getQueryParam("category");
 
-    // 1. Filter by category first
+    // Filter by category first
     let filtered = products.filter(p => p.category === category);
 
-    // 2. Then filter by search term inside that category
+    // Then filter by search term inside that category
     filtered = filtered.filter(p =>
       p.name.toLowerCase().includes(query)
     );
 
-    // 3. Sort alphabetically A → Z
+    // Sort alphabetically A → Z
     filtered.sort((a, b) => a.name.localeCompare(b.name));
     const container = document.getElementById("product-list");
+
+    // If nothing matches → show message
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <p class="no-results">No products found.</p>
+      `;
+      return;
+    }
 
     container.innerHTML = filtered.map(p => `
       <div class="product-card">
