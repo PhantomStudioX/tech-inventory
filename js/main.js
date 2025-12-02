@@ -99,7 +99,7 @@ if (searchInput) {
     // If nothing matches → show message
     if (filtered.length === 0) {
       container.innerHTML = `
-        <p class="no-results">No products found.</p>
+        <p class="no-results">No results found.</p>
       `;
       return;
     }
