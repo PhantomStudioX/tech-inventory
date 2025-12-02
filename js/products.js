@@ -167,39 +167,12 @@ const products = [
     image: "images/airpodspro2-white.jpg",
     colors: ["white"]
   },
-  {
-    id: 18,
-    name: "Finger Sleeve",
-    category: "accessories",
-    price: "$39",
-    stock: 9,
-    image: "images/finger-sleeve.jpg",
-    colors: ["black"]
-  },
-  {
-    id: 19,
-    name: "Laptop Sleeve 15-inch",
-    category: "accessories",
-    price: "$25",
-    stock: 6,
-    image: "images/laptop-sleeve.jpg",
-    colors: ["gray", "black"]
-  },
-  {
-    id: 20,
-    name: "Bluetooth Keyboard",
-    category: "accessories",
-    price: "$49",
-    stock: 7,
-    image: "images/bluetooth-keyboard.jpg",
-    colors: ["black", "white"]
-  },
   
   // -------------------------
   // 🎮 GAMING
   // -------------------------
   {
-    id: 21,
+    id: 18,
     name: "PlayStation 4",
     category: "gaming",
     price: "$499",
@@ -208,7 +181,7 @@ const products = [
     colors: ["black"]
   },
   {
-    id: 22,
+    id: 19,
     name: "Xbox One",
     category: "gaming",
     price: "$499",
@@ -217,7 +190,7 @@ const products = [
     colors: ["white"]
   },
   {
-    id: 23,
+    id: 20,
     name: "Xbox Controller",
     category: "gaming",
     price: "$50",
