@@ -82,7 +82,18 @@ const searchInput = document.getElementById("search");
 if (searchInput) {
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+    const category = getQueryParam("category");
+
+    // 1. Filter by category first
+    let filtered = products.filter(p => p.category === category);
+
+    // 2. Then filter by search term inside that category
+    filtered = filtered.filter(p =>
+      p.name.toLowerCase().includes(query)
+    );
+
+    // 3. Sort alphabetically A → Z
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
     const container = document.getElementById("product-list");
 
     container.innerHTML = filtered.map(p => `
