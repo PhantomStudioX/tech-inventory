@@ -29,6 +29,28 @@ nav a:hover {
   color: #4caf50; /* Bright green */
 }
 
+/* Header Layout */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center; /* Centers everything on mobile */
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+/* Push nav below on small screens */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+}
+
 /* Main */
 main {
   padding: 2rem;
