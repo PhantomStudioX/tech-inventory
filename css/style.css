@@ -155,3 +155,17 @@ footer {
   color: #1b5e20;
   margin-top: 2rem;
 }
+
+/* ---------- Mobile Fixes ---------- */
+@media (max-width: 600px) {
+  .logo {
+    width: 45px;
+    height: 45px;
+    top: 10px;
+    left: 10px;
+  }
+
+  header {
+    padding-top: 3.5rem; /* Prevent overlap with title */
+  }
+}
