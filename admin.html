@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Admin - Tech Inventory</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="admin-wrapper">
+    <aside id="admin-sidebar" class="admin-sidebar">
+      <div class="admin-brand">
+        <img src="images/logo.png" class="logo" alt="Logo">
+        <h3>Admin</h3>
+      </div>
+
+      <nav class="admin-nav">
+        <a href="#" data-view="overview">Overview</a>
+        <a href="#" data-view="products">Products</a>
+        <a href="#" data-view="orders">Orders</a>
+        <a href="#" data-view="messages">AI Messages</a>
+        <a href="#" id="admin-logout">Logout</a>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <div id="admin-login" class="admin-login">
+        <h2>Admin Login</h2>
+        <input id="admin-user" placeholder="username" />
+        <input id="admin-pass" type="password" placeholder="password" />
+        <button id="admin-login-btn">Login</button>
+        <p class="hint">Default demo credentials: <strong>admin / password123</strong> (insecure — use server auth later)</p>
+      </div>
+
+      <div id="admin-dashboard" class="admin-dashboard hidden">
+        <h2>Dashboard</h2>
+        <div id="overview" class="admin-view"></div>
+        <div id="products" class="admin-view hidden"></div>
+        <div id="orders" class="admin-view hidden"></div>
+        <div id="messages" class="admin-view hidden"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/products.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
