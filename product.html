@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Product - Tech Inventory</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header>
@@ -13,22 +13,86 @@
       <h1>Tech Inventory</h1>
     </div>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="products.html?category=phones">Phones</a>
-    <a href="products.html?category=tablets">Tablets</a>
-    <a href="products.html?category=laptops">Laptops</a>
-    <a href="products.html?category=accessories">Accessories</a>
-  </nav>
-</header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html?category=phones">Phones</a>
+      <a href="products.html?category=tablets">Tablets</a>
+      <a href="products.html?category=laptops">Laptops</a>
+      <a href="products.html?category=gaming">Gaming</a>
+      <a href="products.html?category=accessories">Accessories</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
 
   <main>
-    <h2>Product Page</h2>
-    <p>This page is not yet active. Products can be viewed on the main product pages.</p>
+    <div id="product-detail" class="product-detail-container"></div>
   </main>
 
   <footer>
     <p>&copy; 2025 Tech Inventory</p>
   </footer>
+
+  <script src="js/products.js"></script>
+  <script>
+    // Render product detail using products array
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+    const id = Number(getQueryParam('id'));
+    const product = window.products && products.find(p => p.id === id);
+
+    const container = document.getElementById('product-detail');
+
+    if (!product) {
+      container.innerHTML = '<p>Product not found.</p>';
+    } else {
+      container.innerHTML = `
+        <div class="product-card product-detail">
+          <img id="detail-img" src="${product.image}" alt="${product.name}">
+          <h2>${product.name}</h2>
+
+          <div class="color-options" id="detail-colors">
+            ${(product.colors||[]).map(c=>`<button class="color-dot" data-color="${c}" style="background:${c}"></button>`).join('')}
+          </div>
+
+          <p class="price">Price: ${product.price}</p>
+          <p class="stock">${product.stock>0?'In Stock':'Out of Stock'}</p>
+
+          <div class="product-actions">
+            <label for="qty">Qty</label>
+            <input id="qty" type="number" min="1" max="${product.stock}" value="1" />
+            <button id="addToCartBtn">Add to cart</button>
+            <a href="cart.html" class="btn-link">Go to Cart</a>
+          </div>
+
+          <p class="description">Category: ${product.category}</p>
+        </div>
+      `;
+
+      // color switching for detail
+      document.querySelectorAll('#detail-colors .color-dot').forEach(btn=>{
+        btn.addEventListener('click', () => {
+          const color = btn.dataset.color;
+          const file = product.image.split('/').pop();
+          const base = file.split('-')[0];
+          const folder = product.image.replace(/\/[^\/]*$/, "/");
+          document.getElementById('detail-img').src = `${folder}${base}-${color}.jpg`;
+        });
+      });
+
+      document.getElementById('addToCartBtn').addEventListener('click', () => {
+        const qty = Number(document.getElementById('qty').value) || 1;
+        const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+        const existing = cart.find(i => i.id === product.id);
+        if (existing) existing.qty = Math.min(product.stock, existing.qty + qty);
+        else cart.push({ id: product.id, qty });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert('Added to cart');
+      });
+    }
+  </script>
+
+  <script src="js/chatbot.js"></script>
 </body>
 </html>
