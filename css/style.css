@@ -5,30 +5,27 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #ffffff;
-  color: #2f2f2f;
+  background: #ffffff; /* White background */
+  color: #2f2f2f;      /* Dark gray text */
 }
 
 /* Header */
-header,
-.header {                      /* Added .header to support your HTML */
-  background: #d6f5d6;
-  color: #1b5e20;
+header {
+  background: #d6f5d6; /* Light green */
+  color: #1b5e20;       /* Darker green text */
   padding: 1.2rem;
   border-bottom: 3px solid #b2e8b2;
 
+  /* NEW — centers title/nav while allowing logo to sit left */
   display: flex;
-  flex-direction: row;          /* CHANGED: was column → forces logo center */
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* spreads logo left, nav right */
   position: relative;
 }
 
-/* NAV */
 nav {
-  margin-top: 0;               /* CHANGED: fixes spacing after removing column layout */
+  margin-top: 0.6rem;
 }
-
 nav a {
   color: #1b5e20;
   margin: 0 1rem;
@@ -37,7 +34,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #4caf50;
+  color: #4caf50; /* Bright green */
 }
 
 /* Header Layout */
@@ -45,9 +42,10 @@ nav a:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  justify-content: flex-start; /* CHANGED: ensures logo stays left */
+  justify-content: center;
 }
 
+/* NEW — absolutely position logo fully left */
 .logo {
   width: 55px;
   height: 55px;
@@ -66,6 +64,7 @@ main {
   padding: 2rem;
 }
 
+/* Search Box */
 /* Controls */
 .controls-row {
   display: flex;
@@ -95,6 +94,12 @@ main {
   font-size: 16px;
 }
 
+#search:focus {
+  outline: none;
+  border-color: #66cc66;
+  box-shadow: 0 0 5px #b6f5b6;
+}
+
 /* Product Grid */
 .product-grid {
   display: grid;
@@ -109,13 +114,14 @@ main {
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
-  border: 2px solid #e6ffe6;
+  border: 2px solid #e6ffe6; /* Lightest green tint */
   transition: 0.25s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .product-card:hover {
   transform: translateY(-5px);
+  border-color: #99e699; /* Slightly stronger light green */
   border-color: #99e699;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
@@ -163,6 +169,7 @@ main {
   margin: 8px 0;
 }
 
+.color-dot {
 .color-dot, .color-dot[role="button"], .color-dot button {
   width: 14px;
   height: 14px;
@@ -171,6 +178,7 @@ main {
   cursor: pointer;
   display: inline-block;
 }
+
 .color-dot.active-color {
   border: 2px solid #4caf50;
   transform: scale(1.2);
@@ -235,6 +243,7 @@ footer {
   margin-top: 2rem;
 }
 
+/* ---------- Mobile Fixes ---------- */
 /* Admin layout */
 .admin-wrapper {
   display:flex;
@@ -280,6 +289,7 @@ footer {
   }
 
   header {
+    padding-top: 3.5rem; /* Prevent overlap with title */
     padding-top: 3.5rem;
   }
 
