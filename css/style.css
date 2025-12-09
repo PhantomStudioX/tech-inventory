@@ -5,26 +5,30 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #ffffff; /* White background */
-  color: #2f2f2f;      /* Dark gray text */
+  background: #ffffff;
+  color: #2f2f2f;
 }
 
 /* Header */
-header {
-  background: #d6f5d6; /* Light green */
-  color: #1b5e20;       /* Darker green text */
+header,
+.header {                      /* Added .header to support your HTML */
+  background: #d6f5d6;
+  color: #1b5e20;
   padding: 1.2rem;
   border-bottom: 3px solid #b2e8b2;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;          /* CHANGED: was column → forces logo center */
   align-items: center;
+  justify-content: space-between; /* spreads logo left, nav right */
   position: relative;
 }
 
+/* NAV */
 nav {
-  margin-top: 0.6rem;
+  margin-top: 0;               /* CHANGED: fixes spacing after removing column layout */
 }
+
 nav a {
   color: #1b5e20;
   margin: 0 1rem;
@@ -33,7 +37,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #4caf50; /* Bright green */
+  color: #4caf50;
 }
 
 /* Header Layout */
@@ -41,7 +45,7 @@ nav a:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  justify-content: center;
+  justify-content: flex-start; /* CHANGED: ensures logo stays left */
 }
 
 .logo {
@@ -105,7 +109,7 @@ main {
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
-  border: 2px solid #e6ffe6; /* Lightest green tint */
+  border: 2px solid #e6ffe6;
   transition: 0.25s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
