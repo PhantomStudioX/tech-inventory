@@ -24,10 +24,41 @@
     </nav>
   </header>
 
-  <main>
-    <h2>Checkout (Mock)</h2>
-    <div id="checkout-area"></div>
-  </main>
+  <main class="checkout-page">
+  <h2>Checkout</h2>
+
+  <div class="checkout-container">
+
+    <!-- CUSTOMER INFO -->
+    <section class="checkout-card">
+      <h3>Customer Details</h3>
+      <input
+        type="text"
+        id="checkout-name"
+        placeholder="Full Name"
+        required
+      />
+      <input
+        type="tel"
+        id="checkout-phone"
+        placeholder="Phone Number"
+        required
+      />
+    </section>
+
+    <!-- ORDER SUMMARY -->
+    <section class="checkout-card">
+      <h3>Order Summary</h3>
+      <div id="checkout-area"></div>
+    </section>
+
+    <!-- ACTION -->
+    <button id="place-order-btn" class="checkout-btn">
+      Place Order
+    </button>
+
+  </div>
+</main>
 
   <footer>
     <p>&copy; 2025 Tech Inventory</p>
