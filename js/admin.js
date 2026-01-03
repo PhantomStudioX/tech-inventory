@@ -1,6 +1,5 @@
 // tech-inventory/js/admin.js
 
-// Demo credentials (insecure: replace with server auth later)
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'password123';
 
@@ -21,47 +20,64 @@ function showView(name){
   if(el) el.classList.remove('hidden');
 }
 
-// Renders
+function safeProducts(){
+  return Array.isArray(window.products) ? window.products : [];
+}
+
+// ---------- RENDERS ----------
+
 function renderOverview(){
   const orders = JSON.parse(localStorage.getItem('orders')||'[]');
   const messages = JSON.parse(localStorage.getItem('ai_messages')||'[]');
-  const productsCount = (window.products||[]).length;
   document.getElementById('overview').innerHTML = `
-    <div>
-      <h3>Overview</h3>
-      <p>Products: <strong>${productsCount}</strong></p>
-      <p>Orders: <strong>${orders.length}</strong></p>
-      <p>Messages: <strong>${messages.length}</strong></p>
-    </div>
+    <h3>Overview</h3>
+    <p>Products: <strong>${safeProducts().length}</strong></p>
+    <p>Orders: <strong>${orders.length}</strong></p>
+    <p>Messages: <strong>${messages.length}</strong></p>
   `;
 }
 
 function renderProductsAdmin(){
-  const el = document.getElementById('products');
-  const list = (window.products||[]).map(p=>`
+  const el = $('products');
+  el.innerHTML = `<h3>Products</h3>` + safeProducts().map(p=>`
     <div style="border-bottom:1px solid #eee;padding:8px 0">
       <strong>${p.name}</strong> — ${p.category} — ${p.price} — stock: ${p.stock}
     </div>
   `).join('');
-  el.innerHTML = `<h3>Products</h3>${list}`;
 }
 
 function renderOrders(){
-  const el = document.getElementById('orders');
+  const el = $('orders');
   const orders = JSON.parse(localStorage.getItem('orders')||'[]').slice().reverse();
-  if(orders.length===0){ el.innerHTML = '<p>No orders yet.</p>'; return; }
+  const products = safeProducts();
+
+  if(!orders.length){
+    el.innerHTML = '<p>No orders yet.</p>';
+    return;
+  }
+
   el.innerHTML = orders.map(o=>`
     <div style="border-bottom:1px solid #ddd;padding:10px 0">
-      <strong>Order ${o.id}</strong> — ${new Date(o.createdAt).toLocaleString()} — ${o.name || ''} <br/>
-      Items: ${o.items.map(i=>{ const p=products.find(x=>x.id===i.id); return (p?p.name:'?') + ' x'+i.qty; }).join(', ')}
+      <strong>Order ${o.id}</strong> — ${new Date(o.createdAt).toLocaleString()}<br/>
+      Items: ${
+        o.items.map(i=>{
+          const p = products.find(x=>x.id===i.id);
+          return `${p ? p.name : 'Unknown'} x${i.qty}`;
+        }).join(', ')
+      }
     </div>
   `).join('');
 }
 
 function renderMessages(){
-  const el = document.getElementById('messages');
+  const el = $('messages');
   const messages = JSON.parse(localStorage.getItem('ai_messages')||'[]').slice().reverse();
-  if(messages.length===0){ el.innerHTML = '<p>No messages yet.</p>'; return; }
+
+  if(!messages.length){
+    el.innerHTML = '<p>No messages yet.</p>';
+    return;
+  }
+
   el.innerHTML = messages.map(m=>`
     <div style="border-bottom:1px solid #ddd;padding:10px 0">
       <strong>${escapeHtml(m.question)}</strong><br/>
@@ -72,89 +88,61 @@ function renderMessages(){
 }
 
 function escapeHtml(str){
-  if(!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  return String(str||'')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
 }
+
+// ---------- INIT ----------
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
   const loginSection = $('admin-login');
   const dashboardSection = $('admin-dashboard');
-
-  // MOBILE SIDEBAR TOGGLE (fixed selector)
   const sidebar = document.querySelector('.admin-sidebar');
   const toggleBtn = document.querySelector('.sidebar-toggle');
 
-  if(toggleBtn){
-    toggleBtn.addEventListener('click', ()=>{
-      sidebar.classList.toggle('active');
-    });
-  }
+  toggleBtn.addEventListener('click', ()=> sidebar.classList.toggle('active'));
 
-  // If already authenticated — show dashboard
   if(isAdminAuth()){
     loginSection.classList.add('hidden');
     dashboardSection.classList.remove('hidden');
-    renderOverview(); renderProductsAdmin(); renderOrders(); renderMessages();
+    showView('overview');
+    renderOverview();
   }
 
-  // Login handler
-  const loginBtn = $('admin-login-btn');
-  if(loginBtn){
-    loginBtn.addEventListener('click', ()=>{
-      const u = $('admin-user').value.trim();
-      const p = $('admin-pass').value;
-      if(u === ADMIN_USER && p === ADMIN_PASS){
-        setAdminAuth(true);
-        loginSection.classList.add('hidden');
-        dashboardSection.classList.remove('hidden');
-        renderOverview(); renderProductsAdmin(); renderOrders(); renderMessages();
-        showView('overview');
-      } else {
-        alert('Invalid credentials (demo)');
-      }
-    });
-  }
+  $('admin-login-btn').addEventListener('click', ()=>{
+    if($('admin-user').value==='admin' && $('admin-pass').value==='password123'){
+      setAdminAuth(true);
+      loginSection.classList.add('hidden');
+      dashboardSection.classList.remove('hidden');
+      showView('overview');
+      renderOverview();
+    } else alert('Invalid credentials');
+  });
 
-  // Sidebar navigation (fully working)
   document.querySelectorAll('.admin-nav a').forEach(a=>{
-    a.addEventListener('click', (e)=>{
+    a.addEventListener('click', e=>{
       e.preventDefault();
+      if(a.id==='admin-logout') return;
+
+      if(!isAdminAuth()) return alert('Login first');
+
       const view = a.dataset.view;
+      showView(view);
 
-      if(a.id === 'admin-logout') return;
+      if(view==='overview') renderOverview();
+      if(view==='products') renderProductsAdmin();
+      if(view==='orders') renderOrders();
+      if(view==='messages') renderMessages();
 
-      if(!isAdminAuth()){
-        alert('Please login as admin to access this area.');
-        return;
-      }
-
-      if(view){
-        showView(view);
-        if(view==='overview') renderOverview();
-        if(view==='products') renderProductsAdmin();
-        if(view==='orders') renderOrders();
-        if(view==='messages') renderMessages();
-      }
-
-      // CLOSE SIDEBAR ON MOBILE
       sidebar.classList.remove('active');
     });
   });
 
-  // Logout
-  const logout = $('admin-logout');
-  if(logout){
-    logout.addEventListener('click', e=>{
-      e.preventDefault();
-      setAdminAuth(false);
-      loginSection.classList.remove('hidden');
-      dashboardSection.classList.add('hidden');
-      location.reload();
-    });
-  }
-
+  $('admin-logout').addEventListener('click', ()=>{
+    setAdminAuth(false);
+    location.reload();
+  });
 });
