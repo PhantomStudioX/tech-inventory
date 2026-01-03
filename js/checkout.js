@@ -46,7 +46,6 @@ function showCheckout(){
 
   area.innerHTML = `
     <div class="checkout-card">
-      <h3>Order Summary</h3>
       ${rows}
 
       <div class="checkout-total">
