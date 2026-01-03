@@ -2,6 +2,7 @@
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'password123';
+const API_BASE = 'http://localhost:5000/api';
 
 function $(id){ return document.getElementById(id); }
 
@@ -24,11 +25,24 @@ function safeProducts(){
   return Array.isArray(window.products) ? window.products : [];
 }
 
+// ---------- BACKEND FETCH HELPERS ----------
+
+async function fetchOrders(){
+  const res = await fetch(`${API_BASE}/orders`);
+  return res.ok ? res.json() : [];
+}
+
+async function fetchMessages(){
+  const res = await fetch(`${API_BASE}/messages`);
+  return res.ok ? res.json() : [];
+}
+
 // ---------- RENDERS ----------
 
-function renderOverview(){
-  const orders = JSON.parse(localStorage.getItem('orders')||'[]');
-  const messages = JSON.parse(localStorage.getItem('ai_messages')||'[]');
+async function renderOverview(){
+  const orders = await fetchOrders();
+  const messages = await fetchMessages();
+
   document.getElementById('overview').innerHTML = `
     <h3>Overview</h3>
     <p>Products: <strong>${safeProducts().length}</strong></p>
@@ -46,9 +60,9 @@ function renderProductsAdmin(){
   `).join('');
 }
 
-function renderOrders(){
+async function renderOrders(){
   const el = $('orders');
-  const orders = JSON.parse(localStorage.getItem('orders')||'[]').slice().reverse();
+  const orders = (await fetchOrders()).slice().reverse();
   const products = safeProducts();
 
   if(!orders.length){
@@ -58,7 +72,7 @@ function renderOrders(){
 
   el.innerHTML = orders.map(o=>`
     <div style="border-bottom:1px solid #ddd;padding:10px 0">
-      <strong>Order ${o.id}</strong> — ${new Date(o.createdAt).toLocaleString()}<br/>
+      <strong>Order ${o._id}</strong> — ${new Date(o.createdAt).toLocaleString()}<br/>
       Items: ${
         o.items.map(i=>{
           const p = products.find(x=>x.id===i.id);
@@ -69,9 +83,9 @@ function renderOrders(){
   `).join('');
 }
 
-function renderMessages(){
+async function renderMessages(){
   const el = $('messages');
-  const messages = JSON.parse(localStorage.getItem('ai_messages')||'[]').slice().reverse();
+  const messages = (await fetchMessages()).slice().reverse();
 
   if(!messages.length){
     el.innerHTML = '<p>No messages yet.</p>';
@@ -113,7 +127,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }
 
   $('admin-login-btn').addEventListener('click', ()=>{
-    if($('admin-user').value==='admin' && $('admin-pass').value==='password123'){
+    if($('admin-user').value===ADMIN_USER && $('admin-pass').value===ADMIN_PASS){
       setAdminAuth(true);
       loginSection.classList.add('hidden');
       dashboardSection.classList.remove('hidden');
@@ -123,7 +137,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
 
   document.querySelectorAll('.admin-nav a').forEach(a=>{
-    a.addEventListener('click', e=>{
+    a.addEventListener('click', async e=>{
       e.preventDefault();
       if(a.id==='admin-logout') return;
 
@@ -132,10 +146,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const view = a.dataset.view;
       showView(view);
 
-      if(view==='overview') renderOverview();
+      if(view==='overview') await renderOverview();
       if(view==='products') renderProductsAdmin();
-      if(view==='orders') renderOrders();
-      if(view==='messages') renderMessages();
+      if(view==='orders') await renderOrders();
+      if(view==='messages') await renderMessages();
 
       sidebar.classList.remove('active');
     });
