@@ -32,22 +32,23 @@ function renderProducts(list, container){
     container.innerHTML = '<p class="no-results">No results found.</p>';
     return;
   }
+
   container.innerHTML = list.map(p => `
     <div class="product-card">
-      <a href="product.html?id=${p.id}">
-        <img id="img-${p.id}" src="${p.image}" alt="${p.name}">
-      </a>
+      <img id="img-${p.id}" src="${p.image}" alt="${p.name}">
       <h3>${p.name}</h3>
 
       <div class="color-options">
-        ${(p.colors||[]).map(c=>`<span class="color-dot" data-id="${p.id}" data-color="${c}" style="background:${c};"></span>`).join('')}
+        ${(p.colors||[]).map(c=>`
+          <span class="color-dot" data-id="${p.id}" data-color="${c}" style="background:${c};"></span>
+        `).join('')}
       </div>
 
       <p class="price">Price: ${p.price}</p>
       <p class="stock">${p.stock>0 ? 'In Stock' : 'Out of Stock'}</p>
+
       <div style="margin-top:8px">
         <button class="btn add-btn" data-id="${p.id}" ${p.stock===0?'disabled':''}>Add</button>
-        <a href="product.html?id=${p.id}" class="btn-link">Details</a>
       </div>
     </div>
   `).join('');
