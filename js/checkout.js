@@ -1,70 +1,57 @@
-// checkout.js - real checkout → backend
+// tech-inventory/js/checkout.js
 
 const API_BASE = 'http://localhost:5000/api';
 
-async function showCheckout(){
-  const area = document.getElementById('checkout-area');
-  const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-  if(!area) return;
+function $(id) {
+  return document.getElementById(id);
+}
 
-  if(cart.length===0){
-    area.innerHTML = '<p>Your cart is empty. <a href="products.html">Continue shopping</a></p>';
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+
+async function placeOrder() {
+  const name = $('checkout-name').value.trim();
+  const phone = $('checkout-phone').value.trim();
+  const cart = getCart();
+
+  if (!name || !phone) {
+    alert('Please enter name and phone number');
     return;
   }
 
-  let total = 0;
+  if (!cart.length) {
+    alert('Your cart is empty');
+    return;
+  }
 
-  const rows = cart.map(item=>{
-    const p = products.find(x=>x.id===item.id);
-    const priceNum = Number(p.price.replace(/[^0-9]/g,'')) || 0;
-    total += priceNum * item.qty;
-    return `
-      <div class="checkout-item">
-        <img src="${p.image}">
-        <div>
-          <strong>${p.name}</strong><br>
-          Qty: ${item.qty}<br>
-          Price: ${p.price}
-        </div>
-      </div>
-    `;
-  }).join('');
+  const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
 
-  area.innerHTML = `
-    <div class="checkout-card">
-      <h3>Order Summary</h3>
-      ${rows}
-      <hr>
-      <p class="checkout-total">Total: <strong>JMD ${total}</strong></p>
-
-      <h4>Customer Info</h4>
-      <label>Name</label>
-      <input id="cust-name" required>
-
-      <label>Phone Number</label>
-      <input id="cust-phone" required>
-
-      <button id="place-order" class="btn full">Place Order</button>
-    </div>
-  `;
-
-  document.getElementById('place-order').addEventListener('click', async ()=>{
-    const name = document.getElementById('cust-name').value.trim();
-    const phone = document.getElementById('cust-phone').value.trim();
-    if(!name || !phone) return alert('Please fill all fields');
-
-    const order = { name, phone, items: cart, total };
-
-    await fetch(`${API_BASE}/orders`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(order)
+  try {
+    const res = await fetch(`${API_BASE}/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        phone,
+        items: cart,
+        total
+      })
     });
 
+    if (!res.ok) throw new Error('Order failed');
+
     localStorage.removeItem('cart');
-    alert('Order placed successfully');
-    location.href = 'index.html';
-  });
+    alert('Order placed successfully!');
+    window.location.href = 'index.html';
+
+  } catch (err) {
+    console.error(err);
+    alert('Failed to place order');
+  }
 }
 
-document.getElementById('checkout-area') && showCheckout();
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = $('place-order-btn');
+  if (btn) btn.addEventListener('click', placeOrder);
+});
