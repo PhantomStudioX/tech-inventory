@@ -22,13 +22,13 @@ function showCheckout(){
     ${rows}
     <h4>Customer Info</h4>
     <label>Name</label><input id="cust-name" /><br/>
-    <label>Email</label><input id="cust-email" /><br/>
-    <button id="place-order" class="btn">Place Order (Mock)</button>
+    <label>Phone</label><input id="cust-phone" /><br/>
+    <button id="place-order" class="btn">Place Order</button>
   `;
 
   document.getElementById('place-order').addEventListener('click', ()=>{
     const name = document.getElementById('cust-name').value || 'Guest';
-    const email = document.getElementById('cust-email').value || '';
+    const phone = document.getElementById('cust-phone').value || '';
     const orders = JSON.parse(localStorage.getItem('orders')||'[]');
     const order = {
       id: Date.now(),
