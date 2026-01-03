@@ -1,48 +1,70 @@
-// checkout.js - mock checkout flow
+// checkout.js - real checkout → backend
 
-function showCheckout(){
+const API_BASE = 'http://localhost:5000/api';
+
+async function showCheckout(){
   const area = document.getElementById('checkout-area');
   const cart = JSON.parse(localStorage.getItem('cart')||'[]');
   if(!area) return;
+
   if(cart.length===0){
     area.innerHTML = '<p>Your cart is empty. <a href="products.html">Continue shopping</a></p>';
     return;
   }
-  // build summary
+
+  let total = 0;
+
   const rows = cart.map(item=>{
     const p = products.find(x=>x.id===item.id);
-    return `<div style="display:flex;gap:12px;align-items:center;margin-bottom:8px;">
-      <img src="${p.image}" style="width:80px;border-radius:6px;">
-      <div><strong>${p.name}</strong><br>Qty: ${item.qty} • Price: ${p.price}</div>
-    </div>`;
+    const priceNum = Number(p.price.replace(/[^0-9]/g,'')) || 0;
+    total += priceNum * item.qty;
+    return `
+      <div class="checkout-item">
+        <img src="${p.image}">
+        <div>
+          <strong>${p.name}</strong><br>
+          Qty: ${item.qty}<br>
+          Price: ${p.price}
+        </div>
+      </div>
+    `;
   }).join('');
 
   area.innerHTML = `
-    <h3>Order Summary</h3>
-    ${rows}
-    <h4>Customer Info</h4>
-    <label>Name</label><input id="cust-name" /><br/>
-    <label>Phone</label><input id="cust-phone" /><br/>
-    <button id="place-order" class="btn">Place Order</button>
+    <div class="checkout-card">
+      <h3>Order Summary</h3>
+      ${rows}
+      <hr>
+      <p class="checkout-total">Total: <strong>JMD ${total}</strong></p>
+
+      <h4>Customer Info</h4>
+      <label>Name</label>
+      <input id="cust-name" required>
+
+      <label>Phone Number</label>
+      <input id="cust-phone" required>
+
+      <button id="place-order" class="btn full">Place Order</button>
+    </div>
   `;
 
-  document.getElementById('place-order').addEventListener('click', ()=>{
-    const name = document.getElementById('cust-name').value || 'Guest';
-    const phone = document.getElementById('cust-phone').value || '';
-    const orders = JSON.parse(localStorage.getItem('orders')||'[]');
-    const order = {
-      id: Date.now(),
-      createdAt: new Date().toISOString(),
-      name, phone,
-      items: cart,
-      status: 'placed'
-    };
-    orders.push(order);
-    localStorage.setItem('orders', JSON.stringify(orders));
+  document.getElementById('place-order').addEventListener('click', async ()=>{
+    const name = document.getElementById('cust-name').value.trim();
+    const phone = document.getElementById('cust-phone').value.trim();
+    if(!name || !phone) return alert('Please fill all fields');
+
+    const order = { name, phone, items: cart, total };
+
+    await fetch(`${API_BASE}/orders`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(order)
+    });
+
     localStorage.removeItem('cart');
-    alert('Order placed. Order id: ' + order.id);
-    window.location.href = 'products.html';
+    alert('Order placed successfully');
+    location.href = 'index.html';
   });
 }
 
-if(document.getElementById('checkout-area')) showCheckout();
+document.getElementById('checkout-area') && showCheckout();
