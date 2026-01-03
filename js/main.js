@@ -48,7 +48,7 @@ function renderProducts(list, container){
       <p class="stock">${p.stock>0 ? 'In Stock' : 'Out of Stock'}</p>
 
       <div style="margin-top:8px">
-        <button class="btn add-btn" data-id="${p.id}" ${p.stock===0?'disabled':''}>Add</button>
+        <button class="btn add-btn" data-id="${p.id}" ${p.stock===0?'disabled':''}>Add to cart</button>
       </div>
     </div>
   `).join('');
