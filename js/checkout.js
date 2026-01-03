@@ -33,14 +33,14 @@ function showCheckout(){
     const order = {
       id: Date.now(),
       createdAt: new Date().toISOString(),
-      name, email,
+      name, phone,
       items: cart,
       status: 'placed'
     };
     orders.push(order);
     localStorage.setItem('orders', JSON.stringify(orders));
     localStorage.removeItem('cart');
-    alert('Order placed (mock). Order id: ' + order.id);
+    alert('Order placed. Order id: ' + order.id);
     window.location.href = 'products.html';
   });
 }
