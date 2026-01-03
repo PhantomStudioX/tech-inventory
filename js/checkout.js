@@ -17,7 +17,7 @@ function showCheckout(){
   let total = 0;
 
   const rows = cart.map(item => {
-    const p = productsList.find(x => x.id === item.id);
+    const p = productsList.find(x => String(x.id) === String(item.id));
     if(!p){
       return `
         <div class="checkout-item">
