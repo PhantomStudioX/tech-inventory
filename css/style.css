@@ -356,3 +356,34 @@ footer {
 
   .controls-row { flex-direction: column; }
 }
+
+/* CHECKOUT */
+.checkout-card {
+  max-width:600px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  border:1px solid #e6eee6;
+}
+
+.checkout-item {
+  display:flex;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.checkout-item img {
+  width:80px;
+  border-radius:6px;
+}
+
+.checkout-total {
+  font-size:18px;
+  margin:12px 0;
+}
+
+.btn.full {
+  width:100%;
+  padding:12px;
+}
