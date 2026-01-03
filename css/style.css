@@ -52,11 +52,7 @@ nav a:hover {
   object-fit: cover;
   border: 2px solid #fff;
   box-shadow: 0 0 10px rgba(0,0,0,0.25);
-
-  /* ADDED — ensures sidebar logo doesn't block clicks */
   position: relative;
-  left: 0;
-  top: 0;
   z-index: 1;
 }
 
@@ -137,71 +133,6 @@ main {
   color: #1b5e20;
 }
 
-/* Product detail */
-.product-detail-container {
-  display: flex;
-  justify-content: center;
-}
-
-.product-detail {
-  max-width: 700px;
-}
-
-/* Product Actions */
-.product-actions {
-  display:flex;
-  gap:10px;
-  align-items:center;
-  margin-top:10px;
-}
-
-.product-actions input[type="number"]{
-  width:70px;
-  padding:6px;
-}
-
-/* COLOR DOTS */
-.color-options {
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-  margin: 8px 0;
-}
-
-.color-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 2px solid #e0e0e0;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.color-dot.active-color {
-  border: 2px solid #4caf50;
-  transform: scale(1.2);
-}
-
-/* Skeleton */
-.skeleton-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-
-.skeleton-card {
-  border-radius:8px;
-  background: linear-gradient(90deg,#f6f6f6,#eeeeee,#f6f6f6);
-  height:300px;
-  animation: shimmer 1.2s infinite;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-}
-
-@keyframes shimmer {
-  0% { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
-}
-
 /* Cart styles */
 .cart-item {
   display:flex;
@@ -213,7 +144,6 @@ main {
 
 .cart-item img {
   width: 80px;
-  height: auto;
   border-radius: 6px;
 }
 
@@ -232,14 +162,9 @@ button, .btn, .btn-link {
   text-decoration:none;
 }
 
-button[disabled] { opacity:.6; cursor:not-allowed; }
-
-/* No results */
-.no-results {
-  text-align: center;
-  font-size: 18px;
-  padding: 20px;
-  opacity: 0.7;
+button[disabled] {
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 /* Footer */
@@ -252,119 +177,33 @@ footer {
   margin-top: 2rem;
 }
 
-/* --- ADMIN DASHBOARD --- */
-.admin-wrapper { 
-  display:flex; 
-  min-height:100vh; 
-  position: relative;
+/* ===================== */
+/* CHECKOUT (FIXED) */
+/* ===================== */
+
+.checkout-page {
+  max-width: 900px;
+  margin: 40px auto;
 }
 
-/* Sidebar */
-.admin-sidebar {
-  width: 220px;
-  background:#f6f8f6;
-  border-right:1px solid #e6eee6;
-  padding:18px;
-  transition: transform 0.3s ease;
-  transform: translateX(0); /* Desktop default */
+.checkout-container {
+  display: grid;
+  gap: 20px;
 }
 
-/* ENABLE DESKTOP LAYOUT */
-.admin-main { 
-  flex:1; 
-  padding:20px; 
-  margin-left: 220px; /* Prevent overlap */
-}
-
-/* MOBILE: sidebar hidden initially */
-@media (max-width: 900px) {
-  .admin-sidebar {
-    position: fixed;
-    z-index: 999;
-    top:0;
-    left:0;
-    height:100vh;
-    transform: translateX(-100%); /* Hidden until active */
-  }
-
-  .admin-sidebar.active {
-    transform: translateX(0);
-  }
-
-  .sidebar-toggle {
-    display:block;
-  }
-
-  .admin-main {
-    margin-left: 0;
-  }
-
-  .admin-wrapper {
-    display:block;
-  }
-}
-
-.admin-nav a {
-  display:block;
-  color:#1b5e20;
-  padding:8px 0;
-  text-decoration:none;
-}
-
-.admin-nav a:hover {
-  color:#4caf50;
-}
-
-.admin-brand {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:12px;
-}
-
-.admin-login { max-width:420px; }
-
-/* Hamburger button */
-.sidebar-toggle {
-  display:none;
-  position: fixed;
-  top:15px;
-  left:15px;
-  background:#1b5e20;
-  color:white;
-  border:none;
-  padding:10px 14px;
-  border-radius:6px;
-  z-index:1000;
-  font-size:20px;
-  cursor:pointer;
-}
-
-/* Mobile header fixes */
-@media (max-width: 600px) {
-  .logo {
-    width: 45px;
-    height: 45px;
-    position: relative;
-    left: 0;
-    top: 0;
-  }
-
-  header {
-    padding-top: 3.5rem;
-  }
-
-  .controls-row { flex-direction: column; }
-}
-
-/* CHECKOUT */
 .checkout-card {
-  max-width:600px;
-  margin:auto;
   background:#fff;
   padding:20px;
   border-radius:8px;
   border:1px solid #e6eee6;
+}
+
+.checkout-card input {
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:6px;
+  border:1px solid #ccc;
 }
 
 .checkout-item {
@@ -383,7 +222,17 @@ footer {
   margin:12px 0;
 }
 
-.btn.full {
+.checkout-btn {
   width:100%;
-  padding:12px;
+  padding:14px;
+  font-size:16px;
+  background:#1b5e20;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.checkout-btn:hover {
+  opacity:0.9;
 }
