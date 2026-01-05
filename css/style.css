@@ -300,7 +300,7 @@ footer {
     width: 220px;
     background: #f6f8f6;
 
-    transform: translateX(-50%); /* Hidden until active */
+    transform: translateX(-100%); /* Hidden until active */
   }
 
   .admin-sidebar.active {
@@ -444,7 +444,7 @@ footer {
 
 #chat-toggle {
   width: auto;
-  min-width: 60px;
+  min-width: 20px;
   padding: 10px 14px;
   border-radius: 50px;
   cursor: pointer;
