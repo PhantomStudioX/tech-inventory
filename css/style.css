@@ -240,9 +240,6 @@ button[disabled] { opacity:.6; cursor:not-allowed; }
   font-size: 18px;
   padding: 20px;
   opacity: 0.7;
-button[disabled] {
-  opacity:.6;
-  cursor:not-allowed;
 }
 
 /* Footer */
@@ -317,6 +314,15 @@ footer {
 .admin-nav a:hover {
   color:#4caf50;
 }
+
+.admin-view h3 {
+  margin-top: 0;
+}
+
+.admin-view button {
+  margin-top: 8px;
+}
+
 /* ===================== */
 /* CHECKOUT (FIXED) */
 /* ===================== */
@@ -326,9 +332,6 @@ footer {
   align-items:center;
   gap:10px;
   margin-bottom:12px;
-.checkout-page {
-  max-width: 900px;
-  margin: 40px auto;
 }
 
 .admin-login { max-width:420px; }
@@ -354,19 +357,15 @@ footer {
   .logo {
     width: 45px;
     height: 45px;
-    position: relative;
-    left: 0;
-    top: 0;
   }
 
   header {
     padding-top: 3.5rem;
   }
 
-  .controls-row { flex-direction: column; }
-.checkout-container {
-  display: grid;
-  gap: 20px;
+  .controls-row { 
+    flex-direction: column;
+  }
 }
 
 /* CHECKOUT */
@@ -403,7 +402,6 @@ footer {
   margin:12px 0;
 }
 
-.btn.full {
 .checkout-btn {
   width:100%;
   padding:12px;
@@ -418,4 +416,19 @@ footer {
 
 .checkout-btn:hover {
   opacity:0.9;
+}
+
+/* ===================== */
+/* AI CHAT BUTTON */
+/* ===================== */
+
+#chat-toggle {
+  width: 48px;
+  height: 48px;
+  font-size: 12px;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 0;
 }
