@@ -1,4 +1,4 @@
-// tech-inventory/js/admin.js – DEPLOYED FIX
+// tech-inventory/js/admin.js – FIXED ORDERS + AI MESSAGES
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'password123';
@@ -18,23 +18,17 @@ function setAdminAuth(val){
 function showView(name){
   document.querySelectorAll('.admin-view')
     .forEach(v=>v.classList.add('hidden'));
-  const el = document.getElementById(name);
-  if(el) el.classList.remove('hidden');
+  $(name)?.classList.remove('hidden');
 }
 
-function safeProducts(){
-  return Array.isArray(window.products) ? window.products : [];
-}
-
-// ---------- BACKEND FETCH ----------
+// ---------- FETCH HELPERS ----------
 
 async function fetchJSON(url){
   try{
     const res = await fetch(url);
     if(!res.ok) throw new Error('Fetch failed');
     return await res.json();
-  }catch(e){
-    console.error(e);
+  }catch{
     return [];
   }
 }
@@ -52,56 +46,63 @@ async function renderOverview(){
 
   $('overview').innerHTML = `
     <h3>Overview</h3>
-    <p>Products: <strong>${safeProducts().length}</strong></p>
-    <p>Orders: <strong>${orders.length}</strong></p>
-    <p>Messages: <strong>${messages.length}</strong></p>
+    <div style="display:grid;gap:10px">
+      <div>📦 Orders: <strong>${orders.length}</strong></div>
+      <div>💬 Messages: <strong>${messages.length}</strong></div>
+    </div>
   `;
-}
-
-function renderProductsAdmin(){
-  $('products').innerHTML =
-    `<h3>Products</h3>` +
-    safeProducts().map(p=>`
-      <div style="border-bottom:1px solid #eee;padding:8px 0">
-        <strong>${p.name}</strong> — ${p.category} — ${p.price}
-      </div>
-    `).join('');
 }
 
 async function renderOrders(){
   const el = $('orders');
-  const orders = await fetchOrders();
-  const products = safeProducts();
+  const orders = (await fetchOrders()).reverse();
 
   if(!orders.length){
     el.innerHTML = '<p>No orders yet.</p>';
     return;
   }
 
-  el.innerHTML = orders.reverse().map(o=>`
-    <div style="border-bottom:1px solid #ddd;padding:10px 0">
-      <strong>Order ${o._id}</strong><br/>
-      ${o.items.map(i=>{
-        const p = products.find(x=>x.id===i.id);
-        return `${p ? p.name : 'Unknown'} x${i.qty}`;
-      }).join(', ')}
+  el.innerHTML = orders.map(o=>`
+    <div style="
+      border:1px solid #ddd;
+      border-radius:6px;
+      padding:10px;
+      margin-bottom:10px;
+    ">
+      <strong>Order ID:</strong> ${o._id}<br>
+      <strong>Name:</strong> ${o.name}<br>
+      <strong>Phone:</strong> ${o.phone}<br>
+      <strong>Total:</strong> $${o.total} JMD<br>
+      <strong>Items:</strong>
+      <ul>
+        ${o.items.map(i=>`
+          <li>Product ID: ${i.id} — Qty: ${i.qty}</li>
+        `).join('')}
+      </ul>
+      <small>${new Date(o.createdAt).toLocaleString()}</small>
     </div>
   `).join('');
 }
 
 async function renderMessages(){
   const el = $('messages');
-  const messages = await fetchMessages();
+  const messages = (await fetchMessages()).reverse();
 
   if(!messages.length){
     el.innerHTML = '<p>No messages yet.</p>';
     return;
   }
 
-  el.innerHTML = messages.reverse().map(m=>`
-    <div style="border-bottom:1px solid #ddd;padding:10px 0">
-      <strong>${m.question}</strong><br/>
-      ${new Date(m.createdAt).toLocaleString()}
+  el.innerHTML = messages.map(m=>`
+    <div style="
+      border:1px solid #ddd;
+      border-radius:6px;
+      padding:10px;
+      margin-bottom:10px;
+    ">
+      <strong>Question:</strong><br>${m.question}<br><br>
+      <strong>Answer:</strong><br>${m.answer || '—'}<br>
+      <small>${new Date(m.createdAt).toLocaleString()}</small>
     </div>
   `).join('');
 }
@@ -135,11 +136,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
       if(!isAdminAuth()) return alert('Login first');
 
       const view = a.dataset.view;
-      if(!view) return;
-
       showView(view);
+
       if(view==='overview') await renderOverview();
-      if(view==='products') renderProductsAdmin();
       if(view==='orders') await renderOrders();
       if(view==='messages') await renderMessages();
 
