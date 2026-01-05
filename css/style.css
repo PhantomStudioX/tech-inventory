@@ -300,7 +300,7 @@ footer {
     width: 220px;
     background: #f6f8f6;
 
-    transform: translateX(-100%); /* Hidden until active */
+    transform: translateX(-50%); /* Hidden until active */
   }
 
   .admin-sidebar.active {
@@ -438,7 +438,7 @@ footer {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: auto;
+  width: 50px;
   z-index: 99;
 }
 
