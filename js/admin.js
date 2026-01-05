@@ -23,9 +23,16 @@ function showView(name){
 
 // ---------- FETCH HELPERS ----------
 
-async function fetchJSON(url, options={}){
+async function fetchJSON(url, options = {}) {
   const res = await fetch(url, options);
-  return res.ok ? res.json() : [];
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('API error:', text);
+    throw new Error('Request failed');
+  }
+
+  return res.json();
 }
 
 const fetchOrders   = () => fetchJSON(`${API_BASE}/orders`);
@@ -137,6 +144,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
       if(view==='orders') renderOrders();
       if(view==='messages') renderMessages();
     };
+  });
+
+  // ✅ MOBILE SIDEBAR TOGGLE (added)
+  const sidebar = document.querySelector('.admin-sidebar');
+  const toggleBtn = document.querySelector('.sidebar-toggle');
+
+  toggleBtn?.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
   });
 
   $('admin-logout').onclick = ()=>{
