@@ -1,6 +1,6 @@
 // checkout.js – FINAL FIXED VERSION
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
 
 function showCheckout() {
   const area = document.getElementById('checkout-area');
