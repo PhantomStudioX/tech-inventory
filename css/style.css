@@ -292,9 +292,14 @@ footer {
   .admin-sidebar {
     position: fixed;
     z-index: 999;
-    top:0;
-    left:0;
-    height:100vh;
+    top: 0;
+    left: 0;
+    height: 100vh;
+
+    /* ✅ ADD THESE TWO LINES */
+    width: 220px;
+    background: #f6f8f6;
+
     transform: translateX(-100%); /* Hidden until active */
   }
 
@@ -303,7 +308,7 @@ footer {
   }
 
   .sidebar-toggle {
-    display:block;
+    display: block;
   }
 
   .admin-main {
@@ -311,19 +316,19 @@ footer {
   }
 
   .admin-wrapper {
-    display:block;
+    display: block;
   }
 }
 
 .admin-nav a {
-  display:block;
-  color:#1b5e20;
-  padding:8px 0;
-  text-decoration:none;
+  display: block;
+  color: #1b5e20;
+  padding: 8px 0;
+  text-decoration: none;
 }
 
 .admin-nav a:hover {
-  color:#4caf50;
+  color: #4caf50;
 }
 
 .admin-view h3 {
