@@ -66,7 +66,15 @@ function showCheckout() {
         body: JSON.stringify({
           name,
           phone,
-          items: cart,
+          items: cart.map(item => {
+            const product = products.find(p => p.id === item.id);
+            return {
+              id: item.id,
+              name: product?.name || 'Unknown',
+              price: product?.price || '',
+              qty: item.qty
+            };
+          }),
           total
         })
       });
