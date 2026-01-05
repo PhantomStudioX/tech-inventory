@@ -60,6 +60,17 @@ nav a:hover {
   z-index: 1;
 }
 
+/* Sticky footer for cart page */
+body.cart-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body.cart-page main {
+  flex: 1;
+}
+
 /* Main */
 main {
   padding: 2rem;
@@ -423,7 +434,7 @@ footer {
 /* ===================== */
 
 #chat-toggle {
-  width: 28px;
+  width: 18px;
   height: 48px;
   font-size: 12px;
   border-radius: 50%;
