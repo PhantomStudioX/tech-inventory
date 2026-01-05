@@ -1,15 +1,17 @@
-// checkout.js – FINAL FIXED VERSION
+// checkout.js – FINAL POPUP VERSION
 
 const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
 
 function showCheckout() {
   const area = document.getElementById('checkout-area');
+  const btn = document.getElementById('place-order-btn');
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-  if (!area) return;
+  if (!area || !btn) return;
 
   if (cart.length === 0) {
     area.innerHTML = '<p>Your cart is empty.</p>';
+    btn.style.display = 'none';
     return;
   }
 
@@ -17,15 +19,10 @@ function showCheckout() {
 
   const rows = cart.map(item => {
     const product = products.find(p => p.id === item.id);
-
     if (!product) return '';
 
-    const priceNum = Number(
-      String(product.price).replace(/[^0-9]/g, '')
-    );
-
-    const itemTotal = priceNum * item.qty;
-    total += itemTotal;
+    const priceNum = Number(String(product.price).replace(/[^0-9]/g, ''));
+    total += priceNum * item.qty;
 
     return `
       <div class="checkout-item">
@@ -41,7 +38,6 @@ function showCheckout() {
 
   area.innerHTML = `
     ${rows}
-
     <div class="checkout-total">
       <strong>Total:</strong> $${total} JMD
     </div>
@@ -50,8 +46,6 @@ function showCheckout() {
     <input id="cust-name" placeholder="Full Name">
     <input id="cust-phone" placeholder="Phone Number">
   `;
-
-  const btn = document.getElementById('place-order-btn');
 
   btn.onclick = async () => {
     const name = document.getElementById('cust-name').value.trim() || 'Guest';
@@ -77,13 +71,21 @@ function showCheckout() {
         })
       });
 
-      const data = await res.json();
+      if (!res.ok) throw new Error('Order failed');
 
+      await res.json();
+
+      // ✅ SUCCESS POPUP
+      alert('✅ Order placed successfully! We will contact you shortly.');
+
+      // Clear cart + reset UI
       localStorage.removeItem('cart');
-      window.location.href = `order-success.html?id=${data._id}`;
+      area.innerHTML = '<p>Thank you for your order.</p>';
+      btn.style.display = 'none';
 
     } catch (err) {
-      alert('Failed to place order');
+      console.error(err);
+      alert('❌ Failed to place order. Please try again.');
       btn.disabled = false;
       btn.textContent = 'Place Order';
     }
