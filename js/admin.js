@@ -1,4 +1,4 @@
-// tech-inventory/js/admin.js – FIXED ORDERS + AI MESSAGES
+// tech-inventory/js/admin.js – FINAL
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'password123';
@@ -23,18 +23,27 @@ function showView(name){
 
 // ---------- FETCH HELPERS ----------
 
-async function fetchJSON(url){
-  try{
-    const res = await fetch(url);
-    if(!res.ok) throw new Error('Fetch failed');
-    return await res.json();
-  }catch{
-    return [];
-  }
+async function fetchJSON(url, options={}){
+  const res = await fetch(url, options);
+  return res.ok ? res.json() : [];
 }
 
 const fetchOrders   = () => fetchJSON(`${API_BASE}/orders`);
 const fetchMessages = () => fetchJSON(`${API_BASE}/messages`);
+
+// ---------- ACTIONS ----------
+
+async function deleteOrder(id){
+  if(!confirm('Delete this order?')) return;
+  await fetchJSON(`${API_BASE}/orders/${id}`, { method:'DELETE' });
+  renderOrders();
+}
+
+async function deleteMessage(id){
+  if(!confirm('Delete this message?')) return;
+  await fetchJSON(`${API_BASE}/messages/${id}`, { method:'DELETE' });
+  renderMessages();
+}
 
 // ---------- RENDERS ----------
 
@@ -46,10 +55,8 @@ async function renderOverview(){
 
   $('overview').innerHTML = `
     <h3>Overview</h3>
-    <div style="display:grid;gap:10px">
-      <div>📦 Orders: <strong>${orders.length}</strong></div>
-      <div>💬 Messages: <strong>${messages.length}</strong></div>
-    </div>
+    <p>📦 Orders: <strong>${orders.length}</strong></p>
+    <p>💬 Messages: <strong>${messages.length}</strong></p>
   `;
 }
 
@@ -63,23 +70,22 @@ async function renderOrders(){
   }
 
   el.innerHTML = orders.map(o=>`
-    <div style="
-      border:1px solid #ddd;
-      border-radius:6px;
-      padding:10px;
-      margin-bottom:10px;
-    ">
+    <div style="border:1px solid #ddd;padding:10px;border-radius:6px;margin-bottom:10px">
       <strong>Order ID:</strong> ${o._id}<br>
       <strong>Name:</strong> ${o.name}<br>
       <strong>Phone:</strong> ${o.phone}<br>
-      <strong>Total:</strong> $${o.total} JMD<br>
+      <strong>Status:</strong> ${o.status}<br>
+      <strong>Total:</strong> $${o.total} JMD<br><br>
+
       <strong>Items:</strong>
       <ul>
         ${o.items.map(i=>`
-          <li>Product ID: ${i.id} — Qty: ${i.qty}</li>
+          <li>${i.name} × ${i.qty}</li>
         `).join('')}
       </ul>
-      <small>${new Date(o.createdAt).toLocaleString()}</small>
+
+      <button onclick="deleteOrder('${o._id}')">Delete</button>
+      <br><small>${new Date(o.createdAt).toLocaleString()}</small>
     </div>
   `).join('');
 }
@@ -94,15 +100,11 @@ async function renderMessages(){
   }
 
   el.innerHTML = messages.map(m=>`
-    <div style="
-      border:1px solid #ddd;
-      border-radius:6px;
-      padding:10px;
-      margin-bottom:10px;
-    ">
+    <div style="border:1px solid #ddd;padding:10px;border-radius:6px;margin-bottom:10px">
       <strong>Question:</strong><br>${m.question}<br><br>
-      <strong>Answer:</strong><br>${m.answer || '—'}<br>
-      <small>${new Date(m.createdAt).toLocaleString()}</small>
+      <strong>Answer:</strong><br>${m.answer || '—'}<br><br>
+      <button onclick="deleteMessage('${m._id}')">Delete</button>
+      <br><small>${new Date(m.createdAt).toLocaleString()}</small>
     </div>
   `).join('');
 }
@@ -110,10 +112,6 @@ async function renderMessages(){
 // ---------- INIT ----------
 
 document.addEventListener('DOMContentLoaded', ()=>{
-
-  const sidebar = document.querySelector('.admin-sidebar');
-  document.querySelector('.sidebar-toggle')
-    ?.addEventListener('click', ()=> sidebar.classList.toggle('active'));
 
   if(isAdminAuth()){
     $('admin-login').classList.add('hidden');
@@ -133,16 +131,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.querySelectorAll('.admin-nav a').forEach(a=>{
     a.onclick = async e=>{
       e.preventDefault();
-      if(!isAdminAuth()) return alert('Login first');
-
       const view = a.dataset.view;
       showView(view);
-
-      if(view==='overview') await renderOverview();
-      if(view==='orders') await renderOrders();
-      if(view==='messages') await renderMessages();
-
-      sidebar.classList.remove('active');
+      if(view==='overview') renderOverview();
+      if(view==='orders') renderOrders();
+      if(view==='messages') renderMessages();
     };
   });
 
