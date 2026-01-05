@@ -429,7 +429,6 @@ footer {
   opacity:0.9;
 }
 
-/* CHAT WIDGET FIX */
 #chat-widget {
   position: fixed;
   bottom: 20px;
@@ -440,22 +439,8 @@ footer {
 
 #chat-toggle {
   width: auto;
-  padding: 10px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-}
-
-#chat-panel {
-  width: 280px;
-  max-height: 360px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-  margin-top: 10px;
-}
-
-#chat-messages {
-  padding: 10px;
-  overflow-y: auto;
-  max-height: 240px;
+  min-width: 60px;
+  padding: 10px 14px;
+  border-radius: 50px;
+  cursor: pointer;
 }
