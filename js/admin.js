@@ -1,8 +1,8 @@
-// tech-inventory/js/admin.js
+// tech-inventory/js/admin.js – DEPLOYED FIX
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'password123';
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
 
 function $(id){ return document.getElementById(id); }
 
@@ -11,12 +11,13 @@ function isAdminAuth(){
 }
 
 function setAdminAuth(val){
-  if(val) localStorage.setItem('adminAuth','true');
-  else localStorage.removeItem('adminAuth');
+  val ? localStorage.setItem('adminAuth','true')
+      : localStorage.removeItem('adminAuth');
 }
 
 function showView(name){
-  document.querySelectorAll('.admin-view').forEach(v=>v.classList.add('hidden'));
+  document.querySelectorAll('.admin-view')
+    .forEach(v=>v.classList.add('hidden'));
   const el = document.getElementById(name);
   if(el) el.classList.remove('hidden');
 }
@@ -25,25 +26,31 @@ function safeProducts(){
   return Array.isArray(window.products) ? window.products : [];
 }
 
-// ---------- BACKEND FETCH HELPERS ----------
+// ---------- BACKEND FETCH ----------
 
-async function fetchOrders(){
-  const res = await fetch(`${API_BASE}/orders`);
-  return res.ok ? res.json() : [];
+async function fetchJSON(url){
+  try{
+    const res = await fetch(url);
+    if(!res.ok) throw new Error('Fetch failed');
+    return await res.json();
+  }catch(e){
+    console.error(e);
+    return [];
+  }
 }
 
-async function fetchMessages(){
-  const res = await fetch(`${API_BASE}/messages`);
-  return res.ok ? res.json() : [];
-}
+const fetchOrders   = () => fetchJSON(`${API_BASE}/orders`);
+const fetchMessages = () => fetchJSON(`${API_BASE}/messages`);
 
 // ---------- RENDERS ----------
 
 async function renderOverview(){
-  const orders = await fetchOrders();
-  const messages = await fetchMessages();
+  const [orders, messages] = await Promise.all([
+    fetchOrders(),
+    fetchMessages()
+  ]);
 
-  document.getElementById('overview').innerHTML = `
+  $('overview').innerHTML = `
     <h3>Overview</h3>
     <p>Products: <strong>${safeProducts().length}</strong></p>
     <p>Orders: <strong>${orders.length}</strong></p>
@@ -52,17 +59,18 @@ async function renderOverview(){
 }
 
 function renderProductsAdmin(){
-  const el = $('products');
-  el.innerHTML = `<h3>Products</h3>` + safeProducts().map(p=>`
-    <div style="border-bottom:1px solid #eee;padding:8px 0">
-      <strong>${p.name}</strong> — ${p.category} — ${p.price} — stock: ${p.stock}
-    </div>
-  `).join('');
+  $('products').innerHTML =
+    `<h3>Products</h3>` +
+    safeProducts().map(p=>`
+      <div style="border-bottom:1px solid #eee;padding:8px 0">
+        <strong>${p.name}</strong> — ${p.category} — ${p.price}
+      </div>
+    `).join('');
 }
 
 async function renderOrders(){
   const el = $('orders');
-  const orders = (await fetchOrders()).slice().reverse();
+  const orders = await fetchOrders();
   const products = safeProducts();
 
   if(!orders.length){
@@ -70,93 +78,77 @@ async function renderOrders(){
     return;
   }
 
-  el.innerHTML = orders.map(o=>`
+  el.innerHTML = orders.reverse().map(o=>`
     <div style="border-bottom:1px solid #ddd;padding:10px 0">
-      <strong>Order ${o._id}</strong> — ${new Date(o.createdAt).toLocaleString()}<br/>
-      Items: ${
-        o.items.map(i=>{
-          const p = products.find(x=>x.id===i.id);
-          return `${p ? p.name : 'Unknown'} x${i.qty}`;
-        }).join(', ')
-      }
+      <strong>Order ${o._id}</strong><br/>
+      ${o.items.map(i=>{
+        const p = products.find(x=>x.id===i.id);
+        return `${p ? p.name : 'Unknown'} x${i.qty}`;
+      }).join(', ')}
     </div>
   `).join('');
 }
 
 async function renderMessages(){
   const el = $('messages');
-  const messages = (await fetchMessages()).slice().reverse();
+  const messages = await fetchMessages();
 
   if(!messages.length){
     el.innerHTML = '<p>No messages yet.</p>';
     return;
   }
 
-  el.innerHTML = messages.map(m=>`
+  el.innerHTML = messages.reverse().map(m=>`
     <div style="border-bottom:1px solid #ddd;padding:10px 0">
-      <strong>${escapeHtml(m.question)}</strong><br/>
-      <em>${escapeHtml(m.answer || '—')}</em><br/>
+      <strong>${m.question}</strong><br/>
       ${new Date(m.createdAt).toLocaleString()}
     </div>
   `).join('');
-}
-
-function escapeHtml(str){
-  return String(str||'')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;');
 }
 
 // ---------- INIT ----------
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
-  const loginSection = $('admin-login');
-  const dashboardSection = $('admin-dashboard');
   const sidebar = document.querySelector('.admin-sidebar');
-  const toggleBtn = document.querySelector('.sidebar-toggle');
-
-  toggleBtn.addEventListener('click', ()=> sidebar.classList.toggle('active'));
+  document.querySelector('.sidebar-toggle')
+    ?.addEventListener('click', ()=> sidebar.classList.toggle('active'));
 
   if(isAdminAuth()){
-    loginSection.classList.add('hidden');
-    dashboardSection.classList.remove('hidden');
+    $('admin-login').classList.add('hidden');
+    $('admin-dashboard').classList.remove('hidden');
     showView('overview');
     renderOverview();
   }
 
-  $('admin-login-btn').addEventListener('click', ()=>{
-    if($('admin-user').value===ADMIN_USER && $('admin-pass').value===ADMIN_PASS){
+  $('admin-login-btn').onclick = ()=>{
+    if($('admin-user').value===ADMIN_USER &&
+       $('admin-pass').value===ADMIN_PASS){
       setAdminAuth(true);
-      loginSection.classList.add('hidden');
-      dashboardSection.classList.remove('hidden');
-      showView('overview');
-      renderOverview();
+      location.reload();
     } else alert('Invalid credentials');
-  });
+  };
 
   document.querySelectorAll('.admin-nav a').forEach(a=>{
-    a.addEventListener('click', async e=>{
+    a.onclick = async e=>{
       e.preventDefault();
-      if(a.id==='admin-logout') return;
-
       if(!isAdminAuth()) return alert('Login first');
 
       const view = a.dataset.view;
-      showView(view);
+      if(!view) return;
 
+      showView(view);
       if(view==='overview') await renderOverview();
       if(view==='products') renderProductsAdmin();
       if(view==='orders') await renderOrders();
       if(view==='messages') await renderMessages();
 
       sidebar.classList.remove('active');
-    });
+    };
   });
 
-  $('admin-logout').addEventListener('click', ()=>{
+  $('admin-logout').onclick = ()=>{
     setAdminAuth(false);
     location.reload();
-  });
+  };
 });
