@@ -1,6 +1,6 @@
 // chatbot.js - backend powered chat
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://tech-inventory-backend.onrender.com/api/messages';
 
 (function(){
   const widget = document.createElement('div');
