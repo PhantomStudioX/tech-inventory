@@ -32,7 +32,11 @@ function renderCartPage() {
           <p>Price: ${product.price}</p>
         </div>
         <div>
-          <input type="number" min="1" value="${item.qty}" data-id="${item.id}" class="cart-qty">
+          <div class="qty-control">
+            <button class="qty-btn" data-id="${item.id}" data-change="-1">−</button>
+            <span class="qty-value">${item.qty}</span>
+            <button class="qty-btn" data-id="${item.id}" data-change="1">+</button>
+          </div>
           <button class="remove-item" data-id="${item.id}">Remove</button>
         </div>
       </div>
@@ -45,13 +49,21 @@ function renderCartPage() {
     <a href="checkout.html" class="btn">Proceed to Checkout</a>
   `;
 
-  document.querySelectorAll('.cart-qty').forEach(input => {
-    input.addEventListener('change', () => {
-      const id = Number(input.dataset.id);
-      const cart = getCart();
+  document.querySelectorAll('.qty-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = Number(btn.dataset.id);
+      const change = Number(btn.dataset.change);
+      let cart = getCart();
       const item = cart.find(i => i.id === id);
-      if (item) item.qty = Math.max(1, Number(input.value));
+      if (!item) return;
+
+      item.qty += change;
+      if (item.qty < 1) {
+        cart = cart.filter(i => i.id !== id);
+      }
+
       saveCart(cart);
+      renderCartPage();
     });
   });
 
