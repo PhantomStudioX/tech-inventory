@@ -1,4 +1,3 @@
-/*
 // chatbot.js - backend powered chat (FIXED UI + positioning)
 
 const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
@@ -99,4 +98,3 @@ const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
     }
   };
 })();
-*/
