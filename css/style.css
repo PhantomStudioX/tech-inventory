@@ -232,6 +232,11 @@ main {
   margin-top:20px;
 }
 
+/* === CART REMOVE BUTTON POSITION === */
+.cart-item .remove-item {
+  margin-left: auto;
+}
+
 /* Buttons */
 button, .btn, .btn-link {
   background: #1b5e20;
@@ -287,56 +292,31 @@ footer {
   margin-left: 220px; /* Prevent overlap */
 }
 
-/* MOBILE: sidebar hidden initially */
+/* === ADMIN MOBILE NAV FIX === */
 @media (max-width: 900px) {
   .admin-sidebar {
-    position: fixed;
-    z-index: 1100;
-    top: 0;
-    left: 0;
-    height: 100vh;
+    display: none;
+  }
 
-    /* ✅ ADD THESE TWO LINES */
-    width: 220px;
+  .admin-nav {
+    display: flex;
+    justify-content: space-around;
     background: #f6f8f6;
-
-    transform: translateX(-100%); /* Hidden until active */
+    border-bottom: 1px solid #e6eee6;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
-  .admin-sidebar.active {
-    transform: translateX(0);
-  }
-
-  .sidebar-toggle {
-    display: block;
+  .admin-nav a {
+    padding: 6px 10px;
+    font-size: 14px;
   }
 
   .admin-main {
     margin-left: 0;
   }
-
-  .admin-wrapper {
-    display: block;
-  }
-}
-
-.admin-nav a {
-  display: block;
-  color: #1b5e20;
-  padding: 8px 0;
-  text-decoration: none;
-}
-
-.admin-nav a:hover {
-  color: #4caf50;
-}
-
-.admin-view h3 {
-  margin-top: 0;
-}
-
-.admin-view button {
-  margin-top: 8px;
 }
 
 /* ===================== */
