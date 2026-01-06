@@ -16,7 +16,7 @@ const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
 
   widget.innerHTML = `
     <button id="chat-toggle" style="
-      width:100%;
+      width:auto;
       padding:10px;
       background:#1b5e20;
       color:#fff;
