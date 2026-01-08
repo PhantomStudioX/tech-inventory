@@ -296,9 +296,9 @@ footer {
 @media (max-width: 900px) {
   .admin-sidebar {
     position: static;
-    width: 100%;
+    width: 56px;
     display: block;
-    padding: 0;
+    padding: 12px 0;
     border-right: none;
   }
 
@@ -311,23 +311,6 @@ footer {
     position: sticky;
     top: 0;
     z-index: 100;
-  }
-
-  .admin-main {
-    margin-left: 0;
-  }
-}
-
-@media (max-width: 900px) {
-  .admin-sidebar {
-    width: 56px;
-    padding: 12px 0;
-  }
-
-  .admin-sidebar .logo,
-  .admin-sidebar .admin-title,
-  .admin-sidebar span {
-    display: none;
   }
 
   .admin-main {
