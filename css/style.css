@@ -318,6 +318,23 @@ footer {
   }
 }
 
+@media (max-width: 900px) {
+  .admin-sidebar {
+    width: 56px;
+    padding: 12px 0;
+  }
+
+  .admin-sidebar .logo,
+  .admin-sidebar .admin-title,
+  .admin-sidebar span {
+    display: none;
+  }
+
+  .admin-main {
+    margin-left: 56px;
+  }
+}
+
 /* ===================== */
 /* CHECKOUT (FIXED) */
 /* ===================== */
