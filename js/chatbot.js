@@ -8,7 +8,7 @@ const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
   widget.style.cssText = `
     position: fixed;
     bottom: 90px;
-    right: 16px;
+    right: 6px;
     width: 300px;
     font-family: Arial, sans-serif;
     z-index: 9999;
