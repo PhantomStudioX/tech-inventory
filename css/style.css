@@ -292,7 +292,7 @@ footer {
   margin-left: 220px; /* Prevent overlap */
 }
 
-/* === ADMIN MOBILE NAV FIX === */
+/* === ADMIN MOBILE NAV === */
 @media (max-width: 900px) {
   .admin-sidebar {
     position: static;
@@ -314,7 +314,7 @@ footer {
   }
 
   .admin-main {
-    margin-left: 56px;
+    margin-left: 26px;
   }
 }
 
