@@ -7,8 +7,8 @@ const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
   widget.id = 'chat-widget';
   widget.style.cssText = `
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 90px;
+    right: 16px;
     width: 300px;
     font-family: Arial, sans-serif;
     z-index: 9999;
