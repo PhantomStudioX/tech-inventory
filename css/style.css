@@ -295,7 +295,11 @@ footer {
 /* === ADMIN MOBILE NAV FIX === */
 @media (max-width: 900px) {
   .admin-sidebar {
-    display: none;
+    position: static;
+    width: 100%;
+    display: block;
+    padding: 0;
+    border-right: none;
   }
 
   .admin-nav {
@@ -307,11 +311,6 @@ footer {
     position: sticky;
     top: 0;
     z-index: 100;
-  }
-
-  .admin-nav a {
-    padding: 6px 10px;
-    font-size: 14px;
   }
 
   .admin-main {
@@ -331,22 +330,6 @@ footer {
 }
 
 .admin-login { max-width:420px; }
-
-/* Hamburger button */
-.sidebar-toggle {
-  display:none;
-  position: fixed;
-  top:15px;
-  left:15px;
-  background:#1b5e20;
-  color:white;
-  border:none;
-  padding:10px 14px;
-  border-radius:6px;
-  z-index:1200;
-  font-size:20px;
-  cursor:pointer;
-}
 
 /* Mobile header fixes */
 @media (max-width: 600px) {
