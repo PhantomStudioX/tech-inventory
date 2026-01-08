@@ -146,14 +146,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     };
   });
 
-  // ✅ MOBILE SIDEBAR TOGGLE (added)
-  const sidebar = document.querySelector('.admin-sidebar');
-  const toggleBtn = document.querySelector('.sidebar-toggle');
-
-  toggleBtn?.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-  });
-
   $('admin-logout').onclick = ()=>{
     setAdminAuth(false);
     location.reload();
