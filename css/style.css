@@ -431,6 +431,6 @@ footer {
 @media (max-width: 900px) {
   #chat-widget {
     bottom: 20px;
-    right: 15px;    /* pull it inward */
+    right: 35px;    /* pull it inward */
   }
 }
