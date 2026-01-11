@@ -271,7 +271,7 @@ footer {
 
 /* --- ADMIN DASHBOARD --- */
 .admin-wrapper { 
-  display:flex; 
+  display:block; 
   min-height:100vh; 
   position: relative;
 }
@@ -288,20 +288,21 @@ footer {
   margin-left: 0px;
 }
 
+.admin-nav {
+  display: flex;
+  gap: 20px;
+  margin: 12px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e6eee6;
+}
+
 /* === ADMIN MOBILE NAV === */
 @media (max-width: 900px) {
-  .admin-sidebar {
-    display: none; /* hide sidebar on mobile */
-  }
-
-  .admin-nav {
-    display: flex;
-    gap: 20px;
-    margin: 10px 0 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e6eee6;
-  }
-
+.admin-nav {
+  justify-content: space-around;
+  flex-wrap: nowrap;
+}
+  
   .admin-nav a {
   font-size: 14px;
   padding: 6px 8px;
