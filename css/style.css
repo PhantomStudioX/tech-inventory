@@ -399,8 +399,8 @@ footer {
 
 #chat-widget {
   position: fixed;
-  bottom: 25px;
-  right: 25px;
+  bottom: 20px;
+  right: 20px;
   z-index: 99;
 }
 
@@ -430,7 +430,7 @@ footer {
 @media (min-width: 901px) {
   #chat-widget {
     bottom: 40px;   /* lower */
-    right: 60px;    /* more right */
+    right: 40px;    /* more right */
   }
 }
 
@@ -438,6 +438,6 @@ footer {
 @media (max-width: 900px) {
   #chat-widget {
     bottom: 20px;
-    right: 20px;    /* pull it inward */
+    right: 15px;    /* pull it inward */
   }
 }
