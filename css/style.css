@@ -389,14 +389,6 @@ footer {
   opacity:0.9;
 }
 
-#chat-widget {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 50px;
-  z-index: 99;
-}
-
 #chat-toggle {
   width: auto;
   min-width: 20px;
