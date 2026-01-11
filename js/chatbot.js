@@ -1,4 +1,4 @@
-// chatbot.js - backend powered chat (FIXED UI + positioning)
+// chatbot.js - backend powered chat
 
 const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
 
