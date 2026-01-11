@@ -276,11 +276,6 @@ footer {
   position: relative;
 }
 
-/* Sidebar */
-.admin-sidebar {
-  display: none;
-}
-
 /* ENABLE DESKTOP LAYOUT */
 .admin-main { 
   flex:1; 
@@ -301,6 +296,7 @@ footer {
 .admin-nav {
   justify-content: space-around;
   flex-wrap: nowrap;
+  overflow-x: auto;
 }
   
   .admin-nav a {
