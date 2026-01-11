@@ -123,6 +123,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   if(isAdminAuth()){
     $('admin-login').classList.add('hidden');
     $('admin-dashboard').classList.remove('hidden');
+    $('admin-top-nav').classList.remove('hidden');
     showView('overview');
     renderOverview();
   }
