@@ -423,7 +423,7 @@ footer {
 @media (min-width: 901px) {
   #chat-widget {
     bottom: 40px;   /* lower */
-    right: 40px;    /* more right */
+    right: 60px;    /* more right */
   }
 }
 
