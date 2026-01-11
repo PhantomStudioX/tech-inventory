@@ -295,11 +295,7 @@ footer {
 /* === ADMIN MOBILE NAV === */
 @media (max-width: 900px) {
   .admin-sidebar {
-    position: static;
-    width: 56px;
-    display: block;
-    padding: 12px 0;
-    border-right: none;
+    display: none; /* hide sidebar on mobile */
   }
 
   .admin-nav {
@@ -313,8 +309,14 @@ footer {
     z-index: 100;
   }
 
+  .admin-nav a {
+  font-size: 14px;
+  padding: 6px 8px;
+  white-space: nowrap;
+}
+
   .admin-main {
-    margin-left: 26px;
+    margin-left: 0px;
   }
 }
 
