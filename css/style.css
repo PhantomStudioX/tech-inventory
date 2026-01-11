@@ -235,6 +235,7 @@ main {
 /* === CART REMOVE BUTTON POSITION === */
 .cart-item .remove-item {
   margin-left: auto;
+  align-self: center;
 }
 
 /* Buttons */
@@ -321,7 +322,7 @@ footer {
 }
 
 /* ===================== */
-/* CHECKOUT (FIXED) */
+    /* CHECKOUT  */
 /* ===================== */
 
 .admin-brand {
@@ -433,4 +434,22 @@ footer {
   min-width:20px;
   text-align:center;
   font-weight:bold;
+}
+
+/* CHAT BUTTON POSITION FIX */
+
+/* Desktop */
+@media (min-width: 901px) {
+  #chat-widget {
+    bottom: 40px;   /* lower */
+    right: 40px;    /* more right */
+  }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  #chat-widget {
+    bottom: 20px;
+    right: 15px;    /* pull it inward */
+  }
 }
