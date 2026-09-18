@@ -4,6 +4,9 @@ const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'password123';
 const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
 
+let currentView = 'overview';
+let autoRefreshTimer = null;
+
 function $(id){ return document.getElementById(id); }
 
 function isAdminAuth(){
@@ -116,6 +119,34 @@ async function renderMessages(){
   `).join('');
 }
 
+
+// ---------- AUTO REFRESH ----------
+
+function startAutoRefresh(){
+  clearInterval(autoRefreshTimer);
+
+  autoRefreshTimer = setInterval(async ()=>{
+    if(!isAdminAuth()) return;
+
+    try {
+      // Always keep the overview counts updated
+      await renderOverview();
+
+      // Refresh the page currently being viewed
+      if(currentView === 'orders'){
+        await renderOrders();
+      }
+
+      if(currentView === 'messages'){
+        await renderMessages();
+      }
+
+    } catch(error){
+      console.error('Auto-refresh failed:', error);
+    }
+  }, 10000); // 10 seconds
+}
+
 // ---------- INIT ----------
 
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -126,6 +157,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $('admin-top-nav').classList.remove('hidden');
     showView('overview');
     renderOverview();
+    startAutoRefresh();
   }
 
   $('admin-login-btn').onclick = ()=>{
