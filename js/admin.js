@@ -21,7 +21,6 @@ function setAdminAuth(val){
 function showView(name){
   document.querySelectorAll('.admin-view')
     .forEach(v=>v.classList.add('hidden'));
-
   $(name)?.classList.remove('hidden');
 }
 
@@ -47,38 +46,28 @@ const fetchProducts = () => fetchJSON(`${API_BASE}/products`);
 
 async function deleteOrder(id){
   if(!confirm('Delete this order?')) return;
-
-  await fetchJSON(`${API_BASE}/orders/${id}`, {
-    method:'DELETE'
-  });
-
+  await fetchJSON(`${API_BASE}/orders/${id}`, { method:'DELETE' });
   renderOrders();
 }
 
 async function deleteMessage(id){
   if(!confirm('Delete this message?')) return;
-
-  await fetchJSON(`${API_BASE}/messages/${id}`, {
-    method:'DELETE'
-  });
-
+  await fetchJSON(`${API_BASE}/messages/${id}`, { method:'DELETE' });
   renderMessages();
 }
 
 // ---------- RENDERS ----------
 
 async function renderOverview(){
-  const [orders, messages, products] = await Promise.all([
+  const [orders, messages] = await Promise.all([
     fetchOrders(),
-    fetchMessages(),
-    fetchProducts()
+    fetchMessages()
   ]);
 
   $('overview').innerHTML = `
     <h3>Overview</h3>
     <p>📦 Orders: <strong>${orders.length}</strong></p>
     <p>💬 Messages: <strong>${messages.length}</strong></p>
-    <p>🛍️ Products: <strong>${products.length}</strong></p>
   `;
 }
 
@@ -245,7 +234,6 @@ function startAutoRefresh(){
     } catch(error){
       console.error('Auto-refresh failed:', error);
     }
-
   }, 10000); // 10 seconds
 }
 
@@ -257,9 +245,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $('admin-login').classList.add('hidden');
     $('admin-dashboard').classList.remove('hidden');
     $('admin-top-nav').classList.remove('hidden');
-
     showView('overview');
-
     renderOverview();
     startAutoRefresh();
   }
@@ -267,13 +253,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   $('admin-login-btn').onclick = ()=>{
     if($('admin-user').value===ADMIN_USER &&
        $('admin-pass').value===ADMIN_PASS){
-
       setAdminAuth(true);
       location.reload();
-
-    } else {
-      alert('Invalid credentials');
-    }
+    } else alert('Invalid credentials');
   };
 
   document.querySelectorAll('.admin-nav a').forEach(a=>{
