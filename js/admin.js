@@ -21,6 +21,7 @@ function setAdminAuth(val){
 function showView(name){
   document.querySelectorAll('.admin-view')
     .forEach(v=>v.classList.add('hidden'));
+
   $(name)?.classList.remove('hidden');
 }
 
@@ -40,33 +41,44 @@ async function fetchJSON(url, options = {}) {
 
 const fetchOrders   = () => fetchJSON(`${API_BASE}/orders`);
 const fetchMessages = () => fetchJSON(`${API_BASE}/messages`);
+const fetchProducts = () => fetchJSON(`${API_BASE}/products`);
 
 // ---------- ACTIONS ----------
 
 async function deleteOrder(id){
   if(!confirm('Delete this order?')) return;
-  await fetchJSON(`${API_BASE}/orders/${id}`, { method:'DELETE' });
+
+  await fetchJSON(`${API_BASE}/orders/${id}`, {
+    method:'DELETE'
+  });
+
   renderOrders();
 }
 
 async function deleteMessage(id){
   if(!confirm('Delete this message?')) return;
-  await fetchJSON(`${API_BASE}/messages/${id}`, { method:'DELETE' });
+
+  await fetchJSON(`${API_BASE}/messages/${id}`, {
+    method:'DELETE'
+  });
+
   renderMessages();
 }
 
 // ---------- RENDERS ----------
 
 async function renderOverview(){
-  const [orders, messages] = await Promise.all([
+  const [orders, messages, products] = await Promise.all([
     fetchOrders(),
-    fetchMessages()
+    fetchMessages(),
+    fetchProducts()
   ]);
 
   $('overview').innerHTML = `
     <h3>Overview</h3>
     <p>📦 Orders: <strong>${orders.length}</strong></p>
     <p>💬 Messages: <strong>${messages.length}</strong></p>
+    <p>🛍️ Products: <strong>${products.length}</strong></p>
   `;
 }
 
@@ -119,6 +131,91 @@ async function renderMessages(){
   `).join('');
 }
 
+// ---------- PRODUCTS ----------
+
+async function renderProducts(){
+  const el = $('products');
+
+  try {
+    const products = await fetchProducts();
+
+    if(!products.length){
+      el.innerHTML = '<p>No products yet.</p>';
+      return;
+    }
+
+    el.innerHTML = `
+      <h3>Products</h3>
+
+      <div style="display:grid;gap:15px">
+        ${products.map(product => `
+          <div style="
+            border:1px solid #ddd;
+            padding:15px;
+            border-radius:8px;
+            display:flex;
+            gap:15px;
+            align-items:center;
+          ">
+
+            <img
+              src="${product.image}"
+              alt="${product.name}"
+              style="
+                width:90px;
+                height:90px;
+                object-fit:contain;
+                border-radius:6px;
+              "
+              onerror="this.style.display='none'"
+            >
+
+            <div style="flex:1">
+              <h4 style="margin:0 0 8px">
+                ${product.name}
+              </h4>
+
+              <p style="margin:4px 0">
+                <strong>Category:</strong>
+                ${product.category}
+              </p>
+
+              <p style="margin:4px 0">
+                <strong>Price:</strong>
+                $${product.price} JMD
+              </p>
+
+              <p style="margin:4px 0">
+                <strong>Stock:</strong>
+                ${product.stock}
+              </p>
+            </div>
+
+            <div>
+              <button disabled>
+                Edit
+              </button>
+
+              <button disabled>
+                Delete
+              </button>
+            </div>
+
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+  } catch(error){
+    console.error('Failed to load products:', error);
+
+    el.innerHTML = `
+      <p>
+        ❌ Failed to load products.
+      </p>
+    `;
+  }
+}
 
 // ---------- AUTO REFRESH ----------
 
@@ -141,9 +238,14 @@ function startAutoRefresh(){
         await renderMessages();
       }
 
+      if(currentView === 'products'){
+        await renderProducts();
+      }
+
     } catch(error){
       console.error('Auto-refresh failed:', error);
     }
+
   }, 10000); // 10 seconds
 }
 
@@ -155,7 +257,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $('admin-login').classList.add('hidden');
     $('admin-dashboard').classList.remove('hidden');
     $('admin-top-nav').classList.remove('hidden');
+
     showView('overview');
+
     renderOverview();
     startAutoRefresh();
   }
@@ -163,19 +267,40 @@ document.addEventListener('DOMContentLoaded', ()=>{
   $('admin-login-btn').onclick = ()=>{
     if($('admin-user').value===ADMIN_USER &&
        $('admin-pass').value===ADMIN_PASS){
+
       setAdminAuth(true);
       location.reload();
-    } else alert('Invalid credentials');
+
+    } else {
+      alert('Invalid credentials');
+    }
   };
 
   document.querySelectorAll('.admin-nav a').forEach(a=>{
     a.onclick = async e=>{
       e.preventDefault();
+
       const view = a.dataset.view;
+
+      currentView = view;
+
       showView(view);
-      if(view==='overview') renderOverview();
-      if(view==='orders') renderOrders();
-      if(view==='messages') renderMessages();
+
+      if(view==='overview'){
+        renderOverview();
+      }
+
+      if(view==='orders'){
+        renderOrders();
+      }
+
+      if(view==='messages'){
+        renderMessages();
+      }
+
+      if(view==='products'){
+        renderProducts();
+      }
     };
   });
 
