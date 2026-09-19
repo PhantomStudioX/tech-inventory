@@ -1,4 +1,4 @@
-// checkout.js – FINAL POPUP VERSION
+// tech-inventory/js/checkout.js – FINAL POPUP VERSION
 
 const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
 
