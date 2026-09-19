@@ -1,4 +1,4 @@
-// cart.js - stable version
+// tech-inventory/js/cart.js - stable version
 
 function getCart() {
   return JSON.parse(localStorage.getItem('cart') || '[]');
