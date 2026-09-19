@@ -1,3 +1,5 @@
+// tech-inventory/js/product.js
+
 const products = [
   // -------------------
   //     📱 PHONES 
