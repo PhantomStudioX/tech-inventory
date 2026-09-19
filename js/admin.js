@@ -1,4 +1,4 @@
-// tech-inventory/js/admin.js – FINAL
+// tech-inventory/js/admin.js
 
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'password123';
