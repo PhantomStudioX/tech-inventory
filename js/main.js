@@ -1,4 +1,4 @@
-// main.js - product listing, sorting, skeleton, search, color switching
+// tech-inventory/js/main.js - product listing, sorting, skeleton, search, color switching
 
 // Helper: shuffle
 function shuffle(array){ return array.sort(()=>Math.random()-0.5); }
