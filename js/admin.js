@@ -251,6 +251,55 @@ async function renderProducts(){
   }
 }
 
+
+// ---------- EDIT PRODUCT ----------
+
+async function editProduct(id){
+
+  const message = $('edit-product-form-message');
+
+  try {
+
+    message.textContent = 'Loading product...';
+
+    const product = await fetchJSON(
+      `${API_BASE}/products/${id}`
+    );
+
+    $('edit-product-name').value = product.name;
+    $('edit-product-category').value = product.category;
+    $('edit-product-price').value = product.price;
+    $('edit-product-stock').value = product.stock;
+    $('edit-product-image').value = product.image;
+    $('edit-product-colors').value =
+      product.colors?.join(', ') || '';
+
+    $('edit-product-modal').classList.remove('hidden');
+    $('edit-product-modal').style.display = 'flex';
+
+    message.textContent = '';
+
+    // Store the product ID for saving later
+    $('edit-product-modal').dataset.productId = id;
+
+  } catch(error){
+
+    console.error('Failed to load product:', error);
+
+    message.textContent =
+      '❌ Failed to load product.';
+  }
+}
+
+function closeEditProductModal(){
+
+  const modal = $('edit-product-modal');
+
+  modal.classList.add('hidden');
+  modal.style.display = 'none';
+
+}
+
 // ---------- ADD PRODUCT ----------
 
 async function addProduct(){
