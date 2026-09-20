@@ -506,13 +506,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
   };
 
   // Add Product modal
-  $('show-add-product-btn').onclick =
-    openAddProductModal;
+$('show-add-product-btn').onclick =
+  openAddProductModal;
 
-  $('close-add-product-btn').onclick =
-    closeAddProductModal;
+$('close-add-product-btn').onclick =
+  closeAddProductModal;
 
-  $('add-product-btn').onclick =
-    addProduct;
+$('add-product-btn').onclick =
+  addProduct;
+
+// Edit Product modal
+$('close-edit-product-btn').onclick =
+  closeEditProductModal;
 
 });
