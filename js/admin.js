@@ -1,4 +1,3 @@
-```js
 // tech-inventory/js/admin.js
 
 const ADMIN_USER = 'admin';
