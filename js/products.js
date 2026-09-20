@@ -1,6 +1,6 @@
 // tech-inventory/js/products.js
 
-const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
+const PRODUCTS_API_BASE = 'https://tech-inventory-backend.onrender.com/api';
 
 // Products loaded from MongoDB
 let products = [];
@@ -8,7 +8,7 @@ let products = [];
 // Fetch products from the backend
 async function loadProductsFromAPI() {
   try {
-    const response = await fetch(`${API_BASE}/products`);
+    const response = await fetch(`${PRODUCTS_API_BASE}/products`);
 
     if (!response.ok) {
       throw new Error('Failed to fetch products');
