@@ -197,35 +197,42 @@ async function renderProducts(){
 
             <div style="flex:1">
 
-              <h4 style="margin:0 0 8px">
-                ${product.name}
-              </h4>
+  <h4 style="margin:0 0 8px">
+    ${product.name}
+  </h4>
 
-              <p style="margin:4px 0">
-                <strong>Category:</strong>
-                ${product.category}
-              </p>
+  <p style="margin:4px 0">
+    <strong>Category:</strong>
+    ${product.category}
+  </p>
 
-              <p style="margin:4px 0">
-                <strong>Price:</strong>
-                $${product.price} JMD
-              </p>
+  <p style="margin:4px 0">
+    <strong>Price:</strong>
+    $${product.price} JMD
+  </p>
 
-              <p style="margin:4px 0">
-                <strong>Stock:</strong>
-                ${product.stock}
-              </p>
+  <p style="margin:4px 0">
+    <strong>Stock:</strong>
+    ${product.stock}
+  </p>
 
-              <p style="margin:4px 0">
-                <strong>Colors:</strong>
-                ${product.colors?.length
-                  ? product.colors.join(', ')
-                  : 'None'}
-              </p>
+  <p style="margin:4px 0">
+    <strong>Colors:</strong>
+    ${product.colors?.length
+      ? product.colors.join(', ')
+      : 'None'}
+  </p>
 
-              <button onclick="editProduct('${product._id}')">
-                Edit
-              </button>
+</div>
+
+<div style="
+  margin-left:auto;
+  flex-shrink:0;
+">
+  <button onclick="editProduct('${product._id}')">
+    Edit
+  </button>
+</div>
 
             </div>
 
