@@ -1,103 +1,377 @@
-// tech-inventory/js/checkout.js – FINAL POPUP VERSION
+// tech-inventory/js/checkout.js
 
-const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
+const CHECKOUT_API_BASE =
+  'https://tech-inventory-backend.onrender.com/api';
+
+function formatPrice(price) {
+
+  const value =
+    typeof price === 'number'
+      ? price
+      : Number(
+          String(price).replace(/[^0-9.]/g, '')
+        ) || 0;
+
+  return `$${value} JMD`;
+}
+
 
 function showCheckout() {
-  const area = document.getElementById('checkout-area');
-  const btn = document.getElementById('place-order-btn');
-  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+  const area =
+    document.getElementById('checkout-area');
+
+  const btn =
+    document.getElementById('place-order-btn');
+
+  const cart =
+    JSON.parse(
+      localStorage.getItem('cart') || '[]'
+    );
+
 
   if (!area || !btn) return;
 
+
   if (cart.length === 0) {
-    area.innerHTML = '<p>Your cart is empty.</p>';
+
+    area.innerHTML =
+      '<p>Your cart is empty.</p>';
+
     btn.style.display = 'none';
+
     return;
   }
 
+
   let total = 0;
 
-  const rows = cart.map(item => {
-    const product = products.find(p => p.id === item.id);
-    if (!product) return '';
+  let hasInvalidItem = false;
 
-    const priceNum = Number(String(product.price).replace(/[^0-9]/g, ''));
-    total += priceNum * item.qty;
+
+  const rows = cart.map(item => {
+
+    const product =
+      products.find(
+        p => p._id === item.id
+      );
+
+
+    if (!product) {
+
+      hasInvalidItem = true;
+
+      return '';
+
+    }
+
+
+    // Make sure the quantity is not above current stock
+    const quantity =
+      Math.min(
+        item.qty,
+        product.stock
+      );
+
+
+    if(quantity < 1){
+
+      hasInvalidItem = true;
+
+      return '';
+
+    }
+
+
+    const priceNum =
+      typeof product.price === 'number'
+        ? product.price
+        : Number(
+            String(product.price)
+              .replace(/[^0-9.]/g, '')
+          ) || 0;
+
+
+    total +=
+      priceNum * quantity;
+
 
     return `
       <div class="checkout-item">
-        <img src="${product.image}" alt="${product.name}">
+
+        <img
+          src="${product.image}"
+          alt="${product.name}"
+        >
+
         <div>
+
           <strong>${product.name}</strong><br>
-          Qty: ${item.qty}<br>
-          Price: ${product.price}
+
+          Qty: ${quantity}<br>
+
+          Price: ${formatPrice(product.price)}<br>
+
+          Stock: ${product.stock}
+
         </div>
+
       </div>
     `;
+
   }).join('');
 
+
+  if(hasInvalidItem){
+
+    area.innerHTML = `
+      <p>
+        Some products in your cart are no longer
+        available. Please return to the cart and
+        update it before placing your order.
+      </p>
+    `;
+
+    btn.style.display = 'none';
+
+    return;
+
+  }
+
+
   area.innerHTML = `
+
     ${rows}
+
     <div class="checkout-total">
-      <strong>Total:</strong> $${total} JMD
+
+      <strong>Total:</strong>
+      ${formatPrice(total)}
+
     </div>
 
+
     <h4>Customer Info</h4>
-    <input id="cust-name" placeholder="Full Name">
-    <input id="cust-phone" placeholder="Phone Number">
+
+
+    <input
+      id="cust-name"
+      placeholder="Full Name"
+    >
+
+
+    <input
+      id="cust-phone"
+      placeholder="Phone Number"
+    >
+
   `;
 
-  btn.onclick = async () => {
-    const name = document.getElementById('cust-name').value.trim() || 'Guest';
-    const phone = document.getElementById('cust-phone').value.trim();
 
-    if (!phone) {
-      alert('Please enter a phone number');
+  btn.style.display = 'block';
+
+
+  btn.onclick = async () => {
+
+    const name =
+      document
+        .getElementById('cust-name')
+        .value
+        .trim() || 'Guest';
+
+
+    const phone =
+      document
+        .getElementById('cust-phone')
+        .value
+        .trim();
+
+
+    if(!phone){
+
+      alert(
+        'Please enter a phone number'
+      );
+
       return;
+
     }
 
+
+    // Check stock again before submitting
+    const currentCart =
+      JSON.parse(
+        localStorage.getItem('cart') || '[]'
+      );
+
+
+    for(const item of currentCart){
+
+      const product =
+        products.find(
+          p => p._id === item.id
+        );
+
+
+      if(!product){
+
+        alert(
+          `${item.id} is no longer available.`
+        );
+
+        return;
+
+      }
+
+
+      if(product.stock <= 0){
+
+        alert(
+          `${product.name} is out of stock.`
+        );
+
+        return;
+
+      }
+
+
+      if(item.qty > product.stock){
+
+        alert(
+          `Only ${product.stock} of ${product.name} are available.`
+        );
+
+        return;
+
+      }
+
+    }
+
+
     btn.disabled = true;
-    btn.textContent = 'Placing order...';
+
+    btn.textContent =
+      'Placing order...';
+
 
     try {
-      const res = await fetch(`${API_BASE}/orders`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          phone,
-          items: cart.map(item => {
-            const product = products.find(p => p.id === item.id);
-            return {
-              id: item.id,
-              name: product?.name || 'Unknown',
-              price: product?.price || '',
-              qty: item.qty
-            };
-          }),
-          total
-        })
-      });
 
-      if (!res.ok) throw new Error('Order failed');
+      const res =
+        await fetch(
+          `${CHECKOUT_API_BASE}/orders`,
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json'
+            },
+
+            body: JSON.stringify({
+
+              name,
+
+              phone,
+
+              items:
+                currentCart.map(item => {
+
+                  const product =
+                    products.find(
+                      p => p._id === item.id
+                    );
+
+
+                  return {
+
+                    id: item.id,
+
+                    name:
+                      product?.name ||
+                      'Unknown',
+
+                    price:
+                      product?.price ??
+                      0,
+
+                    qty:
+                      item.qty
+
+                  };
+
+                }),
+
+              total
+
+            })
+
+          }
+        );
+
+
+      if(!res.ok){
+
+        throw new Error(
+          'Order failed'
+        );
+
+      }
+
 
       await res.json();
 
-      // ✅ SUCCESS POPUP
-      alert('✅ Order placed successfully! We will contact you shortly.');
 
-      // Clear cart + reset UI
+      // SUCCESS POPUP
+      alert(
+        '✅ Order placed successfully! We will contact you shortly.'
+      );
+
+
+      // Clear cart
       localStorage.removeItem('cart');
-      area.innerHTML = '<p>Thank you for your order.</p>';
-      btn.style.display = 'none';
 
-    } catch (err) {
-      console.error(err);
-      alert('❌ Failed to place order. Please try again.');
-      btn.disabled = false;
-      btn.textContent = 'Place Order';
+
+      area.innerHTML =
+        '<p>Thank you for your order.</p>';
+
+
+      btn.style.display =
+        'none';
+
+
+    } catch(error){
+
+      console.error(
+        'Failed to place order:',
+        error
+      );
+
+
+      alert(
+        '❌ Failed to place order. Please try again.'
+      );
+
+
+      btn.disabled =
+        false;
+
+
+      btn.textContent =
+        'Place Order';
+
     }
+
   };
+
 }
 
-document.addEventListener('DOMContentLoaded', showCheckout);
+
+// Wait for MongoDB products to finish loading
+window.addEventListener(
+  'productsLoaded',
+  () => {
+
+    showCheckout();
+
+  }
+);
