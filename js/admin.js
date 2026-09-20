@@ -1,3 +1,4 @@
+```js
 // tech-inventory/js/admin.js
 
 const ADMIN_USER = 'admin';
@@ -197,43 +198,41 @@ async function renderProducts(){
 
             <div style="flex:1">
 
-  <h4 style="margin:0 0 8px">
-    ${product.name}
-  </h4>
+              <h4 style="margin:0 0 8px">
+                ${product.name}
+              </h4>
 
-  <p style="margin:4px 0">
-    <strong>Category:</strong>
-    ${product.category}
-  </p>
+              <p style="margin:4px 0">
+                <strong>Category:</strong>
+                ${product.category}
+              </p>
 
-  <p style="margin:4px 0">
-    <strong>Price:</strong>
-    $${product.price} JMD
-  </p>
+              <p style="margin:4px 0">
+                <strong>Price:</strong>
+                $${product.price} JMD
+              </p>
 
-  <p style="margin:4px 0">
-    <strong>Stock:</strong>
-    ${product.stock}
-  </p>
+              <p style="margin:4px 0">
+                <strong>Stock:</strong>
+                ${product.stock}
+              </p>
 
-  <p style="margin:4px 0">
-    <strong>Colors:</strong>
-    ${product.colors?.length
-      ? product.colors.join(', ')
-      : 'None'}
-  </p>
+              <p style="margin:4px 0">
+                <strong>Colors:</strong>
+                ${product.colors?.length
+                  ? product.colors.join(', ')
+                  : 'None'}
+              </p>
 
-</div>
+            </div>
 
-<div style="
-  margin-left:auto;
-  flex-shrink:0;
-">
-  <button onclick="editProduct('${product._id}')">
-    Edit
-  </button>
-</div>
-
+            <div style="
+              margin-left:auto;
+              flex-shrink:0;
+            ">
+              <button onclick="editProduct('${product._id}')">
+                Edit
+              </button>
             </div>
 
           </div>
@@ -394,6 +393,72 @@ function closeAddProductModal(){
 
 }
 
+async function saveEditedProduct(){
+
+  const modal = $('edit-product-modal');
+  const productId = modal.dataset.productId;
+
+  const name = $('edit-product-name').value.trim();
+  const category = $('edit-product-category').value;
+  const price = Number($('edit-product-price').value);
+  const stock = Number($('edit-product-stock').value);
+  const image = $('edit-product-image').value.trim();
+
+  const colors = $('edit-product-colors').value
+    .split(',')
+    .map(color => color.trim())
+    .filter(color => color.length > 0);
+
+  const message = $('edit-product-form-message');
+
+  if(!name || !category || !image){
+    message.textContent =
+      '❌ Please fill in all required fields.';
+    return;
+  }
+
+  if(price < 0 || stock < 0){
+    message.textContent =
+      '❌ Price and stock cannot be negative.';
+    return;
+  }
+
+  try {
+
+    message.textContent = 'Saving changes...';
+
+    await fetchJSON(`${API_BASE}/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        category,
+        price,
+        stock,
+        image,
+        colors
+      })
+    });
+
+    message.textContent =
+      '✅ Product updated successfully!';
+
+    await renderProducts();
+    await renderOverview();
+
+    closeEditProductModal();
+
+  } catch(error){
+
+    console.error('Failed to update product:', error);
+
+    message.textContent =
+      '❌ Failed to update product. Please try again.';
+  }
+}
+
 // ---------- AUTO REFRESH ----------
 
 function startAutoRefresh(){
@@ -506,17 +571,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
   };
 
   // Add Product modal
-$('show-add-product-btn').onclick =
-  openAddProductModal;
+  $('show-add-product-btn').onclick =
+    openAddProductModal;
 
-$('close-add-product-btn').onclick =
-  closeAddProductModal;
+  $('close-add-product-btn').onclick =
+    closeAddProductModal;
 
-$('add-product-btn').onclick =
-  addProduct;
+  $('add-product-btn').onclick =
+    addProduct;
 
-// Edit Product modal
-$('close-edit-product-btn').onclick =
-  closeEditProductModal;
+  // Edit Product modal
+  $('close-edit-product-btn').onclick =
+    closeEditProductModal;
+
+  $('save-edit-product-btn').onclick =
+    saveEditedProduct;
 
 });
+```
