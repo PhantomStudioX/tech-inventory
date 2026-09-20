@@ -21,6 +21,7 @@ function setAdminAuth(val){
 function showView(name){
   document.querySelectorAll('.admin-view')
     .forEach(v=>v.classList.add('hidden'));
+
   $(name)?.classList.remove('hidden');
 }
 
@@ -46,13 +47,21 @@ const fetchProducts = () => fetchJSON(`${API_BASE}/products`);
 
 async function deleteOrder(id){
   if(!confirm('Delete this order?')) return;
-  await fetchJSON(`${API_BASE}/orders/${id}`, { method:'DELETE' });
+
+  await fetchJSON(`${API_BASE}/orders/${id}`, {
+    method:'DELETE'
+  });
+
   renderOrders();
 }
 
 async function deleteMessage(id){
   if(!confirm('Delete this message?')) return;
-  await fetchJSON(`${API_BASE}/messages/${id}`, { method:'DELETE' });
+
+  await fetchJSON(`${API_BASE}/messages/${id}`, {
+    method:'DELETE'
+  });
+
   renderMessages();
 }
 
@@ -67,9 +76,21 @@ async function renderOverview(){
 
   $('overview').innerHTML = `
     <h3>Overview</h3>
-    <p>📦 Orders: <strong>${orders.length}</strong></p>
-    <p>💬 Messages: <strong>${messages.length}</strong></p>
-    <p>🛍️ Products: <strong>${products.length}</strong></p>
+
+    <p>
+      📦 Orders:
+      <strong>${orders.length}</strong>
+    </p>
+
+    <p>
+      💬 Messages:
+      <strong>${messages.length}</strong>
+    </p>
+
+    <p>
+      🛍️ Products:
+      <strong>${products.length}</strong>
+    </p>
   `;
 }
 
@@ -97,8 +118,12 @@ async function renderOrders(){
         `).join('')}
       </ul>
 
-      <button onclick="deleteOrder('${o._id}')">Delete</button>
-      <br><small>${new Date(o.createdAt).toLocaleString()}</small>
+      <button onclick="deleteOrder('${o._id}')">
+        Delete
+      </button>
+
+      <br>
+      <small>${new Date(o.createdAt).toLocaleString()}</small>
     </div>
   `).join('');
 }
@@ -114,10 +139,20 @@ async function renderMessages(){
 
   el.innerHTML = messages.map(m=>`
     <div style="border:1px solid #ddd;padding:10px;border-radius:6px;margin-bottom:10px">
-      <strong>Question:</strong><br>${m.question}<br><br>
-      <strong>Answer:</strong><br>${m.answer || '—'}<br><br>
-      <button onclick="deleteMessage('${m._id}')">Delete</button>
-      <br><small>${new Date(m.createdAt).toLocaleString()}</small>
+      <strong>Question:</strong><br>
+      ${m.question}
+      <br><br>
+
+      <strong>Answer:</strong><br>
+      ${m.answer || '—'}
+      <br><br>
+
+      <button onclick="deleteMessage('${m._id}')">
+        Delete
+      </button>
+
+      <br>
+      <small>${new Date(m.createdAt).toLocaleString()}</small>
     </div>
   `).join('');
 }
@@ -137,6 +172,7 @@ async function renderProducts(){
 
     el.innerHTML = `
       <div style="display:grid;gap:15px;margin-top:20px">
+
         ${products.map(product => `
           <div style="
             border:1px solid #ddd;
@@ -160,6 +196,7 @@ async function renderProducts(){
             >
 
             <div style="flex:1">
+
               <h4 style="margin:0 0 8px">
                 ${product.name}
               </h4>
@@ -185,10 +222,12 @@ async function renderProducts(){
                   ? product.colors.join(', ')
                   : 'None'}
               </p>
+
             </div>
 
           </div>
         `).join('')}
+
       </div>
     `;
 
@@ -196,9 +235,7 @@ async function renderProducts(){
     console.error('Failed to load products:', error);
 
     el.innerHTML = `
-      <p>
-        ❌ Failed to load products.
-      </p>
+      <p>❌ Failed to load products.</p>
     `;
   }
 }
@@ -221,12 +258,14 @@ async function addProduct(){
   const message = $('product-form-message');
 
   if(!name || !category || !image){
-    message.textContent = '❌ Please fill in all required fields.';
+    message.textContent =
+      '❌ Please fill in all required fields.';
     return;
   }
 
   if(price < 0 || stock < 0){
-    message.textContent = '❌ Price and stock cannot be negative.';
+    message.textContent =
+      '❌ Price and stock cannot be negative.';
     return;
   }
 
@@ -249,9 +288,9 @@ async function addProduct(){
       })
     });
 
-    message.textContent = '✅ Product added successfully!';
+    message.textContent =
+      '✅ Product added successfully!';
 
-    // Clear form
     $('product-name').value = '';
     $('product-category').value = '';
     $('product-price').value = '';
@@ -259,11 +298,10 @@ async function addProduct(){
     $('product-image').value = '';
     $('product-colors').value = '';
 
-    // Refresh products
     await renderProducts();
-
-    // Update overview count
     await renderOverview();
+
+    closeAddProductModal();
 
   } catch(error){
 
@@ -274,20 +312,42 @@ async function addProduct(){
   }
 }
 
+// ---------- ADD PRODUCT MODAL ----------
+
+function openAddProductModal(){
+
+  const modal = $('add-product-modal');
+
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+
+  $('product-form-message').textContent = '';
+
+}
+
+function closeAddProductModal(){
+
+  const modal = $('add-product-modal');
+
+  modal.classList.add('hidden');
+  modal.style.display = 'none';
+
+}
+
 // ---------- AUTO REFRESH ----------
 
 function startAutoRefresh(){
+
   clearInterval(autoRefreshTimer);
 
   autoRefreshTimer = setInterval(async ()=>{
+
     if(!isAdminAuth()) return;
 
     try {
 
-      // Always keep the overview counts updated
       await renderOverview();
 
-      // Refresh the page currently being viewed
       if(currentView === 'orders'){
         await renderOrders();
       }
@@ -301,10 +361,15 @@ function startAutoRefresh(){
       }
 
     } catch(error){
-      console.error('Auto-refresh failed:', error);
+
+      console.error(
+        'Auto-refresh failed:',
+        error
+      );
+
     }
 
-  }, 10000); // 10 seconds
+  }, 10000);
 }
 
 // ---------- INIT ----------
@@ -312,6 +377,7 @@ function startAutoRefresh(){
 document.addEventListener('DOMContentLoaded', ()=>{
 
   if(isAdminAuth()){
+
     $('admin-login').classList.add('hidden');
     $('admin-dashboard').classList.remove('hidden');
     $('admin-top-nav').classList.remove('hidden');
@@ -323,19 +389,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }
 
   $('admin-login-btn').onclick = ()=>{
-    if($('admin-user').value===ADMIN_USER &&
-       $('admin-pass').value===ADMIN_PASS){
+
+    if(
+      $('admin-user').value===ADMIN_USER &&
+      $('admin-pass').value===ADMIN_PASS
+    ){
 
       setAdminAuth(true);
       location.reload();
 
     } else {
+
       alert('Invalid credentials');
+
     }
+
   };
 
   document.querySelectorAll('.admin-nav a').forEach(a=>{
+
     a.onclick = async e=>{
+
       e.preventDefault();
 
       const view = a.dataset.view;
@@ -359,14 +433,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
       if(view==='products'){
         renderProducts();
       }
+
     };
+
   });
 
   $('admin-logout').onclick = ()=>{
+
     setAdminAuth(false);
     location.reload();
+
   };
 
-  // Add Product button
-  $('add-product-btn').onclick = addProduct;
+  // Add Product modal
+  $('show-add-product-btn').onclick =
+    openAddProductModal;
+
+  $('close-add-product-btn').onclick =
+    closeAddProductModal;
+
+  $('add-product-btn').onclick =
+    addProduct;
+
 });
