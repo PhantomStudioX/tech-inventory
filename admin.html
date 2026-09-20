@@ -149,6 +149,99 @@
             </div>
           </div>
 
+                    <!-- EDIT PRODUCT MODAL -->
+          <div
+            id="edit-product-modal"
+            class="hidden"
+            style="
+              position:fixed;
+              inset:0;
+              background:rgba(0,0,0,0.5);
+              align-items:center;
+              justify-content:center;
+              z-index:1000;
+              padding:20px;
+            "
+          >
+
+            <div style="
+              background:white;
+              width:100%;
+              max-width:500px;
+              padding:25px;
+              border-radius:10px;
+              box-sizing:border-box;
+            ">
+
+              <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-bottom:20px;
+              ">
+                <h3 style="margin:0;">
+                  Edit Product
+                </h3>
+
+                <button id="close-edit-product-btn">
+                  ✕
+                </button>
+              </div>
+
+              <div class="admin-product-form">
+
+                <input
+                  id="edit-product-name"
+                  type="text"
+                  placeholder="Product name"
+                />
+
+                <select id="edit-product-category">
+                  <option value="">Select category</option>
+                  <option value="phones">Phones</option>
+                  <option value="tablets">Tablets</option>
+                  <option value="laptops">Laptops</option>
+                  <option value="gaming">Gaming</option>
+                  <option value="accessories">Accessories</option>
+                </select>
+
+                <input
+                  id="edit-product-price"
+                  type="number"
+                  min="0"
+                  placeholder="Price"
+                />
+
+                <input
+                  id="edit-product-stock"
+                  type="number"
+                  min="0"
+                  placeholder="Stock"
+                />
+
+                <input
+                  id="edit-product-image"
+                  type="text"
+                  placeholder="Image path"
+                />
+
+                <input
+                  id="edit-product-colors"
+                  type="text"
+                  placeholder="Colors e.g. black, blue, pink"
+                />
+
+                <button id="save-edit-product-btn">
+                  Save Changes
+                </button>
+
+                <p id="edit-product-form-message"></p>
+
+              </div>
+
+            </div>
+          </div>
+
           <!-- PRODUCT LIST -->
           <div id="product-list"></div>
 
