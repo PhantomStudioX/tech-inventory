@@ -59,15 +59,17 @@ async function deleteMessage(id){
 // ---------- RENDERS ----------
 
 async function renderOverview(){
-  const [orders, messages] = await Promise.all([
+  const [orders, messages, products] = await Promise.all([
     fetchOrders(),
-    fetchMessages()
+    fetchMessages(),
+    fetchProducts()
   ]);
 
   $('overview').innerHTML = `
     <h3>Overview</h3>
     <p>📦 Orders: <strong>${orders.length}</strong></p>
     <p>💬 Messages: <strong>${messages.length}</strong></p>
+    <p>🛍️ Products: <strong>${products.length}</strong></p>
   `;
 }
 
@@ -123,7 +125,7 @@ async function renderMessages(){
 // ---------- PRODUCTS ----------
 
 async function renderProducts(){
-  const el = $('products');
+  const el = $('product-list');
 
   try {
     const products = await fetchProducts();
@@ -134,9 +136,7 @@ async function renderProducts(){
     }
 
     el.innerHTML = `
-      <h3>Products</h3>
-
-      <div style="display:grid;gap:15px">
+      <div style="display:grid;gap:15px;margin-top:20px">
         ${products.map(product => `
           <div style="
             border:1px solid #ddd;
@@ -178,16 +178,13 @@ async function renderProducts(){
                 <strong>Stock:</strong>
                 ${product.stock}
               </p>
-            </div>
 
-            <div>
-              <button disabled>
-                Edit
-              </button>
-
-              <button disabled>
-                Delete
-              </button>
+              <p style="margin:4px 0">
+                <strong>Colors:</strong>
+                ${product.colors?.length
+                  ? product.colors.join(', ')
+                  : 'None'}
+              </p>
             </div>
 
           </div>
@@ -206,6 +203,77 @@ async function renderProducts(){
   }
 }
 
+// ---------- ADD PRODUCT ----------
+
+async function addProduct(){
+
+  const name = $('product-name').value.trim();
+  const category = $('product-category').value;
+  const price = Number($('product-price').value);
+  const stock = Number($('product-stock').value);
+  const image = $('product-image').value.trim();
+
+  const colors = $('product-colors').value
+    .split(',')
+    .map(color => color.trim())
+    .filter(color => color.length > 0);
+
+  const message = $('product-form-message');
+
+  if(!name || !category || !image){
+    message.textContent = '❌ Please fill in all required fields.';
+    return;
+  }
+
+  if(price < 0 || stock < 0){
+    message.textContent = '❌ Price and stock cannot be negative.';
+    return;
+  }
+
+  try {
+
+    message.textContent = 'Adding product...';
+
+    await fetchJSON(`${API_BASE}/products`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        category,
+        price,
+        stock,
+        image,
+        colors
+      })
+    });
+
+    message.textContent = '✅ Product added successfully!';
+
+    // Clear form
+    $('product-name').value = '';
+    $('product-category').value = '';
+    $('product-price').value = '';
+    $('product-stock').value = '';
+    $('product-image').value = '';
+    $('product-colors').value = '';
+
+    // Refresh products
+    await renderProducts();
+
+    // Update overview count
+    await renderOverview();
+
+  } catch(error){
+
+    console.error('Failed to add product:', error);
+
+    message.textContent =
+      '❌ Failed to add product. Please try again.';
+  }
+}
+
 // ---------- AUTO REFRESH ----------
 
 function startAutoRefresh(){
@@ -215,6 +283,7 @@ function startAutoRefresh(){
     if(!isAdminAuth()) return;
 
     try {
+
       // Always keep the overview counts updated
       await renderOverview();
 
@@ -234,6 +303,7 @@ function startAutoRefresh(){
     } catch(error){
       console.error('Auto-refresh failed:', error);
     }
+
   }, 10000); // 10 seconds
 }
 
@@ -245,7 +315,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $('admin-login').classList.add('hidden');
     $('admin-dashboard').classList.remove('hidden');
     $('admin-top-nav').classList.remove('hidden');
+
     showView('overview');
+
     renderOverview();
     startAutoRefresh();
   }
@@ -253,9 +325,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
   $('admin-login-btn').onclick = ()=>{
     if($('admin-user').value===ADMIN_USER &&
        $('admin-pass').value===ADMIN_PASS){
+
       setAdminAuth(true);
       location.reload();
-    } else alert('Invalid credentials');
+
+    } else {
+      alert('Invalid credentials');
+    }
   };
 
   document.querySelectorAll('.admin-nav a').forEach(a=>{
@@ -290,4 +366,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     setAdminAuth(false);
     location.reload();
   };
+
+  // Add Product button
+  $('add-product-btn').onclick = addProduct;
 });
