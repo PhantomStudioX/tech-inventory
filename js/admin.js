@@ -249,7 +249,6 @@ async function renderProducts(){
   }
 }
 
-
 // ---------- EDIT PRODUCT ----------
 
 async function editProduct(id){
@@ -277,7 +276,6 @@ async function editProduct(id){
 
     message.textContent = '';
 
-    // Store the product ID for saving later
     $('edit-product-modal').dataset.productId = id;
 
   } catch(error){
@@ -296,6 +294,72 @@ function closeEditProductModal(){
   modal.classList.add('hidden');
   modal.style.display = 'none';
 
+}
+
+async function saveEditedProduct(){
+
+  const modal = $('edit-product-modal');
+  const productId = modal.dataset.productId;
+
+  const name = $('edit-product-name').value.trim();
+  const category = $('edit-product-category').value;
+  const price = Number($('edit-product-price').value);
+  const stock = Number($('edit-product-stock').value);
+  const image = $('edit-product-image').value.trim();
+
+  const colors = $('edit-product-colors').value
+    .split(',')
+    .map(color => color.trim())
+    .filter(color => color.length > 0);
+
+  const message = $('edit-product-form-message');
+
+  if(!name || !category || !image){
+    message.textContent =
+      '❌ Please fill in all required fields.';
+    return;
+  }
+
+  if(price < 0 || stock < 0){
+    message.textContent =
+      '❌ Price and stock cannot be negative.';
+    return;
+  }
+
+  try {
+
+    message.textContent = 'Saving changes...';
+
+    await fetchJSON(`${API_BASE}/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        category,
+        price,
+        stock,
+        image,
+        colors
+      })
+    });
+
+    message.textContent =
+      '✅ Product updated successfully!';
+
+    await renderProducts();
+    await renderOverview();
+
+    closeEditProductModal();
+
+  } catch(error){
+
+    console.error('Failed to update product:', error);
+
+    message.textContent =
+      '❌ Failed to update product. Please try again.';
+  }
 }
 
 // ---------- ADD PRODUCT ----------
@@ -390,72 +454,6 @@ function closeAddProductModal(){
   modal.classList.add('hidden');
   modal.style.display = 'none';
 
-}
-
-async function saveEditedProduct(){
-
-  const modal = $('edit-product-modal');
-  const productId = modal.dataset.productId;
-
-  const name = $('edit-product-name').value.trim();
-  const category = $('edit-product-category').value;
-  const price = Number($('edit-product-price').value);
-  const stock = Number($('edit-product-stock').value);
-  const image = $('edit-product-image').value.trim();
-
-  const colors = $('edit-product-colors').value
-    .split(',')
-    .map(color => color.trim())
-    .filter(color => color.length > 0);
-
-  const message = $('edit-product-form-message');
-
-  if(!name || !category || !image){
-    message.textContent =
-      '❌ Please fill in all required fields.';
-    return;
-  }
-
-  if(price < 0 || stock < 0){
-    message.textContent =
-      '❌ Price and stock cannot be negative.';
-    return;
-  }
-
-  try {
-
-    message.textContent = 'Saving changes...';
-
-    await fetchJSON(`${API_BASE}/products/${productId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name,
-        category,
-        price,
-        stock,
-        image,
-        colors
-      })
-    });
-
-    message.textContent =
-      '✅ Product updated successfully!';
-
-    await renderProducts();
-    await renderOverview();
-
-    closeEditProductModal();
-
-  } catch(error){
-
-    console.error('Failed to update product:', error);
-
-    message.textContent =
-      '❌ Failed to update product. Please try again.';
-  }
 }
 
 // ---------- AUTO REFRESH ----------
