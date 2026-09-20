@@ -10,12 +10,19 @@
   <div class="admin-wrapper">
 
     <main class="admin-main">
+
       <div id="admin-login" class="admin-login">
         <h2>Admin Login</h2>
+
         <input id="admin-user" placeholder="username" />
         <input id="admin-pass" type="password" placeholder="password" />
+
         <button id="admin-login-btn">Login</button>
-        <p class="hint">Default demo credentials: <strong>admin / password123</strong></p>
+
+        <p class="hint">
+          Default demo credentials:
+          <strong>admin / password123</strong>
+        </p>
       </div>
 
       <nav class="admin-nav hidden" id="admin-top-nav">
@@ -27,11 +34,82 @@
       </nav>
 
       <div id="admin-dashboard" class="admin-dashboard hidden">
+
         <h2>Dashboard</h2>
+
+        <!-- OVERVIEW -->
         <div id="overview" class="admin-view"></div>
-        <div id="products" class="admin-view hidden"></div>
+
+        <!-- PRODUCTS -->
+        <div id="products" class="admin-view hidden">
+
+          <h3>Products</h3>
+
+          <!-- ADD PRODUCT FORM -->
+          <div class="admin-product-form">
+
+            <h4>Add Product</h4>
+
+            <input
+              id="product-name"
+              type="text"
+              placeholder="Product name"
+            />
+
+            <select id="product-category">
+              <option value="">Select category</option>
+              <option value="phones">Phones</option>
+              <option value="tablets">Tablets</option>
+              <option value="laptops">Laptops</option>
+              <option value="gaming">Gaming</option>
+              <option value="accessories">Accessories</option>
+            </select>
+
+            <input
+              id="product-price"
+              type="number"
+              min="0"
+              placeholder="Price"
+            />
+
+            <input
+              id="product-stock"
+              type="number"
+              min="0"
+              placeholder="Stock"
+            />
+
+            <input
+              id="product-image"
+              type="text"
+              placeholder="Image path e.g. images/iphone15-black.jpg"
+            />
+
+            <input
+              id="product-colors"
+              type="text"
+              placeholder="Colors e.g. black, blue, pink"
+            />
+
+            <button id="add-product-btn">
+              Add Product
+            </button>
+
+            <p id="product-form-message"></p>
+
+          </div>
+
+          <!-- PRODUCT LIST -->
+          <div id="product-list"></div>
+
+        </div>
+
+        <!-- ORDERS -->
         <div id="orders" class="admin-view hidden"></div>
+
+        <!-- MESSAGES -->
         <div id="messages" class="admin-view hidden"></div>
+
       </div>
     </main>
   </div>
