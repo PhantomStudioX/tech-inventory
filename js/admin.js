@@ -228,9 +228,15 @@ async function renderProducts(){
             <div style="
               margin-left:auto;
               flex-shrink:0;
+              display:flex;
+              gap:8px;
             ">
               <button onclick="editProduct('${product._id}')">
                 Edit
+              </button>
+            
+              <button onclick="deleteProduct('${product._id}')">
+                Delete
               </button>
             </div>
 
@@ -359,6 +365,28 @@ async function saveEditedProduct(){
 
     message.textContent =
       '❌ Failed to update product. Please try again.';
+  }
+}
+
+async function deleteProduct(id){
+
+  if(!confirm('Delete this product?')) return;
+
+  try {
+
+    await fetchJSON(`${API_BASE}/products/${id}`, {
+      method: 'DELETE'
+    });
+
+    await renderProducts();
+    await renderOverview();
+
+  } catch(error){
+
+    console.error('Failed to delete product:', error);
+
+    alert('❌ Failed to delete product. Please try again.');
+
   }
 }
 
