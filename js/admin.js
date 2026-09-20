@@ -223,6 +223,10 @@ async function renderProducts(){
                   : 'None'}
               </p>
 
+              <button onclick="editProduct('${product._id}')">
+                Edit
+              </button>
+
             </div>
 
           </div>
