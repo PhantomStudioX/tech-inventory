@@ -771,9 +771,3 @@ document.addEventListener('DOMContentLoaded', ()=>{
     saveEditedProduct;
 
 });
-
-**Important:** this is the same functionality you had, with only the temporary `console.log('🔥 NEW ADMIN.JS LOADED');` removed.
-
-After replacing the file in GitHub, **commit the change**. Then reload the site with a hard refresh. On your Mac in Safari, you can use **Option + Command + R**.
-
-If the old console message **still appears after that**, then we'll check whether GitHub Pages is serving an older cached copy rather than changing the JavaScript again.
