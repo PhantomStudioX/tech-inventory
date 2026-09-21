@@ -318,7 +318,7 @@ function setupControls(){
 
     const q =
       search
-        ? search.value.toLowerCase()
+        ? search.value.trim().toLowerCase()
         : '';
 
 
@@ -330,6 +330,7 @@ function setupControls(){
       products.slice();
 
 
+    // Category filtering
     if(category){
 
       filtered =
@@ -340,6 +341,7 @@ function setupControls(){
     }
 
 
+    // Search filtering
     if(q){
 
       filtered =
@@ -353,6 +355,7 @@ function setupControls(){
     }
 
 
+    // Sorting
     const mode =
       sortSel
         ? sortSel.value
@@ -366,10 +369,11 @@ function setupControls(){
       );
 
 
+    // Works on both:
+    // products.html and index.html
     const container =
-      document.getElementById(
-        'product-list'
-      );
+      document.getElementById('product-list') ||
+      document.getElementById('featured-products');
 
 
     if(container){
@@ -388,6 +392,7 @@ function setupControls(){
   }
 
 
+  // Search as the user types
   if(search){
 
     search.addEventListener(
@@ -395,9 +400,27 @@ function setupControls(){
       doFilter
     );
 
+
+    // Also allow pressing Enter
+    search.addEventListener(
+      'keydown',
+      event => {
+
+        if(event.key === 'Enter'){
+
+          event.preventDefault();
+
+          doFilter();
+
+        }
+
+      }
+    );
+
   }
 
 
+  // Sorting
   if(sortSel){
 
     sortSel.addEventListener(
