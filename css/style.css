@@ -637,4 +637,25 @@ footer {
     flex-direction: column;
   }
 
+  /* ========================================
+   ADMIN PRODUCT STOCK STATUS
+======================================== */
+
+.admin-product-card {
+  border: 2px solid #ddd;
+  transition: 0.2s ease;
+}
+
+.product-stock-in {
+  border-color: #22c55e;
+}
+
+.product-stock-low {
+  border-color: #f59e0b;
+}
+
+.product-stock-out {
+  border-color: #ef4444;
+}
+
 }
