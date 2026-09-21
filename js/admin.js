@@ -45,6 +45,37 @@ const fetchProducts = () => fetchJSON(`${API_BASE}/products`);
 
 // ---------- ACTIONS ----------
 
+async function updateOrderStatus(id, status){
+
+  try {
+
+    await fetchJSON(`${API_BASE}/orders/${id}/status`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        status
+      })
+    });
+
+    await renderOrders();
+
+  } catch(error){
+
+    console.error(
+      'Failed to update order status:',
+      error
+    );
+
+    alert(
+      '❌ Failed to update order status. Please try again.'
+    );
+
+  }
+
+}
+
 async function deleteOrder(id){
   if(!confirm('Delete this order?')) return;
 
@@ -108,7 +139,29 @@ async function renderOrders(){
       <strong>Order ID:</strong> ${o._id}<br>
       <strong>Name:</strong> ${o.name}<br>
       <strong>Phone:</strong> ${o.phone}<br>
-      <strong>Status:</strong> ${o.status}<br>
+      <strong>Status:</strong>
+      
+      <select
+        onchange="updateOrderStatus('${o._id}', this.value)"
+      >
+        <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>
+          Pending
+        </option>
+      
+        <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>
+          Confirmed
+        </option>
+      
+        <option value="Completed" ${o.status === 'Completed' ? 'selected' : ''}>
+          Completed
+        </option>
+      
+        <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>
+          Cancelled
+        </option>
+      </select>
+      
+      <br>
       <strong>Total:</strong> $${o.total} JMD<br><br>
 
       <strong>Items:</strong>
