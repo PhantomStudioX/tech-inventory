@@ -97,6 +97,29 @@ async function deleteMessage(id){
   renderMessages();
 }
 
+
+// ---------- ORDER STATUS STYLING ----------
+
+function getStatusClass(status){
+
+  switch(status){
+
+    case 'Confirmed':
+      return 'status-confirmed';
+
+    case 'Completed':
+      return 'status-completed';
+
+    case 'Cancelled':
+      return 'status-cancelled';
+
+    default:
+      return 'status-pending';
+
+  }
+
+}
+
 // ---------- RENDERS ----------
 
 async function renderOverview(){
@@ -127,59 +150,141 @@ async function renderOverview(){
 }
 
 async function renderOrders(){
+
   const el = $('orders');
   const orders = (await fetchOrders()).reverse();
 
   if(!orders.length){
-    el.innerHTML = '<p>No orders yet.</p>';
+
+    el.innerHTML =
+      '<p class="admin-empty">No orders yet.</p>';
+
     return;
+
   }
 
-  el.innerHTML = orders.map(o=>`
-    <div style="border:1px solid #ddd;padding:10px;border-radius:6px;margin-bottom:10px">
-      <strong>Order ID:</strong> ${o._id}<br>
-      <strong>Name:</strong> ${o.name}<br>
-      <strong>Phone:</strong> ${o.phone}<br>
-      <strong>Status:</strong>
-      
-      <select
-        onchange="updateOrderStatus('${o._id}', this.value)"
-      >
-        <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>
-          Pending
-        </option>
-      
-        <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>
-          Confirmed
-        </option>
-      
-        <option value="Completed" ${o.status === 'Completed' ? 'selected' : ''}>
-          Completed
-        </option>
-      
-        <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>
-          Cancelled
-        </option>
-      </select>
-      
-      <br>
-      <strong>Total:</strong> $${o.total} JMD<br><br>
+  el.innerHTML = orders.map(o => `
 
-      <strong>Items:</strong>
-      <ul>
-        ${o.items.map(i=>`
-          <li>${i.name} × ${i.qty}</li>
-        `).join('')}
-      </ul>
+    <div class="admin-order-card">
 
-      <button onclick="deleteOrder('${o._id}')">
-        Delete
-      </button>
+      <div class="order-header">
 
-      <br>
-      <small>${new Date(o.createdAt).toLocaleString()}</small>
+        <div>
+
+          <h3>
+            Order
+          </h3>
+
+          <small>
+            ${new Date(o.createdAt).toLocaleString()}
+          </small>
+
+        </div>
+
+        <span class="order-id">
+          #${o._id.slice(-6)}
+        </span>
+
+      </div>
+
+
+      <div class="order-customer">
+
+        <p>
+          <strong>Customer</strong><br>
+          ${o.name}
+        </p>
+
+        <p>
+          <strong>Phone</strong><br>
+          ${o.phone}
+        </p>
+
+      </div>
+
+
+      <div class="order-status-row">
+
+        <strong>Status</strong>
+
+        <select
+          class="order-status-select ${getStatusClass(o.status)}"
+          onchange="updateOrderStatus('${o._id}', this.value)"
+        >
+
+          <option
+            value="Pending"
+            ${o.status === 'Pending' ? 'selected' : ''}
+          >
+            Pending
+          </option>
+
+          <option
+            value="Confirmed"
+            ${o.status === 'Confirmed' ? 'selected' : ''}
+          >
+            Confirmed
+          </option>
+
+          <option
+            value="Completed"
+            ${o.status === 'Completed' ? 'selected' : ''}
+          >
+            Completed
+          </option>
+
+          <option
+            value="Cancelled"
+            ${o.status === 'Cancelled' ? 'selected' : ''}
+          >
+            Cancelled
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="order-items">
+
+        <strong>Items</strong>
+
+        <ul>
+
+          ${o.items.map(i => `
+
+            <li>
+              ${i.name}
+              <span>× ${i.qty}</span>
+            </li>
+
+          `).join('')}
+
+        </ul>
+
+      </div>
+
+
+      <div class="order-footer">
+
+        <strong>
+          Total:
+          <span>$${o.total} JMD</span>
+        </strong>
+
+        <button
+          class="admin-delete-btn"
+          onclick="deleteOrder('${o._id}')"
+        >
+          Delete
+        </button>
+
+      </div>
+
     </div>
+
   `).join('');
+
 }
 
 async function renderMessages(){
