@@ -342,6 +342,7 @@ function setupControls(){
 
 
     // Search filtering
+    // Only matches product names that START with the search text
     if(q){
 
       filtered =
@@ -349,7 +350,7 @@ function setupControls(){
           p =>
             p.name
               .toLowerCase()
-              .includes(q)
+              .startsWith(q)
         );
 
     }
@@ -401,7 +402,7 @@ function setupControls(){
     );
 
 
-    // Also allow pressing Enter
+    // Allow pressing Enter
     search.addEventListener(
       'keydown',
       event => {
