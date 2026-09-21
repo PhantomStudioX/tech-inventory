@@ -3,7 +3,6 @@
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'password123';
 const API_BASE = 'https://tech-inventory-backend.onrender.com/api';
-console.log('🔥 NEW ADMIN.JS LOADED');
 
 let currentView = 'overview';
 let autoRefreshTimer = null;
