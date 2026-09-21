@@ -637,8 +637,4 @@ footer {
     flex-direction: column;
   }
 
-  .admin-order-card {
-    border: 5px solid red !important;
-  }
-
 }
