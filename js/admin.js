@@ -318,9 +318,11 @@ async function renderMessages(){
 // ---------- PRODUCTS ----------
 
 async function renderProducts(){
+
   const el = $('product-list');
 
   try {
+
     const products = await fetchProducts();
 
     if(!products.length){
@@ -333,94 +335,103 @@ async function renderProducts(){
 
         ${products.map(product => {
 
-  let stockClass = 'product-stock-in';
+          let stockClass = 'product-stock-in';
 
-  if(product.stock === 0){
-    stockClass = 'product-stock-out';
-  } else if(product.stock <= 3){
-    stockClass = 'product-stock-low';
-  }
+          if(product.stock === 0){
+            stockClass = 'product-stock-out';
+          } else if(product.stock <= 3){
+            stockClass = 'product-stock-low';
+          }
 
-  return `
-    <div class="admin-product-card ${stockClass}" style="
-      padding:15px;
-      border-radius:8px;
-      display:flex;
-      gap:15px;
-      align-items:center;
-    ">
-
-            <img
-              src="${product.image}"
-              alt="${product.name}"
+          return `
+            <div
+              class="admin-product-card ${stockClass}"
               style="
-                width:90px;
-                height:90px;
-                object-fit:contain;
-                border-radius:6px;
+                padding:15px;
+                border-radius:8px;
+                display:flex;
+                gap:15px;
+                align-items:center;
               "
-              onerror="this.style.display='none'"
             >
 
-            <div style="flex:1">
+              <img
+                src="${product.image}"
+                alt="${product.name}"
+                style="
+                  width:90px;
+                  height:90px;
+                  object-fit:contain;
+                  border-radius:6px;
+                "
+                onerror="this.style.display='none'"
+              >
 
-              <h4 style="margin:0 0 8px">
-                ${product.name}
-              </h4>
+              <div style="flex:1">
 
-              <p style="margin:4px 0">
-                <strong>Category:</strong>
-                ${product.category}
-              </p>
+                <h4 style="margin:0 0 8px">
+                  ${product.name}
+                </h4>
 
-              <p style="margin:4px 0">
-                <strong>Price:</strong>
-                $${product.price} JMD
-              </p>
+                <p style="margin:4px 0">
+                  <strong>Category:</strong>
+                  ${product.category}
+                </p>
 
-              <p style="margin:4px 0">
-                <strong>Stock:</strong>
-                ${product.stock}
-              </p>
+                <p style="margin:4px 0">
+                  <strong>Price:</strong>
+                  $${product.price} JMD
+                </p>
 
-              <p style="margin:4px 0">
-                <strong>Colors:</strong>
-                ${product.colors?.length
-                  ? product.colors.join(', ')
-                  : 'None'}
-              </p>
+                <p style="margin:4px 0">
+                  <strong>Stock:</strong>
+                  ${product.stock}
+                </p>
+
+                <p style="margin:4px 0">
+                  <strong>Colors:</strong>
+                  ${product.colors?.length
+                    ? product.colors.join(', ')
+                    : 'None'}
+                </p>
+
+              </div>
+
+              <div style="
+                margin-left:auto;
+                flex-shrink:0;
+                display:flex;
+                gap:8px;
+              ">
+
+                <button onclick="editProduct('${product._id}')">
+                  Edit
+                </button>
+
+                <button onclick="deleteProduct('${product._id}')">
+                  Delete
+                </button>
+
+              </div>
 
             </div>
+          `;
 
-            <div style="
-              margin-left:auto;
-              flex-shrink:0;
-              display:flex;
-              gap:8px;
-            ">
-              <button onclick="editProduct('${product._id}')">
-                Edit
-              </button>
-            
-              <button onclick="deleteProduct('${product._id}')">
-                Delete
-              </button>
-            </div>
-
-                    </div>
-                  `;
-          }).join('')}
+        }).join('')}
 
       </div>
     `;
 
   } catch(error){
+
     console.error('Failed to load products:', error);
 
     el.innerHTML = `
       <p>❌ Failed to load products.</p>
     `;
+
   }
+
 }
 
 // ---------- EDIT PRODUCT ----------
