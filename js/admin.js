@@ -331,15 +331,24 @@ async function renderProducts(){
     el.innerHTML = `
       <div style="display:grid;gap:15px;margin-top:20px">
 
-        ${products.map(product => `
-          <div style="
-            border:1px solid #ddd;
-            padding:15px;
-            border-radius:8px;
-            display:flex;
-            gap:15px;
-            align-items:center;
-          ">
+        ${products.map(product => {
+
+  let stockClass = 'product-stock-in';
+
+  if(product.stock === 0){
+    stockClass = 'product-stock-out';
+  } else if(product.stock <= 3){
+    stockClass = 'product-stock-low';
+  }
+
+  return `
+    <div class="admin-product-card ${stockClass}" style="
+      padding:15px;
+      border-radius:8px;
+      display:flex;
+      gap:15px;
+      align-items:center;
+    ">
 
             <img
               src="${product.image}"
@@ -398,8 +407,9 @@ async function renderProducts(){
               </button>
             </div>
 
-          </div>
-        `).join('')}
+                    </div>
+                  `;
+          }).join('')}
 
       </div>
     `;
