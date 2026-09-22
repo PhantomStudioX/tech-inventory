@@ -878,8 +878,10 @@ footer {
   .admin-form-row {
     grid-template-columns: 1fr;
   }
+}
 
-  /* ========================================
+
+/* ========================================
    STOREFRONT TOAST NOTIFICATIONS
 ======================================== */
 
@@ -995,6 +997,8 @@ footer {
     max-width: none;
     box-sizing: border-box;
   }
+
+}
 
   /* Force storefront toast positioning */
 #toast-container {
