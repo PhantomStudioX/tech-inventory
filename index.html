@@ -8,15 +8,9 @@
 </head>
 
 <body>
-
   <header>
     <div class="header-left">
-      <img
-        src="images/logo.png"
-        class="logo"
-        alt="Tech Inventory Logo"
-      >
-
+      <img src="images/logo.png" class="logo" alt="Logo">
       <h1>Tech Inventory</h1>
     </div>
 
@@ -30,108 +24,26 @@
     </nav>
   </header>
 
-
   <main>
+    <h2>Welcome! Browse our current stock:</h2>
 
-    <!-- HOMEPAGE HERO -->
+    <div class="controls-row">
+      <input
+        type="text"
+        id="search"
+        placeholder="Search products..."
+      >
+    </div>
 
-    <section class="storefront-hero">
-
-      <div class="storefront-hero-content">
-
-        <span class="storefront-eyebrow">
-          TECH INVENTORY
-        </span>
-
-        <h2>
-          Find the tech you need.
-        </h2>
-
-        <p>
-          Browse our current inventory of phones, tablets,
-          laptops, gaming gear, and accessories.
-        </p>
-
-        <a
-          href="products.html"
-          class="storefront-hero-btn"
-        >
-          Browse All Products
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- SEARCH -->
-
-    <section class="storefront-search">
-
-      <div>
-        <h2>What are you looking for?</h2>
-
-        <p>
-          Search our current inventory.
-        </p>
-      </div>
-
-      <div class="controls-row">
-
-        <input
-          type="text"
-          id="search"
-          placeholder="Search products..."
-          aria-label="Search products"
-        >
-
-      </div>
-
-    </section>
-
-
-    <!-- FEATURED PRODUCTS -->
-
-    <section class="featured-section">
-
-      <div class="section-heading">
-
-        <div>
-          <h2>Featured Products</h2>
-
-          <p>
-            A selection from our current stock.
-          </p>
-        </div>
-
-        <a
-          href="products.html"
-          class="view-all-link"
-        >
-          View All →
-        </a>
-
-      </div>
-
-
-      <div
-        id="featured-products"
-        class="product-grid"
-      ></div>
-
-    </section>
-
+    <div id="featured-products" class="product-grid"></div>
   </main>
-
 
   <footer>
     <p>&copy; 2026 Tech Inventory</p>
   </footer>
 
-
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
   <script src="js/chatbot.js"></script>
-
 </body>
 </html>
