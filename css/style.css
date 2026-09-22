@@ -987,10 +987,24 @@ footer {
 @media (max-width: 600px) {
 
   #toast-container {
-    top: 15px;
-    left: 15px;
-    right: 15px;
-  }
+  position: fixed !important;
+
+  top: 20px !important;
+  right: 20px !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px;
+
+  z-index: 10000 !important;
+
+  pointer-events: none;
+}
 
   .storefront-toast {
     width: 100%;
