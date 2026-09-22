@@ -331,86 +331,131 @@ async function renderProducts(){
     }
 
     el.innerHTML = `
-      <div style="display:grid;gap:15px;margin-top:20px">
+      <div class="admin-products-grid">
 
         ${products.map(product => {
 
           let stockClass = 'product-stock-in';
+          let stockLabel = 'In Stock';
 
           if(product.stock === 0){
             stockClass = 'product-stock-out';
+            stockLabel = 'Out of Stock';
+
           } else if(product.stock <= 3){
             stockClass = 'product-stock-low';
+            stockLabel = 'Low Stock';
           }
 
           return `
-            <div
-              class="admin-product-card ${stockClass}"
-              style="
-                padding:15px;
-                border-radius:8px;
-                display:flex;
-                gap:15px;
-                align-items:center;
-              "
-            >
+            <div class="admin-product-card ${stockClass}">
 
-              <img
-                src="${product.image}"
-                alt="${product.name}"
-                style="
-                  width:90px;
-                  height:90px;
-                  object-fit:contain;
-                  border-radius:6px;
-                "
-                onerror="this.style.display='none'"
-              >
+              <div class="admin-product-image-wrapper">
 
-              <div style="flex:1">
-
-                <h4 style="margin:0 0 8px">
-                  ${product.name}
-                </h4>
-
-                <p style="margin:4px 0">
-                  <strong>Category:</strong>
-                  ${product.category}
-                </p>
-
-                <p style="margin:4px 0">
-                  <strong>Price:</strong>
-                  $${product.price} JMD
-                </p>
-
-                <p style="margin:4px 0">
-                  <strong>Stock:</strong>
-                  ${product.stock}
-                </p>
-
-                <p style="margin:4px 0">
-                  <strong>Colors:</strong>
-                  ${product.colors?.length
-                    ? product.colors.join(', ')
-                    : 'None'}
-                </p>
+                <img
+                  src="${product.image}"
+                  alt="${product.name}"
+                  class="admin-product-image"
+                  onerror="this.style.display='none'"
+                >
 
               </div>
 
-              <div style="
-                margin-left:auto;
-                flex-shrink:0;
-                display:flex;
-                gap:8px;
-              ">
 
-                <button onclick="editProduct('${product._id}')">
-                  Edit
-                </button>
+              <div class="admin-product-info">
 
-                <button onclick="deleteProduct('${product._id}')">
-                  Delete
-                </button>
+                <div class="admin-product-heading">
+
+                  <div>
+
+                    <h4>
+                      ${product.name}
+                    </h4>
+
+                    <span class="admin-product-category">
+                      ${product.category}
+                    </span>
+
+                  </div>
+
+
+                  <span class="admin-stock-badge ${stockClass}">
+                    ${stockLabel}
+                  </span>
+
+                </div>
+
+
+                <div class="admin-product-details">
+
+                  <div class="admin-product-detail">
+
+                    <span>
+                      Price
+                    </span>
+
+                    <strong>
+                      $${product.price} JMD
+                    </strong>
+
+                  </div>
+
+
+                  <div class="admin-product-detail">
+
+                    <span>
+                      Stock
+                    </span>
+
+                    <strong>
+                      ${product.stock}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+
+                <div class="admin-product-colors">
+
+                  <span>
+                    Colors
+                  </span>
+
+                  <div class="admin-product-color-list">
+
+                    ${
+                      product.colors?.length
+                        ? product.colors.map(color => `
+                            <span class="admin-color-tag">
+                              ${color}
+                            </span>
+                          `).join('')
+                        : '<span class="admin-no-colors">None</span>'
+                    }
+
+                  </div>
+
+                </div>
+
+
+                <div class="admin-product-actions">
+
+                  <button
+                    class="admin-edit-btn"
+                    onclick="editProduct('${product._id}')"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    class="admin-delete-product-btn"
+                    onclick="deleteProduct('${product._id}')"
+                  >
+                    Delete
+                  </button>
+
+                </div>
 
               </div>
 
