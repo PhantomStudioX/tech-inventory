@@ -996,4 +996,12 @@ footer {
     box-sizing: border-box;
   }
 
+  /* Force storefront toast positioning */
+#toast-container {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  bottom: auto !important;
+  left: auto !important;
+  z-index: 10000 !important;
 }
