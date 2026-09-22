@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="cart-page">
+
   <header>
     <div class="header-left">
       <img src="images/logo.png" class="logo" alt="Logo">
@@ -24,10 +25,26 @@
     </nav>
   </header>
 
-  <main>
-    <h2>Your Cart</h2>
-    <div id="cart-contents"></div>
-    <div id="cart-actions" style="margin-top:20px;"></div>
+  <main class="cart-main">
+
+    <div class="cart-page-header">
+      <h2>Your Shopping Cart</h2>
+      <p>Review your items before checkout.</p>
+    </div>
+
+    <div class="cart-layout">
+
+      <section class="cart-items-card">
+        <div id="cart-contents"></div>
+      </section>
+
+      <aside
+        class="cart-summary"
+        id="cart-actions">
+      </aside>
+
+    </div>
+
   </main>
 
   <footer>
