@@ -191,7 +191,7 @@ function enableUI(){
         JSON.stringify(cart)
       );
 
-      alert('Added to cart');
+      showToast('Added to cart');
 
     });
 
