@@ -56,191 +56,224 @@
             </button>
           </div>
 
-          <!-- ADD PRODUCT MODAL -->
-          <div
-            id="add-product-modal"
-            class="hidden"
-            style="
-              position:fixed;
-              inset:0;
-              background:rgba(0,0,0,0.5);
-              align-items:center;
-              justify-content:center;
-              z-index:1000;
-              padding:20px;
-            "
-          >
+        
+<!-- ADD PRODUCT MODAL -->
+<div
+  id="add-product-modal"
+  class="admin-product-modal hidden"
+>
+  <div class="admin-product-modal-card">
 
-            <div style="
-              background:white;
-              width:100%;
-              max-width:500px;
-              padding:25px;
-              border-radius:10px;
-              box-sizing:border-box;
-            ">
+    <div class="admin-product-modal-header">
+      <div>
+        <h3>Add Product</h3>
+        <p>Add a new product to your inventory.</p>
+      </div>
 
-              <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                margin-bottom:20px;
-              ">
-                <h3 style="margin:0;">
-                  Add Product
-                </h3>
+      <button
+        id="close-add-product-btn"
+        class="admin-modal-close"
+        aria-label="Close"
+      >
+        ✕
+      </button>
+    </div>
 
-                <button id="close-add-product-btn">
-                  ✕
-                </button>
-              </div>
+    <div class="admin-product-form">
 
-              <div class="admin-product-form">
+      <div class="admin-form-group">
+        <label for="product-name">Product Name</label>
+        <input
+          id="product-name"
+          type="text"
+          placeholder="e.g. iPhone 15"
+        />
+      </div>
 
-                <input
-                  id="product-name"
-                  type="text"
-                  placeholder="Product name"
-                />
+      <div class="admin-form-group">
+        <label for="product-category">Category</label>
+        <select id="product-category">
+          <option value="">Select category</option>
+          <option value="phones">Phones</option>
+          <option value="tablets">Tablets</option>
+          <option value="laptops">Laptops</option>
+          <option value="gaming">Gaming</option>
+          <option value="accessories">Accessories</option>
+        </select>
+      </div>
 
-                <select id="product-category">
-                  <option value="">Select category</option>
-                  <option value="phones">Phones</option>
-                  <option value="tablets">Tablets</option>
-                  <option value="laptops">Laptops</option>
-                  <option value="gaming">Gaming</option>
-                  <option value="accessories">Accessories</option>
-                </select>
+      <div class="admin-form-row">
 
-                <input
-                  id="product-price"
-                  type="number"
-                  min="0"
-                  placeholder="Price"
-                />
+        <div class="admin-form-group">
+          <label for="product-price">Price</label>
+          <input
+            id="product-price"
+            type="number"
+            min="0"
+            placeholder="0"
+          />
+        </div>
 
-                <input
-                  id="product-stock"
-                  type="number"
-                  min="0"
-                  placeholder="Stock"
-                />
+        <div class="admin-form-group">
+          <label for="product-stock">Stock</label>
+          <input
+            id="product-stock"
+            type="number"
+            min="0"
+            placeholder="0"
+          />
+        </div>
 
-                <input
-                  id="product-image"
-                  type="text"
-                  placeholder="Image path e.g. images/iphone15-black.jpg"
-                />
+      </div>
 
-                <input
-                  id="product-colors"
-                  type="text"
-                  placeholder="Colors e.g. black, blue, pink"
-                />
+      <div class="admin-form-group">
+        <label for="product-image">Image Path</label>
+        <input
+          id="product-image"
+          type="text"
+          placeholder="images/iphone15-black.jpg"
+        />
+        <small>
+          Example: images/iphone15-black.jpg
+        </small>
+      </div>
 
-                <button id="add-product-btn">
-                  Add Product
-                </button>
+      <div class="admin-form-group">
+        <label for="product-colors">Colors</label>
+        <input
+          id="product-colors"
+          type="text"
+          placeholder="black, blue, pink"
+        />
+        <small>
+          Separate multiple colors with commas.
+        </small>
+      </div>
 
-                <p id="product-form-message"></p>
+      <button
+        id="add-product-btn"
+        class="admin-primary-btn"
+      >
+        Add Product
+      </button>
 
-              </div>
+      <p
+        id="product-form-message"
+        class="admin-form-message"
+      ></p>
 
-            </div>
-          </div>
+    </div>
 
-                    <!-- EDIT PRODUCT MODAL -->
-          <div
-            id="edit-product-modal"
-            class="hidden"
-            style="
-              position:fixed;
-              inset:0;
-              background:rgba(0,0,0,0.5);
-              align-items:center;
-              justify-content:center;
-              z-index:1000;
-              padding:20px;
-            "
-          >
+  </div>
+</div>
 
-            <div style="
-              background:white;
-              width:100%;
-              max-width:500px;
-              padding:25px;
-              border-radius:10px;
-              box-sizing:border-box;
-            ">
 
-              <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                margin-bottom:20px;
-              ">
-                <h3 style="margin:0;">
-                  Edit Product
-                </h3>
+<!-- EDIT PRODUCT MODAL -->
+<div
+  id="edit-product-modal"
+  class="admin-product-modal hidden"
+>
+  <div class="admin-product-modal-card">
 
-                <button id="close-edit-product-btn">
-                  ✕
-                </button>
-              </div>
+    <div class="admin-product-modal-header">
+      <div>
+        <h3>Edit Product</h3>
+        <p>Update this product's inventory information.</p>
+      </div>
 
-              <div class="admin-product-form">
+      <button
+        id="close-edit-product-btn"
+        class="admin-modal-close"
+        aria-label="Close"
+      >
+        ✕
+      </button>
+    </div>
 
-                <input
-                  id="edit-product-name"
-                  type="text"
-                  placeholder="Product name"
-                />
+    <div class="admin-product-form">
 
-                <select id="edit-product-category">
-                  <option value="">Select category</option>
-                  <option value="phones">Phones</option>
-                  <option value="tablets">Tablets</option>
-                  <option value="laptops">Laptops</option>
-                  <option value="gaming">Gaming</option>
-                  <option value="accessories">Accessories</option>
-                </select>
+      <div class="admin-form-group">
+        <label for="edit-product-name">Product Name</label>
+        <input
+          id="edit-product-name"
+          type="text"
+          placeholder="e.g. iPhone 15"
+        />
+      </div>
 
-                <input
-                  id="edit-product-price"
-                  type="number"
-                  min="0"
-                  placeholder="Price"
-                />
+      <div class="admin-form-group">
+        <label for="edit-product-category">Category</label>
+        <select id="edit-product-category">
+          <option value="">Select category</option>
+          <option value="phones">Phones</option>
+          <option value="tablets">Tablets</option>
+          <option value="laptops">Laptops</option>
+          <option value="gaming">Gaming</option>
+          <option value="accessories">Accessories</option>
+        </select>
+      </div>
 
-                <input
-                  id="edit-product-stock"
-                  type="number"
-                  min="0"
-                  placeholder="Stock"
-                />
+      <div class="admin-form-row">
 
-                <input
-                  id="edit-product-image"
-                  type="text"
-                  placeholder="Image path"
-                />
+        <div class="admin-form-group">
+          <label for="edit-product-price">Price</label>
+          <input
+            id="edit-product-price"
+            type="number"
+            min="0"
+            placeholder="0"
+          />
+        </div>
 
-                <input
-                  id="edit-product-colors"
-                  type="text"
-                  placeholder="Colors e.g. black, blue, pink"
-                />
+        <div class="admin-form-group">
+          <label for="edit-product-stock">Stock</label>
+          <input
+            id="edit-product-stock"
+            type="number"
+            min="0"
+            placeholder="0"
+          />
+        </div>
 
-                <button id="save-edit-product-btn">
-                  Save Changes
-                </button>
+      </div>
 
-                <p id="edit-product-form-message"></p>
+      <div class="admin-form-group">
+        <label for="edit-product-image">Image Path</label>
+        <input
+          id="edit-product-image"
+          type="text"
+          placeholder="images/iphone15-black.jpg"
+        />
+      </div>
 
-              </div>
+      <div class="admin-form-group">
+        <label for="edit-product-colors">Colors</label>
+        <input
+          id="edit-product-colors"
+          type="text"
+          placeholder="black, blue, pink"
+        />
+        <small>
+          Separate multiple colors with commas.
+        </small>
+      </div>
 
-            </div>
-          </div>
+      <button
+        id="save-edit-product-btn"
+        class="admin-primary-btn"
+      >
+        Save Changes
+      </button>
+
+      <p
+        id="edit-product-form-message"
+        class="admin-form-message"
+      ></p>
+
+    </div>
+
+  </div>
+</div>
 
           <!-- PRODUCT LIST -->
           <div id="product-list"></div>
