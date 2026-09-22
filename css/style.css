@@ -14,10 +14,10 @@ body {
 
 /* Header */
 header {
-  background: #d6f5d6;
-  color: #1b5e20;
+  background: #e0f2fe;
+  color: #0369a1;
   padding: 1.2rem;
-  border-bottom: 3px solid #b2e8b2;
+  border-bottom: 3px solid #bae6fd;
 
   display: flex;
   flex-direction: column;
@@ -30,14 +30,14 @@ nav {
 }
 
 nav a {
-  color: #1b5e20;
+  color: #0369a1;
   margin: 0 1rem;
   text-decoration: none;
   font-weight: bold;
 }
 
 nav a:hover {
-  color: #4caf50;
+  color: #0284c7;
 }
 
 .header-left {
@@ -90,20 +90,20 @@ main {
   flex: 1;
   padding: 10px;
   border-radius: 6px;
-  border: 2px solid #b2e8b2;
+  border: 2px solid #bae6fd;
 }
 
 .controls-row select {
   padding: 10px;
   border-radius: 6px;
-  border: 2px solid #b2e8b2;
+  border: 2px solid #bae6fd;
 }
 
 /* Fallback search */
 #search {
   width: 100%;
   padding: 12px;
-  border: 2px solid #b2e8b2;
+  border: 2px solid #bae6fd;
   border-radius: 6px;
   margin-bottom: 1.5rem;
   font-size: 16px;
@@ -111,8 +111,8 @@ main {
 
 #search:focus {
   outline: none;
-  border-color: #66cc66;
-  box-shadow: 0 0 5px #b6f5b6;
+  border-color: #38bdf8;
+  box-shadow: 0 0 5px #bae6fd;
 }
 
 /* Product Grid */
@@ -129,14 +129,14 @@ main {
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
-  border: 2px solid #e6ffe6;
+  border: 2px solid #e0f2fe;
   transition: 0.25s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  border-color: #99e699;
+  border-color: #7dd3fc;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
@@ -147,7 +147,7 @@ main {
 }
 
 .product-card h3 {
-  color: #1b5e20;
+  color: #0369a1;
 }
 
 /* Product detail */
@@ -191,7 +191,7 @@ main {
 }
 
 .color-dot.active-color {
-  border: 2px solid #4caf50;
+  border: 2px solid #2563eb;
   transform: scale(1.2);
 }
 
@@ -242,7 +242,7 @@ main {
 
 /* Buttons */
 button, .btn, .btn-link {
-  background: #1b5e20;
+  background: #2563eb;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -265,9 +265,9 @@ button[disabled] { opacity:.6; cursor:not-allowed; }
 footer {
   text-align: center;
   padding: 1rem;
-  background: #d6f5d6;
-  border-top: 3px solid #b2e8b2;
-  color: #1b5e20;
+  background: #e0f2fe;
+  border-top: 3px solid #bae6fd;
+  color: #0369a1;
   margin-top: 2rem;
 }
 
