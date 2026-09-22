@@ -878,4 +878,122 @@ footer {
   .admin-form-row {
     grid-template-columns: 1fr;
   }
+
+  /* ========================================
+   STOREFRONT TOAST NOTIFICATIONS
+======================================== */
+
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  pointer-events: none;
+}
+
+.storefront-toast {
+  min-width: 250px;
+  max-width: 360px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 13px 16px;
+
+  background: #ffffff;
+  border: 1px solid #dbe4ea;
+  border-radius: 10px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.12);
+
+  color: #263238;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  animation: toastSlideIn 0.25s ease;
+}
+
+.toast-icon {
+  width: 24px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #dbeafe;
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.toast-error .toast-icon {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.toast-warning .toast-icon {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.toast-hide {
+  animation: toastSlideOut 0.25s ease forwards;
+}
+
+@keyframes toastSlideIn {
+
+  from {
+    opacity: 0;
+    transform: translateX(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+}
+
+@keyframes toastSlideOut {
+
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(25px);
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  #toast-container {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+  }
+
+  .storefront-toast {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+  }
+
 }
