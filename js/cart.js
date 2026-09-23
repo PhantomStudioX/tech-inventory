@@ -214,32 +214,39 @@ function renderCartPage() {
   // Cart summary
   if (actions) {
 
-    actions.innerHTML = `
+        actions.innerHTML = `
       <div class="cart-summary-content">
-
+    
         <h3>Cart Summary</h3>
-
+    
         <div class="cart-summary-row">
-
+    
           <strong>Items</strong>
-
+    
           <strong>
             ${totalItems}
           </strong>
-
+    
         </div>
-
-
+    
         <div class="cart-summary-row">
-
+    
           <strong>Subtotal</strong>
-
+    
           <strong>
             ${formatCartPrice(subtotal)}
           </strong>
-
+    
         </div>
-
+    
+        <a
+          href="checkout.html"
+          class="btn"
+          style="display:block; text-align:center; margin-top:15px;"
+        >
+          Checkout
+        </a>
+    
       </div>
     `;
 
