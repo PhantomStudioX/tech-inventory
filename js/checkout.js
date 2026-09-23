@@ -12,7 +12,7 @@ function formatPrice(price) {
           String(price).replace(/[^0-9.]/g, '')
         ) || 0;
 
-  return `$${value} JMD`;
+  return `$${value.toLocaleString('en-US')} JMD`;
 }
 
 
@@ -189,8 +189,9 @@ function showCheckout() {
 
     if(!phone){
 
-      alert(
-        'Please enter a phone number'
+      showToast(
+        'Please enter a phone number',
+        'warning'
       );
 
       return;
@@ -215,8 +216,9 @@ function showCheckout() {
 
       if(!product){
 
-        alert(
-          `${item.id} is no longer available.`
+        showToast(
+          `${item.id} is no longer available.`,
+          'error'
         );
 
         return;
@@ -226,8 +228,9 @@ function showCheckout() {
 
       if(product.stock <= 0){
 
-        alert(
-          `${product.name} is out of stock.`
+        showToast(
+          `${product.name} is out of stock.`,
+          'error'
         );
 
         return;
@@ -237,8 +240,9 @@ function showCheckout() {
 
       if(item.qty > product.stock){
 
-        alert(
-          `Only ${product.stock} of ${product.name} are available.`
+        showToast(
+          `Only ${product.stock} of ${product.name} are available.`,
+          'error'
         );
 
         return;
@@ -321,9 +325,9 @@ function showCheckout() {
       await res.json();
 
 
-      // SUCCESS POPUP
-      alert(
-        '✅ Order placed successfully! We will contact you shortly.'
+      // SUCCESS TOAST
+      showToast(
+        'Order placed successfully! We will contact you shortly.'
       );
 
 
@@ -347,8 +351,9 @@ function showCheckout() {
       );
 
 
-      alert(
-        '❌ Failed to place order. Please try again.'
+      showToast(
+        'Failed to place order. Please try again.',
+        'error'
       );
 
 
