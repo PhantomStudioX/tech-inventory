@@ -1305,6 +1305,7 @@ footer {
   .controls-row select {
     flex: 0 0 auto;
     width: auto;
+    transform: translateY(-3px);
   }
 
 }
