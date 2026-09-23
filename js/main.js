@@ -28,11 +28,12 @@ function showSkeleton(container, count = 8){
 }
 
 // Parse price
-function formatPrice(price){
-  const value = parsePrice(price);
+function parsePrice(price){
+  if(price === undefined || price === null) return 0;
 
-  return `$${value.toLocaleString('en-US')} JMD`;
-}
+  if(typeof price === 'number'){
+    return price;
+  }
 
   const num = String(price).replace(/[^0-9.]/g, '');
 
@@ -43,7 +44,7 @@ function formatPrice(price){
 function formatPrice(price){
   const value = parsePrice(price);
 
-  return `$${value} JMD`;
+  return `$${value.toLocaleString('en-US')} JMD`;
 }
 
 function renderProducts(list, container){
