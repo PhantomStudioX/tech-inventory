@@ -150,6 +150,13 @@ main {
   color: #0369a1;
 }
 
+.product-card .price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0369a1;
+  margin: 8px 0;
+}
+
 /* Product detail */
 .product-detail-container {
   display: flex;
