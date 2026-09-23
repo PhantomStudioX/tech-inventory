@@ -16,7 +16,7 @@ function formatCartPrice(price) {
       ? price
       : Number(String(price).replace(/[^0-9.]/g, '')) || 0;
 
-  return `$${value} JMD`;
+  return `$${value.toLocaleString('en-US')} JMD`;
 }
 
 
