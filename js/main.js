@@ -28,12 +28,11 @@ function showSkeleton(container, count = 8){
 }
 
 // Parse price
-function parsePrice(price){
-  if(price === undefined || price === null) return 0;
+function formatPrice(price){
+  const value = parsePrice(price);
 
-  if(typeof price === 'number'){
-    return price;
-  }
+  return `$${value.toLocaleString('en-US')} JMD`;
+}
 
   const num = String(price).replace(/[^0-9.]/g, '');
 
