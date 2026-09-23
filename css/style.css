@@ -289,12 +289,35 @@ button, .btn, .btn-link {
   color: white;
   border: none;
   padding: 8px 12px;
-  border-radius:6px;
-  cursor:pointer;
-  text-decoration:none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-button[disabled] { opacity:.6; cursor:not-allowed; }
+button:hover:not([disabled]),
+.btn:hover,
+.btn-link:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+button:active:not([disabled]),
+.btn:active,
+.btn-link:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 /* No results */
 .no-results {
