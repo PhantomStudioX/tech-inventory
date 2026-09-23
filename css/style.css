@@ -86,6 +86,10 @@ main {
   margin-bottom: 12px;
 }
 
+.controls-row select {
+  transform: translateY(-3px);
+}
+
 .controls-row input[type="text"] {
   flex: 1;
   padding: 10px;
