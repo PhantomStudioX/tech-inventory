@@ -156,13 +156,13 @@ function showCheckout() {
 
     <input
       id="cust-name"
-      placeholder="Full Name"
+      placeholder="Enter your full name"
     >
 
 
     <input
       id="cust-phone"
-      placeholder="Phone Number"
+      placeholder="Enter your phone number"
     >
 
   `;
