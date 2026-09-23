@@ -423,9 +423,6 @@ footer {
     margin: 0 0.8rem;
   }
 
-  .controls-row { 
-    flex-direction: column;
-  }
 }
 
 /* CHECKOUT */
@@ -1289,6 +1286,25 @@ footer {
 
   .product-card img {
     max-height: 150px;
+  }
+
+  /* MOBILE SEARCH + SORT */
+
+@media (max-width: 600px) {
+
+  .controls-row {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .controls-row input[type="text"] {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .controls-row select {
+    flex: 0 0 auto;
+    width: auto;
   }
 
 }
