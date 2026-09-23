@@ -87,7 +87,7 @@ main {
 }
 
 .controls-row select {
-  transform: translateY(-3px);
+  transform: translateY(-10px);
 }
 
 .controls-row input[type="text"] {
