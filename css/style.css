@@ -1335,4 +1335,15 @@ footer {
     flex: 1;
   }
   
+  /* Keep checkout footer at bottom */
+  body:has(.checkout-page) {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  body:has(.checkout-page) .checkout-page {
+    flex: 1;
+  }
+  
 }
