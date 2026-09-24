@@ -128,11 +128,6 @@ async function renderOverview(){
     fetchProducts()
   ]);
 
-  const pendingOrders =
-    orders.filter(
-      order => order.status === 'Pending'
-    ).length;
-
   const lowStockProducts =
     products.filter(
       product =>
@@ -146,18 +141,6 @@ async function renderOverview(){
         product.stock === 0
     ).length;
 
-  const totalSales =
-    orders
-      .filter(
-        order =>
-          order.status !== 'Cancelled'
-      )
-      .reduce(
-        (total, order) =>
-          total + Number(order.total || 0),
-        0
-      );
-
   $('overview').innerHTML = `
 
     <h3>Overview</h3>
@@ -167,7 +150,7 @@ async function renderOverview(){
       <div class="admin-stat-card">
         <span class="admin-stat-icon">🛍️</span>
         <div>
-          <p>Total Products</p>
+          <p>Products</p>
           <strong>${products.length}</strong>
         </div>
       </div>
@@ -175,16 +158,8 @@ async function renderOverview(){
       <div class="admin-stat-card">
         <span class="admin-stat-icon">📦</span>
         <div>
-          <p>Total Orders</p>
+          <p>Orders</p>
           <strong>${orders.length}</strong>
-        </div>
-      </div>
-
-      <div class="admin-stat-card">
-        <span class="admin-stat-icon">⏳</span>
-        <div>
-          <p>Pending Orders</p>
-          <strong>${pendingOrders}</strong>
         </div>
       </div>
 
@@ -201,16 +176,6 @@ async function renderOverview(){
         <div>
           <p>Out of Stock</p>
           <strong>${outOfStockProducts}</strong>
-        </div>
-      </div>
-
-      <div class="admin-stat-card">
-        <span class="admin-stat-icon">💰</span>
-        <div>
-          <p>Total Sales</p>
-          <strong>
-            $${totalSales.toLocaleString('en-US')} JMD
-          </strong>
         </div>
       </div>
 
