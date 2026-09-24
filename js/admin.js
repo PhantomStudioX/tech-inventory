@@ -122,29 +122,227 @@ function getStatusClass(status){
 // ---------- RENDERS ----------
 
 async function renderOverview(){
-  const [orders, messages, products] = await Promise.all([
+
+  const [orders, products] = await Promise.all([
     fetchOrders(),
-    fetchMessages(),
     fetchProducts()
   ]);
 
+  const pendingOrders =
+    orders.filter(
+      order => order.status === 'Pending'
+    ).length;
+
+  const lowStockProducts =
+    products.filter(
+      product =>
+        product.stock > 0 &&
+        product.stock <= 3
+    ).length;
+
+  const outOfStockProducts =
+    products.filter(
+      product =>
+        product.stock === 0
+    ).length;
+
+  const totalSales =
+    orders
+      .filter(
+        order =>
+          order.status !== 'Cancelled'
+      )
+      .reduce(
+        (total, order) =>
+          total + Number(order.total || 0),
+        0
+      );
+
   $('overview').innerHTML = `
+
     <h3>Overview</h3>
 
-    <p>
-      📦 Orders:
-      <strong>${orders.length}</strong>
-    </p>
+    <div class="admin-overview-grid">
 
-    <p>
-      💬 Messages:
-      <strong>${messages.length}</strong>
-    </p>
+      <div class="admin-stat-card">
+        <span class="admin-stat-icon">🛍️</span>
+        <div>
+          <p>Total Products</p>
+          <strong>${products.length}</strong>
+        </div>
+      </div>
 
-    <p>
-      🛍️ Products:
-      <strong>${products.length}</strong>
-    </p>
+      <div class="admin-stat-card">
+        <span class="admin-stat-icon">📦</span>
+        <div>
+          <p>Total Orders</p>
+          <strong>${orders.length}</strong>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <span class="admin-stat-icon">⏳</span>
+        <div>
+          <p>Pending Orders</p>
+          <strong>${pendingOrders}</strong>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <span class="admin-stat-icon">⚠️</span>
+        <div>
+          <p>Low Stock</p>
+          <strong>${lowStockProducts}</strong>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <span class="admin-stat-icon">🚫</span>
+        <div>
+          <p>Out of Stock</p>
+          <strong>${outOfStockProducts}</strong>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <span class="admin-stat-icon">💰</span>
+        <div>
+          <p>Total Sales</p>
+          <strong>
+            $${totalSales.toLocaleString('en-US')} JMD
+          </strong>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="admin-overview-section">
+
+      <div class="admin-overview-section-header">
+        <h3>Recent Orders</h3>
+
+        <button
+          class="admin-overview-link"
+          onclick="currentView='orders'; showView('orders'); renderOrders();"
+        >
+          View Orders
+        </button>
+      </div>
+
+      ${
+        orders.length === 0
+          ? `
+            <p class="admin-empty">
+              No orders yet.
+            </p>
+          `
+          : `
+            <div class="admin-recent-orders">
+
+              ${orders
+                .slice(0, 5)
+                .map(order => `
+                  <div class="admin-recent-order">
+
+                    <div>
+                      <strong>
+                        #${order._id.slice(-6)}
+                      </strong>
+
+                      <small>
+                        ${order.name}
+                      </small>
+                    </div>
+
+                    <div>
+                      <strong>
+                        $${Number(order.total || 0).toLocaleString('en-US')} JMD
+                      </strong>
+
+                      <small class="${getStatusClass(order.status)}">
+                        ${order.status}
+                      </small>
+                    </div>
+
+                  </div>
+                `)
+                .join('')}
+
+            </div>
+          `
+      }
+
+    </div>
+
+    <div class="admin-overview-section">
+
+      <div class="admin-overview-section-header">
+        <h3>Low Stock Products</h3>
+
+        <button
+          class="admin-overview-link"
+          onclick="currentView='products'; showView('products'); renderProducts();"
+        >
+          View Products
+        </button>
+      </div>
+
+      ${
+        products.filter(
+          product =>
+            product.stock <= 3
+        ).length === 0
+          ? `
+            <p class="admin-empty">
+              All products have sufficient stock.
+            </p>
+          `
+          : `
+            <div class="admin-low-stock-list">
+
+              ${products
+                .filter(
+                  product =>
+                    product.stock <= 3
+                )
+                .slice(0, 5)
+                .map(product => `
+                  <div class="admin-low-stock-item">
+
+                    <div>
+                      <strong>
+                        ${product.name}
+                      </strong>
+
+                      <small>
+                        ${product.category}
+                      </small>
+                    </div>
+
+                    <span
+                      class="${
+                        product.stock === 0
+                          ? 'stock-out-text'
+                          : 'stock-low-text'
+                      }"
+                    >
+                      ${
+                        product.stock === 0
+                          ? 'Out of Stock'
+                          : `${product.stock} left`
+                      }
+                    </span>
+
+                  </div>
+                `)
+                .join('')}
+
+            </div>
+          `
+      }
+
+    </div>
+
   `;
 }
 
