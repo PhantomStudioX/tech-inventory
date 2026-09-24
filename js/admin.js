@@ -147,37 +147,37 @@ async function renderOverview(){
 
     <div class="admin-overview-grid">
 
-      <div class="admin-stat-card">
-        <span class="admin-stat-icon">🛍️</span>
-        <div>
-          <p>Products</p>
-          <strong>${products.length}</strong>
-        </div>
-      </div>
+      <div class="admin-stat-card" onclick="currentView='products'; showView('products'); renderProducts();">
+  <span class="admin-stat-icon">🛍️</span>
+  <div>
+    <p>Products</p>
+    <strong>${products.length}</strong>
+  </div>
+</div>
 
-      <div class="admin-stat-card">
-        <span class="admin-stat-icon">📦</span>
-        <div>
-          <p>Orders</p>
-          <strong>${orders.length}</strong>
-        </div>
-      </div>
+<div class="admin-stat-card" onclick="currentView='orders'; showView('orders'); renderOrders();">
+  <span class="admin-stat-icon">📦</span>
+  <div>
+    <p>Orders</p>
+    <strong>${orders.length}</strong>
+  </div>
+</div>
 
-      <div class="admin-stat-card">
-        <span class="admin-stat-icon">⚠️</span>
-        <div>
-          <p>Low Stock</p>
-          <strong>${lowStockProducts}</strong>
-        </div>
-      </div>
+<div class="admin-stat-card" onclick="currentView='products'; showView('products'); renderProducts();">
+  <span class="admin-stat-icon">⚠️</span>
+  <div>
+    <p>Low Stock</p>
+    <strong>${lowStockProducts}</strong>
+  </div>
+</div>
 
-      <div class="admin-stat-card">
-        <span class="admin-stat-icon">🚫</span>
-        <div>
-          <p>Out of Stock</p>
-          <strong>${outOfStockProducts}</strong>
-        </div>
-      </div>
+<div class="admin-stat-card" onclick="currentView='products'; showView('products'); renderProducts();">
+  <span class="admin-stat-icon">🚫</span>
+  <div>
+    <p>Out of Stock</p>
+    <strong>${outOfStockProducts}</strong>
+  </div>
+</div>
 
     </div>
 
