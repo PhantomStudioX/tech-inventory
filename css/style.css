@@ -1330,4 +1330,160 @@ footer {
     flex: 1;
   }
   
+  /* =========================
+   ADMIN OVERVIEW
+========================= */
+
+.admin-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.admin-stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.admin-stat-icon {
+  font-size: 28px;
+}
+
+.admin-stat-card p {
+  margin: 0 0 5px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.admin-stat-card strong {
+  font-size: 22px;
+  color: #1f2937;
+}
+
+.admin-overview-section {
+  margin-top: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.admin-overview-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 16px;
+}
+
+.admin-overview-section-header h3 {
+  margin: 0;
+}
+
+.admin-overview-link {
+  border: none;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 8px 12px;
+  border-radius: 7px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-overview-link:hover {
+  background: #dbeafe;
+}
+
+.admin-recent-orders {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-recent-order,
+.admin-low-stock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.admin-recent-order:last-child,
+.admin-low-stock-item:last-child {
+  border-bottom: none;
+}
+
+.admin-recent-order > div,
+.admin-low-stock-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-recent-order small,
+.admin-low-stock-item small {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.admin-recent-order .status-pending,
+.admin-recent-order .status-confirmed,
+.admin-recent-order .status-completed,
+.admin-recent-order .status-cancelled {
+  display: inline-block;
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.stock-low-text {
+  color: #d97706;
+  font-weight: 700;
+}
+
+.stock-out-text {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+
+  .admin-overview-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .admin-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-overview-section {
+    padding: 15px;
+  }
+
+  .admin-overview-section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-recent-order,
+  .admin-low-stock-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
 }
