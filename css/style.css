@@ -1312,4 +1312,11 @@ footer {
     transform: translateY(10px);
   }
 
+  /* Hide AI chatbot widget */
+  #chatbot-widget,
+  .chatbot-widget,
+  #chatbot-container {
+    display: none !important;
+  }
+
 }
