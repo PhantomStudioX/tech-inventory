@@ -1318,22 +1318,6 @@ footer {
   #chatbot-container {
     display: none !important;
   }
-
-  /* Keep footer at bottom on short pages */
-  html,
-  body {
-    min-height: 100%;
-  }
-  
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  main {
-    flex: 1;
-  }
   
   /* Keep checkout footer at bottom */
   body:has(.checkout-page) {
