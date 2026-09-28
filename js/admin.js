@@ -354,12 +354,12 @@ async function renderOrders(){
 
         <p>
           <strong>Customer</strong><br>
-          ${o.name}
+          <strong>${o.name}</strong>
         </p>
-
+        
         <p>
           <strong>Phone</strong><br>
-          ${o.phone}
+          <strong>${o.phone}</strong>
         </p>
 
       </div>
@@ -416,7 +416,7 @@ async function renderOrders(){
           ${o.items.map(i => `
 
             <li>
-              ${i.name}
+              <strong>${i.name}</strong>
               <span>× ${i.qty}</span>
             </li>
 
