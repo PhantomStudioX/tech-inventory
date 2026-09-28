@@ -905,7 +905,8 @@ footer {
 .order-customer strong,
 .order-items > strong {
   font-size: 13px;
-  color: #64748b;
+  font-weight: 700;
+  color: #1f2937;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
